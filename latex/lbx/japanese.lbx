@@ -13,7 +13,7 @@
   \blxja@xpatchbibmacro{name:first-last}{\ifprefchar{}}{\ifpunctmark{'}} % why changed from the original?
 
   \let\blxja@multinamedelim@orig\multinamedelim
-  \renewcommand*{\multinamedelim}{\iffieldequalstr{langid}{japanese}{，}{\blxja@finalnamedelim@orig}}%
+  \renewcommand*{\multinamedelim}{\iffieldequalstr{langid}{japanese}{，}{\blxja@multinamedelim@orig}}%
   \let\blxja@finalnamedelim@orig\finalnamedelim
   \renewcommand*{\finalnamedelim}{\iffieldequalstr{langid}{japanese}{，}{\blxja@finalnamedelim@orig}}%
 }
