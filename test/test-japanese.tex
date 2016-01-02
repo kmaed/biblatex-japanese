@@ -1,0 +1,10 @@
+\documentclass[lualatex,ja=standard,magstyle=real,12pt]{bxjsarticle}
+\usepackage[backend=biber,sortcites=true]{biblatex-japanese}
+\addbibresource{test-japanese.bib}
+\begin{document}
+文献\autocite{hoge2000,foobar1990}はこの業界で最も広く読まれている基礎文献であり，
+大学院に入学するまでに必読である．
+また，\autocite{hoge2001}は新たな分野を拓いた最初の文献であり，
+当初の問題意識を知るうえで重要である．
+\printbibliography
+\end{document}

@@ -1,0 +1,22 @@
+%
+% biblatex-japanese.sty
+%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{biblatex-japanese}[2016/01/01 Japanese language support for biblatex]
+
+\DeclareOption*{\PassOptionsToPackage{%
+    language=japanese,
+    sortlocale=japanese,
+    bibencoding=utf8,texencoding=utf8, % for platex and uplatex
+    \CurrentOption}{biblatex}}
+\ProcessOptions*
+
+\RequirePackage{biblatex}[2015/10/21]
+
+\RequirePackage{xpatch}
+\def\blxja@xpatchbibmacro#1#2#3{%
+  \xpatchbibmacro{#1}{#2}{#3}{}{%
+    \PackageWarning{biblatex-japanese}{Patching to the bibmacro `#1' failed.}}}
+
+
+\endinput

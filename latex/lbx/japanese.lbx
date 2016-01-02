@@ -1,0 +1,26 @@
+\ProvidesFile{japanese.lbx}
+[\abx@lbxid]
+
+%% ad hoc...
+\InheritBibliographyExtras{english}
+\InheritBibliographyStrings{english}
+
+\DeclareBibliographyExtras{%
+  \blxja@xpatchbibmacro{name:first-last}{\bibnamedelimd}{%
+    \iffieldequalstr{langid}{japanese}{}{\bibnamedelimd}}%
+  \blxja@xpatchbibmacro{name:first-last}{\ifuseprefix{\bibnamedelimc}{\bibnamedelimd}}{%
+    \ifuseprefix{\bibnamedelimc}{\iffieldequalstr{langid}{japanese}{}{\bibnamedelimd}}}%
+  \blxja@xpatchbibmacro{name:first-last}{\ifprefchar{}}{\ifpunctmark{'}} % why changed from the original?
+
+  \let\blxja@multinamedelim@orig\multinamedelim
+  \renewcommand*{\multinamedelim}{\iffieldequalstr{langid}{japanese}{，}{\blxja@finalnamedelim@orig}}%
+  \let\blxja@finalnamedelim@orig\finalnamedelim
+  \renewcommand*{\finalnamedelim}{\iffieldequalstr{langid}{japanese}{，}{\blxja@finalnamedelim@orig}}%
+}
+
+\DeclareBibliographyStrings{%
+  bibliography  = {{参考文献}{参考文献}},
+  references    = {{参考文献}{参考文献}},
+}
+
+\endinput

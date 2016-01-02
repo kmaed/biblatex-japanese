@@ -1,0 +1,87 @@
+\documentclass[lualatex,ja=standard,magstyle=real]{bxjsarticle}
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\@maketitle}{\@author}{\setcounter{footnote}{1}\@author}{}{}
+\usepackage{btxdockit}
+\setmainjfont[BoldFont=M+ 1c-Bold]{IPAexMincho}
+\setsansjfont{M+ 1c-Bold}
+\setmainfont[BoldFont=M+ 1c-Bold]{TeXGyreTermes}
+\setsansfont{M+ 1c-Bold}
+\setmonofont{Inconsolata-zi4}
+\renewcommand{\headfont}{\sffamily\spotcolor}
+\renewcommand{\marglistfont}{\bfseries\spotcolor}
+\renewcommand{\@makefnmark}{\hbox{}\hbox{\@textsuperscript{\normalfont\@thefnmark}}\hbox{}}
+\makeatother
+
+\title{\bfseries\spotcolor\texttt{biblatex-japanese}パッケージ（仮）}
+\author{前田一貴\footnote{Email: \texttt{kmaeda@kmaeda.net}}}
+\hypersetup{%
+  pdftitle={biblatex-japaneseパッケージ（仮）},
+  pdfauthor={前田一貴},
+  unicode,
+  hypertexnames=false,
+  colorlinks,
+  citecolor=spot,
+  linkcolor=spot,
+  urlcolor=spot}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\section{はじめに}
+\LaTeX{}においては文献引用の煩雑な作業の効率化のためにBib\TeX{}がよく用いられている．
+Bib\TeX{}を使うと，文献データベースを作成しておき，本文中の引用が必要な箇所に
+\verb+\cite+コマンドを書くだけで自動的に，指定したスタイルでソートされた文献リストが
+指定箇所に，ソート後の文献番号が本文中の引用箇所に出力される．Bib\TeX{}は特に
+参考文献が膨大な数に及ぶ書籍や論文の執筆には欠かせない機構であるが，文献リストの
+スタイルを指定する\texttt{.bst}ファイルの作成には逆ポーランド記法に基づく文法を持つ
+独自言語を用いなければならず，指定された様式に沿う\texttt{.bst}ファイルが用意されて
+いない場合には門外漢には利用が困難であるという問題があった．
+
+この困難を緩和するために，近年になって
+\texttt{biblatex}\footnote{\url{https://github.com/plk/biblatex}}というパッケージが
+開発されている．
+\texttt{biblatex}は文献のソートに\texttt{biber}と呼ばれるPerlスクリプトを用いる
+以外は全て\LaTeX{}のマクロで記述されており，カスタマイズが（Bib\TeX{}に比べると）
+容易になっている．また\texttt{biblatex}では，従来は別のパッケージで提供されていた，
+脚注への文献情報の出力や章毎の文献リストの出力といった，人文系で要求されることの
+多い機能が充実しており，欧米の人文系学界ではBib\TeX{}に代わるものとして普及が
+進んでいるとされている\footnote{本当かどうかはちゃんと調べていないので知らない．}．
+しかし，\texttt{biblatex}では和文における利用は現状全く考慮されていないため，
+日本国内では需要があるにも関わらずあまり活用されていないようである．需要に対して
+供給がない理由は，日本の\LaTeX{}利用者の多くが理科系の人間であり，理科系においては
+論文といえば多くが英文によるものであること，理科系の和文論文を書く場合にもBib\TeX{}
+の機能で事足りてしまうといったことがあると考えられる．
+
+そこで，こうした問題に対処するために，\texttt{biblatex-japanese}というパッケージを
+作るプロジェクトを立ち上げることにした．「パッケージを作る」とは書いたが，立ち上げ
+時点では着地点がどこになるかはまだ定かではない．\texttt{biblatex}を使わなくとも
+Bib\TeX{}で問題を解決することも可能であるという話もある
+\footnote{\url{https://twitter.com/munepixyz/status/663199507392237568}}ので，
+そうしたノウハウを集めて形にするといったことも目標として考えられる．いずれにせよ，
+これを書いている人（前田）自身は理科系の人間であるため，具体的にどういう要望がある
+のかを集約することが喫緊の課題であると考えている．
+
+おぼろげながら考えているロードマップ（と呼べるほどのものではないが）は以下のようである．
+\begin{enumerate}
+\item GitHubのIssue機能などを用いて要望を集める．
+\item コードを書いて要望を実現する．ベースとしては\texttt{biblatex}や
+  \texttt{biblatex-chicago}を用い，和文での文献引用における様々なニーズに柔軟に
+  対応できるようなフレームワークを用意することを目指す．
+\item 成果物はCTANにアップロードし，\TeX{} Liveをインストールするだけで利用可能にする．
+\end{enumerate}
+
+\section{使い方}
+\texttt{biblatex-japanese}一式を\texttt{TEXMF}ツリーの適切な場所に配置したうえで，
+プリアンブルに次を入れる：
+\begin{lstlisting}[style=latex]{}
+\usepackage[backend=biber]{biblatex-japanese}
+\end{lstlisting}
+これで日本語用の設定ファイルが読み込まれる．
+
+\noindent\textbf{（注意）}まだまだ開発は始めたばかりのため，
+とても実用に耐えるものではない．
+
+\end{document}
