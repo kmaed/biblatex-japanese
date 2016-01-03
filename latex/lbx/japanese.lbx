@@ -6,8 +6,7 @@
 \InheritBibliographyStrings{english}
 
 \DeclareBibliographyExtras{%
-  \blxja@xpatchbibmacro{name:first-last}{\ifprefchar {} {} {\ifuseprefix{\bibnamedelimc}{\bibnamedelimd}}}{%
-    \ifprefchar{}{}{\ifuseprefix{\bibnamedelimc}{\bibnamedelimd}}}% omission of % !!!
+  \blxja@xpatchbibmacro{name:first-last}{\ifprefchar{}}{\ifprefchar}% fix a bug of biblatex.def
   \let\blxja@bibnamedelimd@orig\bibnamedelimd
   \renewcommand*{\bibnamedelimd}{\iffieldequalstr{langid}{japanese}{}{\blxja@bibnamedelimd@orig}}%
   \let\blxja@multinamedelim@orig\multinamedelim
