@@ -112,12 +112,12 @@ Bib\TeX{}で問題を解決することも可能であるという話もある
 \file{biblatex-japanese.def}というファイルの中に記述している．
 
 \begin{ltxsyntax}
-  \cmditem{DeclareJapaneseCommand}{csname}{code for Japanese}
+  \cmditem{DeclareJapaneseCommand}{command}{code for Japanese}
 
-  \prm{csname}で与えたコマンドが文献の出力コマンド中に現れたとき，
-  もしその文献の\bibfield{langid}が\opt{japanese}ならば\prm{code for japanese}に
+  \prm{command}が文献出力コマンド中に現れたとき，もしその文献の
+  \bibfield{langid}が\opt{japanese}ならば\prm{code for japanese}に
   置き換わり，そうでなければ元々のコマンドになる．
-  「\bibfield{langid}が……」という条件はあまり筋がよくないように思うので，
+  「\bibfield{langid}が\opt{japanese}」という条件はあまり筋がよくないように思うので，
   そのうち変更される可能性がある．
 
   \cmditem{DeclareJapaneseBibmacro}{bibmacro name}{code for Japanese}

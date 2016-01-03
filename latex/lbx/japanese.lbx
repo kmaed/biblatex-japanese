@@ -10,13 +10,13 @@
           {\input{biblatex-japanese.def}}
           {}%
 
-  \xpatchbibmacro{name:first-last}{\ifprefchar{}}{\ifprefchar}{}{}% fix a bug of biblatex.def (v3.2)
+  \xpatchbibmacro{name:first-last}{\ifprefchar{}}{\ifprefchar}{}{}% fix a bug of biblatex.def
 
-  \DeclareJapaneseBibmacro{name:last-first}{\usebibmacro{name:first-last}}%
-  \DeclareJapaneseCommand{addlowpenspace}{}%
-  \DeclareJapaneseCommand{bibnamedelimd}{}%
-  \DeclareJapaneseCommand{multinamedelim}{，}%
-  \DeclareJapaneseCommand{finalnamedelim}{，}%
+  \DeclareJapaneseBibmacro{name:last-first}{\usebibmacro{name:first-last}}
+  \DeclareJapaneseCommand{\addlowpenspace}{}%
+  \DeclareJapaneseCommand{\bibnamedelimd}{}%
+  \DeclareJapaneseCommand{\multinamedelim}{，}%
+  \DeclareJapaneseCommand{\finalnamedelim}{，}%
 }
 
 \DeclareBibliographyStrings{%
