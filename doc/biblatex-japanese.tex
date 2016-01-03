@@ -80,8 +80,21 @@ Bib\TeX{}で問題を解決することも可能であるという話もある
 \usepackage[backend=biber]{biblatex-japanese}
 \end{lstlisting}
 これで日本語用の設定ファイルが読み込まれる．
+\texttt{biblatex}に渡したいオプションは\texttt{biblatex-japanese}に渡せばよい．
+例えば，引用時の番号をソートしたければ
+\begin{lstlisting}[style=latex]{}
+\usepackage[backend=biber,sortcites=true]{biblatex-japanese}
+\end{lstlisting}
+のようにする．
+
+\texttt{biblatex-chicago}を読み込みたいときは
+\begin{lstlisting}[style=latex]{}
+\usepackage[backend=biber,chicago]{biblatex-japanese}
+\end{lstlisting}
+と\texttt{chicago}オプションをつける．
+このときは，\texttt{biblatex-chicago}に渡すオプションも通るようになる．
 
 \noindent\textbf{（注意）}まだまだ開発は始めたばかりのため，
-とても実用に耐えるものではない．
+とても実用に耐えるものではない．気長に待っていただければ幸いである．
 
 \end{document}

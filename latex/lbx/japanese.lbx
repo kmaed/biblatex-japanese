@@ -6,6 +6,10 @@
 \InheritBibliographyStrings{english}
 
 \DeclareBibliographyExtras{%
+  \ifundef{\blxja@macrodefined}
+          {\input{biblatex-japanese.def}}
+          {}
+
   \blxja@xpatchbibmacro{name:first-last}{\ifprefchar{}}{\ifprefchar}% fix a bug of biblatex.def
   \let\blxja@bibnamedelimd@orig\bibnamedelimd
   \renewcommand*{\bibnamedelimd}{\iffieldequalstr{langid}{japanese}{}{\blxja@bibnamedelimd@orig}}%

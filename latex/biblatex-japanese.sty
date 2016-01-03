@@ -24,13 +24,13 @@
   bibencoding=utf8,texencoding=utf8, % for platex and uplatex
 }{biblatex}
 
-\iftoggle{blxja@chicago}{%
-  \RequirePackage{biblatex-chicago}[2014/08/15]}{}
+\iftoggle{blxja@chicago}
+         {\RequirePackage{biblatex-chicago}[2014/08/15]}
+         {}
 \RequirePackage{biblatex}[2015/10/21]
 
-\RequirePackage{xpatch}
-\def\blxja@xpatchbibmacro#1#2#3{%
-  \xpatchbibmacro{#1}{#2}{#3}{}{%
-    \PackageWarning{biblatex-japanese}{Patching to the bibmacro `#1' failed.}}}
+\ifundef{\blxja@macrodefined}
+        {\input{biblatex-japanese.def}}
+        {}
 
 \endinput
