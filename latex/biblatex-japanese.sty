@@ -4,13 +4,28 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{biblatex-japanese}[2016/01/01 Japanese language support for biblatex]
 
-\DeclareOption*{\PassOptionsToPackage{%
-    language=japanese,
-    sortlocale=japanese,
-    bibencoding=utf8,texencoding=utf8, % for platex and uplatex
-    \CurrentOption}{biblatex}}
+\RequirePackage{etoolbox}
+
+\newtoggle{blxja@chicago}
+
+\newcommand*{\DeclareOptionsToChicago}[1]{%
+  \edef\@tempa{#1}%
+  \@for\@tempb:=\@tempa\do{%
+    \DeclareOption{\@tempb}{\PassOptionsToPackage{\CurrentOption}{biblatex-chicago}}}}
+
+\DeclareOption{chicago}{\global\toggletrue{blxja@chicago}}
+\DeclareOptionsToChicago{authordate,notes,authordate-trad,authordate15,notes15,footmarkoff}
+\DeclareOption*{\PassOptionsToPackage{\CurrentOption}{biblatex}}
 \ProcessOptions*
 
+\PassOptionsToPackage{%
+  language=japanese,
+  sortlocale=japanese,
+  bibencoding=utf8,texencoding=utf8, % for platex and uplatex
+}{biblatex}
+
+\iftoggle{blxja@chicago}{%
+  \RequirePackage{biblatex-chicago}[2014/08/15]}{}
 \RequirePackage{biblatex}[2015/10/21]
 
 \RequirePackage{xpatch}

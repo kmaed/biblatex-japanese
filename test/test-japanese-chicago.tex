@@ -1,6 +1,9 @@
 \documentclass[lualatex,ja=standard,magstyle=real,12pt]{bxjsarticle}
-\usepackage[backend=biber,sortcites=true]{biblatex-japanese}
+\usepackage[backend=biber,sortcites=true,chicago]{biblatex-japanese}
 \addbibresource{test-japanese.bib}
+\makeatletter
+\renewcommand{\@makefnmark}{\hbox{}\hbox{\@textsuperscript{\normalfont\@thefnmark}}\hbox{}}
+\makeatother
 \begin{document}
 文献\autocite{hoge2000,foobar1990}はこの業界で最も広く読まれている基礎文献であり，
 大学院に入学するまでに必読である．
