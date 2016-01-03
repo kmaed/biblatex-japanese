@@ -6,12 +6,10 @@
 \InheritBibliographyStrings{english}
 
 \DeclareBibliographyExtras{%
-  \blxja@xpatchbibmacro{name:first-last}{\bibnamedelimd}{%
-    \iffieldequalstr{langid}{japanese}{}{\bibnamedelimd}}%
-  \blxja@xpatchbibmacro{name:first-last}{\ifuseprefix{\bibnamedelimc}{\bibnamedelimd}}{%
-    \ifuseprefix{\bibnamedelimc}{\iffieldequalstr{langid}{japanese}{}{\bibnamedelimd}}}%
-  \blxja@xpatchbibmacro{name:first-last}{\ifprefchar{}}{\ifpunctmark{'}} % why changed from the original?
-
+  \blxja@xpatchbibmacro{name:first-last}{\ifprefchar {} {} {\ifuseprefix{\bibnamedelimc}{\bibnamedelimd}}}{%
+    \ifprefchar{}{}{\ifuseprefix{\bibnamedelimc}{\bibnamedelimd}}}% omission of % !!!
+  \let\blxja@bibnamedelimd@orig\bibnamedelimd
+  \renewcommand*{\bibnamedelimd}{\iffieldequalstr{langid}{japanese}{}{\blxja@bibnamedelimd@orig}}%
   \let\blxja@multinamedelim@orig\multinamedelim
   \renewcommand*{\multinamedelim}{\iffieldequalstr{langid}{japanese}{，}{\blxja@multinamedelim@orig}}%
   \let\blxja@finalnamedelim@orig\finalnamedelim
