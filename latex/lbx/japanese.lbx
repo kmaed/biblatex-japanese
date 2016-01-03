@@ -6,17 +6,17 @@
 \InheritBibliographyStrings{english}
 
 \DeclareBibliographyExtras{%
-  \ifundef{\blxja@macrodefined}
+  \ifundef{\blxja@macrosdefined}
           {\input{biblatex-japanese.def}}
-          {}
+          {}%
 
-  \blxja@xpatchbibmacro{name:first-last}{\ifprefchar{}}{\ifprefchar}% fix a bug of biblatex.def
-  \let\blxja@bibnamedelimd@orig\bibnamedelimd
-  \renewcommand*{\bibnamedelimd}{\iffieldequalstr{langid}{japanese}{}{\blxja@bibnamedelimd@orig}}%
-  \let\blxja@multinamedelim@orig\multinamedelim
-  \renewcommand*{\multinamedelim}{\iffieldequalstr{langid}{japanese}{，}{\blxja@multinamedelim@orig}}%
-  \let\blxja@finalnamedelim@orig\finalnamedelim
-  \renewcommand*{\finalnamedelim}{\iffieldequalstr{langid}{japanese}{，}{\blxja@finalnamedelim@orig}}%
+  \xpatchbibmacro{name:first-last}{\ifprefchar{}}{\ifprefchar}{}{}% fix a bug of biblatex.def (v3.2)
+
+  \DeclareJapaneseBibmacro{name:last-first}{\usebibmacro{name:first-last}}%
+  \DeclareJapaneseCommand{addlowpenspace}{}%
+  \DeclareJapaneseCommand{bibnamedelimd}{}%
+  \DeclareJapaneseCommand{multinamedelim}{，}%
+  \DeclareJapaneseCommand{finalnamedelim}{，}%
 }
 
 \DeclareBibliographyStrings{%

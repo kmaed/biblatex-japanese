@@ -2,11 +2,34 @@
 \ProvidesFile{biblatex-japanese.def}
 
 \catcode`\@=11
-\def\blxja@macrodefined{\blxja@macrodefined}
+\def\blxja@macrosdefined{\blxja@macrodefined}
 
 \RequirePackage{xpatch}
+
 \def\blxja@xpatchbibmacro#1#2#3{%
   \xpatchbibmacro{#1}{#2}{#3}{}{%
-    \PackageWarning{biblatex-japanese}{Patching to the bibmacro `#1' failed.}}}
+    \PackageWarning{biblatex-japanese}{Patching to the bibmacro `#1' failed}}}
+
+\DeclareDocumentCommand{\DeclareJapaneseCommand}{ m m }{%
+  \ifcsundef{\detokenize{#1}}{%
+    \PackageError{biblatex-japanese}{\DeclareJapaneseCommand to the command `#1' failed}%
+  }{%
+    \csdef{blxja@ja@\detokenize{#1}}{#2}%
+    \csletcs{blxja@orig@\detokenize{#1}}{\detokenize{#1}}%
+    \csdef{\detokenize{#1}}{%
+      \iffieldequalstr{langid}{japanese}%
+                      {\csuse{blxja@ja@\detokenize{#1}}}
+                      {\csuse{blxja@orig@\detokenize{#1}}}}}}
+
+\DeclareDocumentCommand{\DeclareJapaneseBibmacro}{ m m }{%
+  \ifcsundef{abx@macro@\detokenize{#1}}{%
+    \PackageError{biblatex-japanese}{\DeclareJapaneseBibmacro to the bibmacro `#1' failed}%
+  }{%
+    \newbibmacro*{blxja@ja@#1}{#2}%
+    \csletcs{abx@macro@blxja@orig@\detokenize{#1}}{abx@macro@\detokenize{#1}}%
+    \renewbibmacro*{#1}{%
+      \iffieldequalstr{langid}{japanese}
+                      {\usebibmacro{blxja@ja@#1}}
+                      {\usebibmacro{blxja@orig@#1}}}}}
 
 \endinput

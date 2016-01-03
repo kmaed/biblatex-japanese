@@ -3,17 +3,27 @@
 \makeatletter
 \patchcmd{\@maketitle}{\@author}{\setcounter{footnote}{1}\@author}{}{}
 \usepackage{btxdockit}
+%% from ltxdockit.cfg
+\renewcommand*{\verbatimfont}{\ttfamily}
+\renewcommand*{\displayverbfont}{\ttfamily}
+\renewcommand*{\marglistfont}{\spotcolor\sffamily\small}
+\renewcommand*{\margnotefont}{\sffamily\small}
+\renewcommand*{\optionlistfont}{\spotcolor\sffamily\displayverbfont}
+\renewcommand*{\ltxsyntaxfont}{\ttfamily}
+\renewcommand*{\ltxsyntaxlabelfont}{\spotcolor\displayverbfont}
+\renewcommand*{\changelogfont}{\normalfont}
+\renewcommand*{\changeloglabelfont}{\spotcolor\sffamily\bfseries}
+
 \setmainjfont[BoldFont=M+ 1c-Bold]{IPAexMincho}
 \setsansjfont{M+ 1c-Bold}
 \setmainfont[BoldFont=M+ 1c-Bold]{TeXGyreTermes}
 \setsansfont{M+ 1c-Bold}
 \setmonofont{Inconsolata-zi4}
 \renewcommand{\headfont}{\sffamily\spotcolor}
-\renewcommand{\marglistfont}{\bfseries\spotcolor}
 \renewcommand{\@makefnmark}{\hbox{}\hbox{\@textsuperscript{\normalfont\@thefnmark}}\hbox{}}
 \makeatother
 
-\title{\bfseries\spotcolor\texttt{biblatex-japanese}パッケージ（仮）}
+\title{\bfseries\spotcolor\sty{biblatex-japanese}パッケージ（仮）}
 \author{前田一貴\footnote{Email: \texttt{kmaeda@kmaeda.net}}}
 \hypersetup{%
   pdftitle={biblatex-japaneseパッケージ（仮）},
@@ -36,28 +46,28 @@ Bib\TeX{}を使うと，文献データベースを作成しておき，本文�
 \verb+\cite+コマンドを書くだけで自動的に，指定したスタイルでソートされた文献リストが
 指定箇所に，ソート後の文献番号が本文中の引用箇所に出力される．Bib\TeX{}は特に
 参考文献が膨大な数に及ぶ書籍や論文の執筆には欠かせない機構であるが，文献リストの
-スタイルを指定する\texttt{.bst}ファイルの作成には逆ポーランド記法に基づく文法を持つ
-独自言語を用いなければならず，指定された様式に沿う\texttt{.bst}ファイルが用意されて
+スタイルを指定する\file{.bst}ファイルの作成には逆ポーランド記法に基づく文法を持つ
+独自言語を用いなければならず，指定された様式に沿う\file{.bst}ファイルが用意されて
 いない場合には門外漢には利用が困難であるという問題があった．
 
 この困難を緩和するために，近年になって
-\texttt{biblatex}\footnote{\url{https://github.com/plk/biblatex}}というパッケージが
+\sty{biblatex}\footnote{\url{https://github.com/plk/biblatex}}というパッケージが
 開発されている．
-\texttt{biblatex}は文献のソートに\texttt{biber}と呼ばれるPerlスクリプトを用いる
+\sty{biblatex}は文献のソートに\texttt{biber}と呼ばれるPerlスクリプトを用いる
 以外は全て\LaTeX{}のマクロで記述されており，カスタマイズが（Bib\TeX{}に比べると）
-容易になっている．また\texttt{biblatex}では，従来は別のパッケージで提供されていた，
+容易になっている．また\sty{biblatex}では，従来は別のパッケージで提供されていた，
 脚注への文献情報の出力や章毎の文献リストの出力といった，人文系で要求されることの
 多い機能が充実しており，欧米の人文系学界ではBib\TeX{}に代わるものとして普及が
 進んでいるとされている\footnote{本当かどうかはちゃんと調べていないので知らない．}．
-しかし，\texttt{biblatex}では和文における利用は現状全く考慮されていないため，
+しかし，\sty{biblatex}では和文における利用は現状全く考慮されていないため，
 日本国内では需要があるにも関わらずあまり活用されていないようである．需要に対して
 供給がない理由は，日本の\LaTeX{}利用者の多くが理科系の人間であり，理科系においては
 論文といえば多くが英文によるものであること，理科系の和文論文を書く場合にもBib\TeX{}
 の機能で事足りてしまうといったことがあると考えられる．
 
-そこで，こうした問題に対処するために，\texttt{biblatex-japanese}というパッケージを
+そこで，こうした問題に対処するために，\sty{biblatex-japanese}というパッケージを
 作るプロジェクトを立ち上げることにした．「パッケージを作る」とは書いたが，立ち上げ
-時点では着地点がどこになるかはまだ定かではない．\texttt{biblatex}を使わなくとも
+時点では着地点がどこになるかはまだ定かではない．\sty{biblatex}を使わなくとも
 Bib\TeX{}で問題を解決することも可能であるという話もある
 \footnote{\url{https://twitter.com/munepixyz/status/663199507392237568}}ので，
 そうしたノウハウを集めて形にするといったことも目標として考えられる．いずれにせよ，
@@ -67,34 +77,53 @@ Bib\TeX{}で問題を解決することも可能であるという話もある
 おぼろげながら考えているロードマップ（と呼べるほどのものではないが）は以下のようである．
 \begin{enumerate}
 \item GitHubのIssue機能などを用いて要望を集める．
-\item コードを書いて要望を実現する．ベースとしては\texttt{biblatex}や
-  \texttt{biblatex-chicago}を用い，和文での文献引用における様々なニーズに柔軟に
+\item コードを書いて要望を実現する．ベースとしては\sty{biblatex}や
+  \sty{biblatex-chicago}を用い，和文での文献引用における様々なニーズに柔軟に
   対応できるようなフレームワークを用意することを目指す．
 \item 成果物はCTANにアップロードし，\TeX{} Liveをインストールするだけで利用可能にする．
 \end{enumerate}
 
 \section{使い方}
-\texttt{biblatex-japanese}一式を\texttt{TEXMF}ツリーの適切な場所に配置したうえで，
+\sty{biblatex-japanese}一式を\file{TEXMF}ツリーの適切な場所に配置したうえで，
 プリアンブルに次を入れる：
 \begin{lstlisting}[style=latex]{}
 \usepackage[backend=biber]{biblatex-japanese}
 \end{lstlisting}
 これで日本語用の設定ファイルが読み込まれる．
-\texttt{biblatex}に渡したいオプションは\texttt{biblatex-japanese}に渡せばよい．
+\sty{biblatex}に渡したいオプションは\sty{biblatex-japanese}に渡せばよい．
 例えば，引用時の番号をソートしたければ
 \begin{lstlisting}[style=latex]{}
 \usepackage[backend=biber,sortcites=true]{biblatex-japanese}
 \end{lstlisting}
 のようにする．
 
-\texttt{biblatex-chicago}を読み込みたいときは
+\sty{biblatex-chicago}を読み込みたいときは
 \begin{lstlisting}[style=latex]{}
 \usepackage[backend=biber,chicago]{biblatex-japanese}
 \end{lstlisting}
-と\texttt{chicago}オプションをつける．
-このときは，\texttt{biblatex-chicago}に渡すオプションも通るようになる．
+と\opt{chicago}オプションをつける．
+このときは，\sty{biblatex-chicago}に渡すオプションも通るようになる．
 
 \noindent\textbf{（注意）}まだまだ開発は始めたばかりのため，
 とても実用に耐えるものではない．気長に待っていただければ幸いである．
+
+\section{開発者向けマクロ解説}
+\sty{biblatex-japanese}では，日本語対応ファイルの開発に用いるマクロを
+\file{biblatex-japanese.def}というファイルの中に記述している．
+
+\begin{ltxsyntax}
+  \cmditem{DeclareJapaneseCommand}{csname}{code for Japanese}
+
+  \prm{csname}で与えたコマンドが文献の出力コマンド中に現れたとき，
+  もしその文献の\bibfield{langid}が\opt{japanese}ならば\prm{code for japanese}に
+  置き換わり，そうでなければ元々のコマンドになる．
+  「\bibfield{langid}が……」という条件はあまり筋がよくないように思うので，
+  そのうち変更される可能性がある．
+
+  \cmditem{DeclareJapaneseBibmacro}{bibmacro name}{code for Japanese}
+
+  \cmd{DeclareJapaneseCommand}のbibmacro版．
+\end{ltxsyntax}
+
 
 \end{document}
