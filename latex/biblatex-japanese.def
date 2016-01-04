@@ -10,16 +10,15 @@
   \xpatchbibmacro{#1}{#2}{#3}{}{%
     \PackageWarning{biblatex-japanese}{Patching to the bibmacro `#1' failed}}}
 
-\DeclareDocumentCommand{\DeclareJapaneseCommand}{ m m }{%
-  \ifundef{#1}{%
-    \PackageError{biblatex-japanese}{\DeclareJapaneseCommand for the command `#1' failed}%
-  }{%
-    \csdef{blxja@ja@\detokenize{#1}}{#2}%
-    \cslet{blxja@orig@\detokenize{#1}}{#1}%
-    \def#1{%
-      \iffieldequalstr{langid}{japanese}
-                      {\csuse{blxja@ja@\detokenize{#1}}}
-                      {\csuse{blxja@orig@\detokenize{#1}}}}}}
+\long\def\blxja@replace@#1#2{\unexpanded{\unexpanded{\unexpanded{\iffieldequalstr}}}{langid}{japanese}{#2}{#1}}
+\long\def\blxja@hooktoreplace#1#2#3#4{#1#2{#3}{#4}{}{%
+    \PackageError{biblatex-japanese}
+                 {\DeclareJapaneseCommand for the command `\noexpand#3' failed}{}}}
+\DeclareDocumentCommand{\DeclareJapaneseCommand}{}{%
+  \etb@dbg@trce\apptocmd
+  \begingroup
+  \@makeother\#%
+  \blxja@hooktoreplace\etb@hooktocmd\blxja@replace@}
 
 \DeclareDocumentCommand{\DeclareJapaneseBibmacro}{ m m }{%
   \ifcsundef{abx@macro@\detokenize{#1}}{%
@@ -32,18 +31,18 @@
                       {\csuse{abx@macro@blxja@ja@\detokenize{#1}}}
                       {\csuse{abx@macro@blxja@orig@\detokenize{#1}}}}}}
 
-\def\blxja@def@jamacro#1#2#3{%
-  \DeclareDocumentCommand{#1}{ O{*} m m }{%
-    \ifcsundef{#2@\detokenize{##1}@\detokenize{##2}}{%
-      \PackageError{biblatex-japanese}{#1 for the name format `##2' failed}%
+\def\blxja@def@declarejamacro#1#2#3{%
+  \DeclareDocumentCommand{#2}{ O{*} m m }{%
+    \ifcsundef{#1@\detokenize{##1}@\detokenize{##2}}{%
+      \PackageError{biblatex-japanese}{#2 for the name format `##2' failed}%
     }{%
-      \csdef{#2@\detokenize{##1}@blxja@ja@\detokenize{##2}}#3{##3}%
-      \csletcs{#2@\detokenize{##1}@blxja@orig@\detokenize{##2}}{#2@\detokenize{##1}@\detokenize{##2}}%
-      \csdef{#2@\detokenize{##1}@\detokenize{##2}}{%
+      \csdef{#1@\detokenize{##1}@blxja@ja@\detokenize{##2}}#3{##3}%
+      \csletcs{#1@\detokenize{##1}@blxja@orig@\detokenize{##2}}{#1@\detokenize{##1}@\detokenize{##2}}%
+      \csdef{#1@\detokenize{##1}@\detokenize{##2}}{%
         \iffieldequalstr{langid}{japanese}
-                        {\csuse{#2@\detokenize{##1}@blxja@ja@\detokenize{##2}}}
-                        {\csuse{#2@\detokenize{##1}@blxja@orig@\detokenize{##2}}}}}}}
+                        {\csuse{#1@\detokenize{##1}@blxja@ja@\detokenize{##2}}}
+                        {\csuse{#1@\detokenize{##1}@blxja@orig@\detokenize{##2}}}}}}}
 
-\blxja@def@jamacro{\DeclareJapaneseNameFormat}{abx@nfd}{##1##2##3##4##5##6##7##8}
+\blxja@def@declarejamacro{abx@nfd}{\DeclareJapaneseNameFormat}{##1##2##3##4##5##6##7##8}
 
 \endinput
