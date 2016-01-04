@@ -12,7 +12,7 @@
 
   \xpatchbibmacro{name:first-last}{\ifprefchar{}}{\ifprefchar}{}{}% fix a bug of biblatex.def
 
-  \DeclareJapaneseBibmacro{name:last-first}{\usebibmacro{name:first-last}}
+  \DeclareJapaneseBibmacro{name:last-first}{\usebibmacro{name:first-last}}%
   \DeclareJapaneseCommand{\addlowpenspace}{}%
   \DeclareJapaneseCommand{\bibnamedelimd}{}%
   \DeclareJapaneseCommand{\multinamedelim}{，}%

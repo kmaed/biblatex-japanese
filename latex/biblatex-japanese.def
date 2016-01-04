@@ -25,11 +25,25 @@
   \ifcsundef{abx@macro@\detokenize{#1}}{%
     \PackageError{biblatex-japanese}{\DeclareJapaneseBibmacro for the bibmacro `#1' failed}%
   }{%
-    \newbibmacro*{blxja@ja@#1}{#2}%
+    \csdef{abx@macro@blxja@ja@\detokenize{#1}}{#2}%
     \csletcs{abx@macro@blxja@orig@\detokenize{#1}}{abx@macro@\detokenize{#1}}%
-    \renewbibmacro*{#1}{%
+    \csdef{abx@macro@\detokenize{#1}}{%
       \iffieldequalstr{langid}{japanese}
-                      {\usebibmacro{blxja@ja@#1}}
-                      {\usebibmacro{blxja@orig@#1}}}}}
+                      {\csuse{abx@macro@blxja@ja@\detokenize{#1}}}
+                      {\csuse{abx@macro@blxja@orig@\detokenize{#1}}}}}}
+
+\def\blxja@def@jamacro#1#2#3{%
+  \DeclareDocumentCommand{#1}{ O{*} m m }{%
+    \ifcsundef{#2@\detokenize{##1}@\detokenize{##2}}{%
+      \PackageError{biblatex-japanese}{#1 for the name format `##2' failed}%
+    }{%
+      \csdef{#2@\detokenize{##1}@blxja@ja@\detokenize{##2}}#3{##3}%
+      \csletcs{#2@\detokenize{##1}@blxja@orig@\detokenize{##2}}{#2@\detokenize{##1}@\detokenize{##2}}%
+      \csdef{#2@\detokenize{##1}@\detokenize{##2}}{%
+        \iffieldequalstr{langid}{japanese}
+                        {\csuse{#2@\detokenize{##1}@blxja@ja@\detokenize{##2}}}
+                        {\csuse{#2@\detokenize{##1}@blxja@orig@\detokenize{##2}}}}}}}
+
+\blxja@def@jamacro{\DeclareJapaneseNameFormat}{abx@nfd}{##1##2##3##4##5##6##7##8}
 
 \endinput

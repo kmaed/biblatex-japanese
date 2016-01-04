@@ -104,25 +104,32 @@ Bib\TeX{}で問題を解決することも可能であるという話もある
 と\opt{chicago}オプションをつける．
 このときは，\sty{biblatex-chicago}に渡すオプションも通るようになる．
 
-\noindent\textbf{（注意）}まだまだ開発は始めたばかりのため，
-とても実用に耐えるものではない．気長に待っていただければ幸いである．
+\paragraph{注意}
+まだまだ開発は始めたばかりのため，とても実用に耐えるものではない．
+気長に待っていただければ幸いである．
 
 \section{開発者向けマクロ解説}
 \sty{biblatex-japanese}では，日本語対応ファイルの開発に用いるマクロを
 \file{biblatex-japanese.def}というファイルの中に記述している．
+なお，以下に説明するマクロの名前・文法・仕様はまだ流動的であり，
+今後のバージョンで変更がある可能性が高いので注意を要する．
 
 \begin{ltxsyntax}
   \cmditem{DeclareJapaneseCommand}{command}{code for Japanese}
 
-  \prm{command}が文献出力コマンド中に現れたとき，もしその文献の
+  \prm{command}が文献出力処理中に現れたとき，もしその文献の
   \bibfield{langid}が\opt{japanese}ならば\prm{code for japanese}に
   置き換わり，そうでなければ元々のコマンドになる．
   「\bibfield{langid}が\opt{japanese}」という条件はあまり筋がよくないように思うので，
   そのうち変更される可能性がある．
 
-  \cmditem{DeclareJapaneseBibmacro}{bibmacro name}{code for Japanese}
+  \clearpage
 
-  \cmd{DeclareJapaneseCommand}のbibmacro版．
+  \cmditem{DeclareJapaneseBibmacro}{name}{code for Japanese}
+
+  \cmditem{DeclareJapaneseNameFormat}[entrytype, ...]{format}{code for Japanese}
+
+  それぞれ\cmd{DeclareJapaneseCommand}のbibmacro, name list formatに対応するもの．
 \end{ltxsyntax}
 
 
