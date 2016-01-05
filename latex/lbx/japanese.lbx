@@ -5,7 +5,9 @@
 \InheritBibliographyExtras{english}
 \InheritBibliographyStrings{english}
 
-\catcode`\#=12                  % for patching for macros taking parameters
+%% For patching to macros taking parameters, change the catcode of #.
+%% Cf. http://tex.stackexchange.com/questions/113147/patching-arguments-inside-a-macro
+\catcode`\#=12
 \DeclareBibliographyExtras{%
   \ifundef{\blxja@macrosdefined}
           {\input{biblatex-japanese.def}}
@@ -19,7 +21,7 @@
   \DeclareJapaneseCommand{\multinamedelim}{，}%
   \DeclareJapaneseCommand{\finalnamedelim}{，}%
 }
-\catcode`\#=6
+\catcode`\#=6                   % restore the catcode of #
 
 \DeclareBibliographyStrings{%
   bibliography  = {{参考文献}{参考文献}},
