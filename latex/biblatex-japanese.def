@@ -6,19 +6,19 @@
 
 \RequirePackage{xpatch}
 
-\long\def\blxja@xpatchbibmacro@#1#2#3#4{#1{#2}{#3}{#4}{}{%
+\long\def\blxja@xpatchbibmacro@args@#1#2#3#4{#1{#2}{#3}{#4}{}{%
     \PackageWarning{biblatex-japanese}
                    {Patching to the bibmacro `\detokenize{#2}' failed}}}
 \newrobustcmd*\blxja@xpatchbibmacro{%
   \etb@dbg@trce\blxja@xpatchbibmacro
   \begingroup
   \@makeother\#%
-  \blxja@xpatchbibmacro@\etb@patchcmd}
+  \blxja@xpatchbibmacro@args@\etb@patchcmd}
 
 \long\def\blxja@addjafork#1#2{%
   \unexpanded{\unexpanded{\unexpanded{\iffieldequalstr}}}{langid}{japanese}{#2}{#1}}
 
-\long\def\blxja@djc@#1#2#3#4{#1#2{#3}{#4}{}{%
+\long\def\blxja@djc@args@#1#2#3#4{#1#2{#3}{#4}{}{%
     \PackageError{biblatex-japanese}
                  {\DeclareJapaneseCommand for the command \string#3 failed}
                  {Try \detokenize{\tracingpatching} to investigate the cause of the problem.}}}
@@ -26,9 +26,9 @@
   \etb@dbg@trce\DeclareJapaneseCommand
   \begingroup
   \@makeother\#%
-  \blxja@djc@\etb@hooktocmd\blxja@addjafork}
+  \blxja@djc@args@\etb@hooktocmd\blxja@addjafork}
 
-\long\def\blxja@djb@#1#2#3#4{\expandafter
+\long\def\blxja@djb@args@#1#2#3#4{\expandafter
   #1\expandafter
   #2\expandafter
   {\csname abx@macro@\detokenize{#3}\endcsname}
@@ -41,11 +41,11 @@
   \etb@dbg@trce\DeclareJapaneseBibmacro
   \begingroup
   \@makeother\#%
-  \blxja@djb@\etb@hooktocmd\blxja@addjafork}
+  \blxja@djb@args@\etb@hooktocmd\blxja@addjafork}
 
 \def\blxja@def@declarejamacro#1#2#3{%
   \expandafter\DeclareDocumentCommand\expandafter
-      {\csname blxja@\detokenize{#1}@\endcsname}
+      {\csname blxja@\detokenize{#1}@args@\endcsname}
       { O{*} m m m +m }{\expandafter
         ##2\expandafter
         ##3\expandafter
@@ -53,13 +53,13 @@
         {##5}
         {}
         {\PackageError{biblatex-japanese}
-          {^^J#3 for the #2 `\detokenize{##4}' failed}
+          {#3 for the #2 `\detokenize{##4}' failed}
           {Try \detokenize{\tracingpatches} to investigate the cause of the problem.^^J^^J}}}
   \DeclareDocumentCommand{#3}{}{%
     \etb@dbg@trce#3
     \begingroup
     \@makeother\#%
-    \csuse{blxja@\detokenize{#1}@}\etb@hooktocmd\blxja@addjafork}}
+    \csuse{blxja@\detokenize{#1}@args@}\etb@hooktocmd\blxja@addjafork}}
 
 \blxja@def@declarejamacro{abx@nfd}{name format}{\DeclareJapaneseNameFormat}
 
