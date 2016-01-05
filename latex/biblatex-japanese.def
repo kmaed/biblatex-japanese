@@ -79,7 +79,7 @@
   \ifuseprefix
     {\usebibmacro{name:delim}{#2}%
      \usebibmacro{name:hook}{#2}%
-     \ifblank{#1}
+     \ifblank{#2}
        {}
        {\ifcapital
           {\mkbibnameprefix{\MakeCapital{#2}}\isdot}
