@@ -6,35 +6,39 @@
 
 \RequirePackage{xpatch}
 
-\def\blxja@xpatchbibmacro#1#2#3{%
-  \xpatchbibmacro{#1}{#2}{#3}{}{%
-    \PackageWarning{biblatex-japanese}{Patching to the bibmacro `#1' failed}}}
-
-\long\def\blxja@replace@#1#2{\unexpanded{\unexpanded{\unexpanded{\iffieldequalstr}}}{langid}{japanese}{#2}{#1}}
-\long\def\blxja@hooktoreplace#1#2#3#4{#1#2{#3}{#4}{}{%
-    \PackageError{biblatex-japanese}
-                 {\DeclareJapaneseCommand for the command `\noexpand#3' failed}{}}}
-\DeclareDocumentCommand{\DeclareJapaneseCommand}{}{%
-  \etb@dbg@trce\apptocmd
+\long\def\blxja@xpatchbibmacro@#1#2#3#4{#1{#2}{#3}{#4}{}{%
+    \PackageWarning{biblatex-japanese}{Patching to the bibmacro `\string#2' failed}{}}}
+\newrobustcmd*\blxja@xpatchbibmacro{%
+  \etb@dbg@trce\blxja@xpatchbibmacro
   \begingroup
   \@makeother\#%
-  \blxja@hooktoreplace\etb@hooktocmd\blxja@replace@}
+  \blxja@xpatchbibmacro@\etb@patchcmd}
 
-\DeclareDocumentCommand{\DeclareJapaneseBibmacro}{ m m }{%
-  \ifcsundef{abx@macro@\detokenize{#1}}{%
-    \PackageError{biblatex-japanese}{\DeclareJapaneseBibmacro for the bibmacro `#1' failed}%
-  }{%
-    \csdef{abx@macro@blxja@ja@\detokenize{#1}}{#2}%
-    \csletcs{abx@macro@blxja@orig@\detokenize{#1}}{abx@macro@\detokenize{#1}}%
-    \csdef{abx@macro@\detokenize{#1}}{%
-      \iffieldequalstr{langid}{japanese}
-                      {\csuse{abx@macro@blxja@ja@\detokenize{#1}}}
-                      {\csuse{abx@macro@blxja@orig@\detokenize{#1}}}}}}
+\long\def\blxja@addjafork#1#2{%
+  \unexpanded{\unexpanded{\unexpanded{\iffieldequalstr}}}{langid}{japanese}{#2}{#1}}
+
+\long\def\blxja@djc@#1#2#3#4{#1#2{#3}{#4}{}{%
+    \PackageError{biblatex-japanese}
+                 {\DeclareJapaneseCommand for the command `\string#3' failed}{}}}
+\DeclareDocumentCommand{\DeclareJapaneseCommand}{}{%
+  \etb@dbg@trce\DeclareJapaneseCommand
+  \begingroup
+  \@makeother\#%
+  \blxja@djc@\etb@hooktocmd\blxja@addjafork}
+
+\long\def\blxja@djb@#1#2#3#4{%
+  \expandafter#1\expandafter#2\expandafter{\csname abx@macro@#3\endcsname}{#4}{}{%
+    \PackageError{biblatex-japanese}{\DeclareJapaneseBibmacro for the bibmacro `\detokenize{#3}' failed}{}}}
+\DeclareDocumentCommand{\DeclareJapaneseBibmacro}{}{%
+  \etb@dbg@trce\DeclareJapaneseBibmacro
+  \begingroup
+  \@makeother\#%
+  \blxja@djb@\etb@hooktocmd\blxja@addjafork}
 
 \def\blxja@def@declarejamacro#1#2#3{%
   \DeclareDocumentCommand{#2}{ O{*} m m }{%
     \ifcsundef{#1@\detokenize{##1}@\detokenize{##2}}{%
-      \PackageError{biblatex-japanese}{#2 for the name format `##2' failed}%
+      \PackageError{biblatex-japanese}{#2 for the name format `##2' failed}{}%
     }{%
       \csdef{#1@\detokenize{##1}@blxja@ja@\detokenize{##2}}#3{##3}%
       \csletcs{#1@\detokenize{##1}@blxja@orig@\detokenize{##2}}{#1@\detokenize{##1}@\detokenize{##2}}%

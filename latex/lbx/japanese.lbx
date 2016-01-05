@@ -5,6 +5,7 @@
 \InheritBibliographyExtras{english}
 \InheritBibliographyStrings{english}
 
+\catcode`\#=12                  % for patching for macros taking parameters
 \DeclareBibliographyExtras{%
   \ifundef{\blxja@macrosdefined}
           {\input{biblatex-japanese.def}}
@@ -12,12 +13,13 @@
 
   \xpatchbibmacro{name:first-last}{\ifprefchar{}}{\ifprefchar}{}{}% fix a bug of biblatex.def
 
-  \DeclareJapaneseBibmacro{name:last-first}{\usebibmacro{name:first-last}}%
+  \DeclareJapaneseBibmacro{name:last-first}{\usebibmacro{name:first-last}{#1}{#2}{#3}{#4}}%
   \DeclareJapaneseCommand{\addlowpenspace}{}%
   \DeclareJapaneseCommand{\bibnamedelimd}{}%
   \DeclareJapaneseCommand{\multinamedelim}{，}%
   \DeclareJapaneseCommand{\finalnamedelim}{，}%
 }
+\catcode`\#=6
 
 \DeclareBibliographyStrings{%
   bibliography  = {{参考文献}{参考文献}},
