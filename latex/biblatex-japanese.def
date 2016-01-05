@@ -65,7 +65,7 @@
 
 \blxja@def@declarejamacro{abx@nfd}{name format}{\DeclareJapaneseNameFormat}
 
-%% --- Bibmacros and name formats for Japanese ---
+%% --- Bibmacros for Japanese ---
 \newbibmacro*{name:japanese-full}[4]{% test: now only removed delimiters
   \usebibmacro{name:delim}{#2#3#1}%
   \usebibmacro{name:hook}{#2#3#1}%
