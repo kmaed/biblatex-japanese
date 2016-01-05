@@ -20,6 +20,12 @@
   \DeclareJapaneseCommand{\bibnamedelimd}{}%
   \DeclareJapaneseCommand{\multinamedelim}{，}%
   \DeclareJapaneseCommand{\finalnamedelim}{，}%
+
+  \DeclareJapaneseNameFormat{first-last}{%
+    \iffirstinits
+        {\usebibmacro{name:first-last}{#1}{#4}{#5}{#7}}
+        {\usebibmacro{name:japanese-full}{#1}{#3}{#5}{#7}}%
+    \usebibmacro{name:andothers}}
 }
 \catcode`\#=6                   % restore the catcode of #
 

@@ -6,6 +6,7 @@
 
 \RequirePackage{xpatch}
 
+%% --- Internal macros ---
 \long\def\blxja@xpatchbibmacro@args@#1#2#3#4{#1{#2}{#3}{#4}{}{%
     \PackageWarning{biblatex-japanese}
                    {Patching to the bibmacro `\detokenize{#2}' failed}}}
@@ -15,6 +16,7 @@
   \@makeother\#%
   \blxja@xpatchbibmacro@args@\etb@patchcmd}
 
+%% --- User commands ---
 \long\def\blxja@addjafork#1#2{%
   \unexpanded{\unexpanded{\unexpanded{\iffieldequalstr}}}{langid}{japanese}{#2}{#1}}
 
@@ -62,5 +64,16 @@
     \csuse{blxja@\detokenize{#1}@args@}\etb@hooktocmd\blxja@addjafork}}
 
 \blxja@def@declarejamacro{abx@nfd}{name format}{\DeclareJapaneseNameFormat}
+
+%% --- Bibmacros and name formats for Japanese ---
+\newbibmacro*{name:japanese-full}[4]{% test: now only removed delimiters
+  \usebibmacro{name:delim}{#2#3#1}%
+  \usebibmacro{name:hook}{#2#3#1}%
+  \ifblank{#2}{}{\mkbibnamefirst{#2}\isdot}%
+  \ifblank{#3}{}{%
+    \mkbibnameprefix{#3}\isdot}%
+  \mkbibnamelast{#1}\isdot
+  \ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}}
+\newbibmacro*{name:japanese-last}[4]{#1}   % test
 
 \endinput
