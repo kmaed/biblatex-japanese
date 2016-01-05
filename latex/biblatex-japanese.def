@@ -9,7 +9,7 @@
 %% --- Internal macros ---
 \long\def\blxja@xpatchbibmacro@args@#1#2#3#4{#1{#2}{#3}{#4}{}{%
     \PackageWarning{biblatex-japanese}
-                   {Patching to the bibmacro `\detokenize{#2}' failed}}}
+                   {Patching to the bibliography macro '\detokenize{#2}' failed}}}
 \newrobustcmd*\blxja@xpatchbibmacro{%
   \etb@dbg@trce\blxja@xpatchbibmacro
   \begingroup
@@ -23,7 +23,7 @@
 \long\def\blxja@djc@args@#1#2#3#4{#1#2{#3}{#4}{}{%
     \PackageError{biblatex-japanese}
                  {\DeclareJapaneseCommand for the command \string#3 failed}
-                 {Try \detokenize{\tracingpatching} to investigate the cause of the problem.}}}
+                 {Try \detokenize{\tracingpatches} to investigate the cause of the problem.}}}
 \DeclareDocumentCommand{\DeclareJapaneseCommand}{}{%
   \etb@dbg@trce\DeclareJapaneseCommand
   \begingroup
@@ -37,7 +37,7 @@
   {#4}
   {}
   {\PackageError{biblatex-japanese}
-    {\DeclareJapaneseBibmacro for the bibmacro `\detokenize{#3}' failed}
+    {\DeclareJapaneseBibmacro for the bibliography macro '\detokenize{#3}' failed}
     {Try \detokenize{\tracingpatches} to investigate the cause of the problem.^^J^^J}}}
 \DeclareDocumentCommand{\DeclareJapaneseBibmacro}{}{%
   \etb@dbg@trce\DeclareJapaneseBibmacro
@@ -55,7 +55,7 @@
         {##5}
         {}
         {\PackageError{biblatex-japanese}
-          {#3 for the #2 `\detokenize{##4}' failed}
+          {#3 for the #2 '\detokenize{##4}' failed}
           {Try \detokenize{\tracingpatches} to investigate the cause of the problem.^^J^^J}}}
   \DeclareDocumentCommand{#3}{}{%
     \etb@dbg@trce#3
@@ -66,7 +66,7 @@
 \blxja@def@declarejamacro{abx@nfd}{name format}{\DeclareJapaneseNameFormat}
 
 %% --- Bibmacros for Japanese ---
-\newbibmacro*{name:japanese-full}[4]{% test: now only removed delimiters
+\newbibmacro*{name:japanese-full}[4]{% test: now only remove spaces
   \usebibmacro{name:delim}{#2#3#1}%
   \usebibmacro{name:hook}{#2#3#1}%
   \ifblank{#2}{}{\mkbibnamefirst{#2}\isdot}%
@@ -74,6 +74,19 @@
     \mkbibnameprefix{#3}\isdot}%
   \mkbibnamelast{#1}\isdot
   \ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}}
-\newbibmacro*{name:japanese-last}[4]{#1}   % test
+
+\newbibmacro*{name:japanese-last}[4]{% test
+  \ifuseprefix
+    {\usebibmacro{name:delim}{#2}%
+     \usebibmacro{name:hook}{#2}%
+     \ifblank{#1}
+       {}
+       {\ifcapital
+          {\mkbibnameprefix{\MakeCapital{#2}}\isdot}
+          {\mkbibnameprefix{#2}\isdot}%
+        \ifprefchar{}{\bibnamedelimc}}}
+    {\usebibmacro{name:delim}{#2}%
+     \usebibmacro{name:hook}{#2}}%
+  \mkbibnamelast{#2}\isdot}
 
 \endinput

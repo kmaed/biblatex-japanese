@@ -13,24 +13,61 @@
           {\input{biblatex-japanese.def}}
           {}%
 
-  \xpatchbibmacro{name:first-last}{\ifprefchar{}}{\ifprefchar}{}{}% fix a bug of biblatex.def
-
-  \DeclareJapaneseBibmacro{name:last-first}{\usebibmacro{name:first-last}{#1}{#2}{#3}{#4}}%
-  \DeclareJapaneseCommand{\addlowpenspace}{}%
-  \DeclareJapaneseCommand{\bibnamedelimd}{}%
   \DeclareJapaneseCommand{\multinamedelim}{，}%
   \DeclareJapaneseCommand{\finalnamedelim}{，}%
 
+  \savenameformat{first-last}%
   \DeclareJapaneseNameFormat{first-last}{%
     \iffirstinits
         {\usebibmacro{name:first-last}{#1}{#4}{#5}{#7}}
         {\usebibmacro{name:japanese-full}{#1}{#3}{#5}{#7}}%
-    \usebibmacro{name:andothers}}
+    \usebibmacro{name:andothers}}%
+
+  \savenameformat{last-first}%
+  \DeclareJapaneseNameFormat{last-first}{%
+    \iffirstinits
+        {\usebibmacro{name:last-first}{#1}{#4}{#5}{#7}}
+        {\usebibmacro{name:japanese-full}{#1}{#3}{#5}{#7}}%
+        \usebibmacro{name:andothers}}%
+
+  \savenameformat{last-first/first-last}%
+  \DeclareJapaneseNameFormat{last-first/first-last}{%
+    \ifnumequal{\value{listcount}}{1}
+               {\iffirstinits
+                 {\usebibmacro{name:last-first}{#1}{#4}{#5}{#7}}
+                 {\usebibmacro{name:japanese-full}{#1}{#3}{#5}{#7}}%
+                 \ifblank{#3#5}
+                         {}
+                         {\usebibmacro{name:revsdelim}}}
+               {\iffirstinits
+                 {\usebibmacro{name:first-last}{#1}{#4}{#5}{#7}}
+                 {\usebibmacro{name:japanese-full}{#1}{#3}{#5}{#7}}}%
+     \usebibmacro{name:andothers}}%
+
+  \DeclareJapaneseNameFormat{labelname}{%
+    \ifcase\value{uniquename}%
+        \usebibmacro{name:japanese-last}{#1}{#3}{#5}{#7}%
+    \or
+        \ifuseprefix
+            {\usebibmacro{name:first-last}{#1}{#4}{#5}{#8}}
+            {\usebibmacro{name:japanese-full}{#1}{#4}{#6}{#8}}%
+    \or
+        \usebibmacro{name:japanese-full}{#1}{#3}{#5}{#7}%
+    \fi
+    \usebibmacro{name:andothers}}%
 }
 \catcode`\#=6                   % restore the catcode of #
 
+\UndeclareBibliographyExtras{%
+  \restorenameformat{first-last}%
+  \restorenameformat{last-first}%
+  \restorenameformat{last-first/first-last}%
+  \restorenameformat{labelname}%
+}
+
 \DeclareBibliographyStrings{%
   bibliography  = {{参考文献}{参考文献}},
+  ibidem        = {{同書}{同書}},
   references    = {{参考文献}{参考文献}},
 }
 
