@@ -1,8 +1,9 @@
 \documentclass[lualatex,ja=standard,magstyle=real]{bxjsarticle}
 \usepackage{etoolbox}
+\usepackage{btxdockit}
 \makeatletter
 \patchcmd{\@maketitle}{\@author}{\setcounter{footnote}{1}\@author}{}{}
-\usepackage{btxdockit}
+\patchcmd{\ltxsyntax}{\let}{\parindent=1\zw\let}{}{}
 %% from ltxdockit.cfg
 \renewcommand*{\verbatimfont}{\ttfamily}
 \renewcommand*{\displayverbfont}{\ttfamily}
@@ -41,6 +42,8 @@
 \tableofcontents
 
 \section{はじめに}
+
+\subsection{動機と目標}
 \LaTeX においては文献引用の煩雑な作業の効率化のためにBib\TeX がよく用いられている．
 Bib\TeX を使うと，文献データベースを作成しておき，本文中の引用が必要な箇所に
 \cmd{cite}コマンドを書くだけで自動的に，指定したスタイルでソートされた文献リストが
@@ -86,6 +89,18 @@ Bib\TeX で問題を解決することも可能であるという話もある
 \item 成果物はCTANにアップロードし，\TeX{} Liveをインストールするだけで利用可能にする．
 \end{enumerate}
 
+\subsection{ライセンス}
+二条項BSDライセンスとする．同梱の\file{LICENSE}を参照し，従うこと．
+
+\subsection{バグレポート・要望など}
+パッケージの開発にはGithub\footnote{\url{https://github.com/kmaed/biblatex-japanese}}を利用している．
+バグレポートや要望はここのIssuesに書き込めば，対応可能である（もちろん日本語で構わない）．
+また，パッチを投げるにはPull requestsが利用できる．
+もちろん，メールで報告しても構わない（アドレスは最初のページの脚注に書いてある）．
+
+\subsection{謝辞}
+
+
 \section{使い方}
 \sty{biblatex-japanese}一式を\file{TEXMF}ツリーの適切な場所に配置したうえで，
 プリアンブルに次を入れる：
@@ -111,11 +126,15 @@ Bib\TeX で問題を解決することも可能であるという話もある
 まだまだ開発は始めたばかりのため，とても実用に耐えるものではない．
 気長に待っていただければ幸いである．
 
-\section{開発者向けマクロ解説}
-\sty{biblatex-japanese}では，日本語対応ファイルの開発に用いるマクロを
+\section{開発者向けコマンド解説}
+\sty{biblatex-japanese}では，日本語対応ファイルの開発に用いるコマンド（マクロ）を
 \file{biblatex-japanese.def}というファイルの中に記述している．
-なお，以下に説明するマクロの名前・文法・仕様はまだ流動的であり，
+使用例は\file{japanese.lbx}内で見つけられるだろう．
+
+なお，以下に説明するコマンドの名前・文法・仕様はまだ流動的であり，
 今後のバージョンで変更がある可能性が高いので注意を要する．
+
+\subsection{日本語部分のコードを置換するコマンド}
 
 \begin{ltxsyntax}
   \cmditem{DeclareJapaneseCommand}{command}{code for Japanese}
@@ -124,8 +143,8 @@ Bib\TeX で問題を解決することも可能であるという話もある
   \bibfield{langid}が\opt{japanese}ならば\prm{code for Japanese}に
   置き換わり，そうでなければ元々のコマンドになる．
 
-  ただし，「\bibfield{langid}が\opt{japanese}」という条件はあまり筋がよくないように思うので，
-  そのうち変更される可能性がある．
+  ただし，「\bibfield{langid}が\opt{japanese}」という条件はあまり筋がよくない
+  ように思うので，そのうち変更される可能性がある．
 
   \cmditem{DeclareJapaneseBibmacro}{name}{code for Japanese}
 
@@ -134,5 +153,32 @@ Bib\TeX で問題を解決することも可能であるという話もある
   それぞれ\cmd{DeclareJapaneseCommand}のbibmacro, name list formatに対応するもの．
 \end{ltxsyntax}
 
+\paragraph{使用上の注意点}
+\cmd{DefineBibliographyExtras}などの引数内で使用する場合は注意が必要である．
+以下でこのことについて説明する．
 
+一連の\prm{code for Japanese}に置換するコマンドは\sty{etoolbox}パッケージ
+\footnote{\url{https://github.com/josephwright/etoolbox}}の
+パッチコマンドを用いて実装されている．このパッチコマンドはパラメータ文字
+（\texttt{\#1}など）を取り扱うために，一度\texttt{\#}のカテゴリコードを12 (other)に
+変えてから引数のコードを取り込み，後で\cmd{scantokens}で読み直すという処理を行っている．
+このため，引数のコードを一度別のマクロに保存してから実行するような処理と相性が悪い．
+このことを理解するには次のコードを試してみるとよい：
+\begin{lstlisting}[style=latex]{}
+\def\a#1{\detokenize{#1}}
+\a{#2}
+\end{lstlisting}
+処理すると結果は「\#\#2」となるはずである．このように二重\texttt{\#}に化けてから
+パッチコマンドに渡すと，うまくパッチが当てられないということになる．
+この現象と同じことが\cmd{DeclareBibliographyExtras}や
+\cmd{DefineBibliographyExtras}などの引数にパラメータ文字を含む
+\prm{code for Japanese}を持つ置換コマンドを与えた場合に起こり，パッチ処理が
+失敗するという結果になる．
+
+この問題の回避策としては，前もって\texttt{\#}のカテゴリコードを12 (other)に変えて
+しまうという方法がある．実例は\file{japanese.lbx}にある．もちろん，問題部分を
+読み取らせた後はカテゴリコードを元に戻す必要がある．なお，置換コマンド以外
+（定義関係のコマンド）の引数で\texttt{\#}を含むものがある場合は，
+カテゴリコード12で読ませると当然意図通りにならないので，この場合は処理を
+分割する必要がある．
 \end{document}
