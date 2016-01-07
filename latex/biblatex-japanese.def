@@ -18,19 +18,20 @@
 
 %% --- User commands ---
 
-% \addiftocommand{<command>}[<if rule name>}{<code>}
-% \addiftocommand*{<command>}[<if rule code>}{<code>}
+% \replacecommand{<command>}[<replace rule name>}{<code>}
+% \replacecommand*{<command>}[<replace rule code>}{<code>}
 
-% \newifrule{<if rule name>}{<rule code>}
-% \renewifrule{<if rule name>}{<rule code>}
+\long\def\newreplacerule#1#2{%
+  \long\csdef{blxja@replacerule@#1@}##1##2{#2}%
+  \csdef{blxja@replacerule@#1}{%
+    \unexpanded{\unexpanded{\unexpanded{\csuse{blxja@replacerule@#1@}}}}}}
 
-%% \newifrule{iflangisjapanese}{%
-%%   \iffieldequalstr{langid}{japanese}
-%%                   {#2}
-%%                   {#1}}
+% \renewreplacerule{<if rule name>}{<rule code>}
 
-\long\def\blxja@addjafork#1#2{%
-  \unexpanded{\unexpanded{\unexpanded{\iffieldequalstr}}}{langid}{japanese}{#2}{#1}}
+\newreplacerule{iflangidisjapanese}{%
+  \iffieldequalstr{langid}{japanese}
+                  {#2}
+                  {#1}}
 
 \long\def\blxja@djc@args@#1#2#3#4{#1#2{#3}{#4}{}{%
     \PackageError{biblatex-japanese}
@@ -40,7 +41,7 @@
   \etb@dbg@trce\DeclareJapaneseCommand
   \begingroup
   \@makeother\#%
-  \blxja@djc@args@\etb@hooktocmd\blxja@addjafork}
+  \blxja@djc@args@\etb@hooktocmd\blxja@replacerule@iflangidisjapanese}
 
 \long\def\blxja@djb@args@#1#2#3#4{\expandafter
   #1\expandafter
@@ -55,7 +56,7 @@
   \etb@dbg@trce\DeclareJapaneseBibmacro
   \begingroup
   \@makeother\#%
-  \blxja@djb@args@\etb@hooktocmd\blxja@addjafork}
+  \blxja@djb@args@\etb@hooktocmd\blxja@replacerule@iflangidisjapanese}
 
 \def\blxja@def@declarejamacro#1#2#3{%
   \expandafter\DeclareDocumentCommand\expandafter
@@ -73,7 +74,7 @@
     \etb@dbg@trce#3
     \begingroup
     \@makeother\#%
-    \csuse{blxja@\detokenize{#1}@args@}\etb@hooktocmd\blxja@addjafork}}
+    \csuse{blxja@\detokenize{#1}@args@}\etb@hooktocmd\blxja@replacerule@iflangidisjapanese}}
 
 \blxja@def@declarejamacro{abx@nfd}{name format}{\DeclareJapaneseNameFormat}
 
