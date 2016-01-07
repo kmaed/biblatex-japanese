@@ -17,6 +17,18 @@
   \blxja@xpatchbibmacro@args@\etb@patchcmd}
 
 %% --- User commands ---
+
+% \addiftocommand{<command>}[<if rule name>}{<code>}
+% \addiftocommand*{<command>}[<if rule code>}{<code>}
+
+% \newifrule{<if rule name>}{<rule code>}
+% \renewifrule{<if rule name>}{<rule code>}
+
+%% \newifrule{iflangisjapanese}{%
+%%   \iffieldequalstr{langid}{japanese}
+%%                   {#2}
+%%                   {#1}}
+
 \long\def\blxja@addjafork#1#2{%
   \unexpanded{\unexpanded{\unexpanded{\iffieldequalstr}}}{langid}{japanese}{#2}{#1}}
 
@@ -48,10 +60,10 @@
 \def\blxja@def@declarejamacro#1#2#3{%
   \expandafter\DeclareDocumentCommand\expandafter
       {\csname blxja@\detokenize{#1}@args@\endcsname}
-      { O{*} m m m +m }{\expandafter
+      { m m O{*} m +m }{\expandafter
+        ##1\expandafter
         ##2\expandafter
-        ##3\expandafter
-        {\csname \detokenize{#1}@\detokenize{##1}@\detokenize{##4}\endcsname}
+        {\csname \detokenize{#1}@\detokenize{##3}@\detokenize{##4}\endcsname}
         {##5}
         {}
         {\PackageError{biblatex-japanese}

@@ -6,7 +6,8 @@
 \InheritBibliographyStrings{english}
 
 %% For patching to macros taking parameters, change the catcode of #.
-%% Cf. http://tex.stackexchange.com/questions/113147/patching-arguments-inside-a-macro
+%% Cf. http://tex.stackexchange.com/questions/113147
+%%     http://tex.stackexchange.com/questions/51929
 \catcode`\#=12
 \DeclareBibliographyExtras{%
   \ifundef{\blxja@macrosdefined}
@@ -44,6 +45,7 @@
                  {\usebibmacro{name:japanese-full}{#1}{#3}{#5}{#7}}}%
      \usebibmacro{name:andothers}}%
 
+  \savenameformat{labelname}%
   \DeclareJapaneseNameFormat{labelname}{%
     \ifcase\value{uniquename}%
         \usebibmacro{name:japanese-last}{#1}{#3}{#5}{#7}%
