@@ -4,27 +4,22 @@
 \catcode`\@=11
 \def\blxja@macrosdefined{\blxja@macrosdefined}
 
-\RequirePackage{xpatch}
-
 %% --- Internal macros ---
-\long\def\blxja@xpatchbibmacro@args@#1#2#3#4{#1{#2}{#3}{#4}{}{%
-    \PackageWarning{biblatex-japanese}
-                   {Patching to the bibliography macro '\detokenize{#2}' failed}}}
-\newrobustcmd*\blxja@xpatchbibmacro{%
-  \etb@dbg@trce\blxja@xpatchbibmacro
-  \begingroup
-  \@makeother\#%
-  \blxja@xpatchbibmacro@args@\etb@patchcmd}
+\def\blxja@error#1#2{\PackageError{biblatex-japanese}{#1}{#2}}
+\def\blxja@warning#1{\PackageWarning{biblatex-japanese}{#1}}
+\def\blxja@warning@noline#1{\PackageWarningNoLine{biblatex-japanese}{#1}}
 
 %% --- User commands ---
 
 % \replacecommand{<command>}[<replace rule name>}{<code>}
 % \replacecommand*{<command>}[<replace rule code>}{<code>}
 
-\long\def\newreplacerule#1#2{%
-  \long\csdef{blxja@replacerule@#1@}##1##2{#2}%
-  \csdef{blxja@replacerule@#1}{%
-    \unexpanded{\unexpanded{\unexpanded{\csuse{blxja@replacerule@#1@}}}}}}
+\DeclareDocumentCommand{\newreplacerule}{ m +m }{%
+  \ifcsdef{blxja@replacerule@#1}{%
+    \blxja@warning{%
+      Replace rule '\detokenize{#1}' already defined.^^J
+      Using \string\renewreplacerule}%
+  }{\protected\long\csdef{blxja@replacerule@#1}##1##2{#2}}}
 
 % \renewreplacerule{<if rule name>}{<rule code>}
 
@@ -34,9 +29,8 @@
                   {#1}}
 
 \long\def\blxja@djc@args@#1#2#3#4{#1#2{#3}{#4}{}{%
-    \PackageError{biblatex-japanese}
-                 {\DeclareJapaneseCommand for the command \string#3 failed}
-                 {Try \detokenize{\tracingpatches} to investigate the cause of the problem.}}}
+    \blxja@error{\DeclareJapaneseCommand for the command \string#3 failed}
+                {Try \detokenize{\tracingpatches} to investigate the cause of the problem.}}}
 \DeclareDocumentCommand{\DeclareJapaneseCommand}{}{%
   \etb@dbg@trce\DeclareJapaneseCommand
   \begingroup
@@ -49,7 +43,7 @@
   {\csname abx@macro@\detokenize{#3}\endcsname}
   {#4}
   {}
-  {\PackageError{biblatex-japanese}
+  {\blxja@error
     {\DeclareJapaneseBibmacro for the bibliography macro '\detokenize{#3}' failed}
     {Try \detokenize{\tracingpatches} to investigate the cause of the problem.^^J^^J}}}
 \DeclareDocumentCommand{\DeclareJapaneseBibmacro}{}{%
@@ -67,7 +61,7 @@
         {\csname \detokenize{#1}@\detokenize{##3}@\detokenize{##4}\endcsname}
         {##5}
         {}
-        {\PackageError{biblatex-japanese}
+        {\blxja@error
           {#3 for the #2 '\detokenize{##4}' failed}
           {Try \detokenize{\tracingpatches} to investigate the cause of the problem.^^J^^J}}}
   \DeclareDocumentCommand{#3}{}{%
