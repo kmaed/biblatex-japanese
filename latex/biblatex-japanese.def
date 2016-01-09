@@ -14,14 +14,22 @@
 % \replacecommand{<command>}[<replace rule name>}{<code>}
 % \replacecommand*{<command>}[<replace rule code>}{<code>}
 
-\DeclareDocumentCommand{\newreplacerule}{ m +m }{%
-  \ifcsdef{blxja@replacerule@#1}{%
+\DeclareDocumentCommand{\newreplacerule}{ m }{%
+  \ifcsdef{blxja@replacerule@\detokenize{#1}}{%
     \blxja@warning{%
       Replace rule '\detokenize{#1}' already defined.^^J
-      Using \string\renewreplacerule}%
-  }{\protected\long\csdef{blxja@replacerule@#1}##1##2{#2}}}
+      Using \string\renewreplacerule}}{}%
+  \blxja@def@replacerule{#1}}
 
-% \renewreplacerule{<if rule name>}{<rule code>}
+\DeclareDocumentCommand{\renewreplacerule}{ m }{%
+  \ifcsundef{blxja@replacerule@\detokenize{#1}}{%
+    \blxja@warning{%
+      Replace rule '\detokenize{#1}' undefined.^^J
+      Using \string\newreplacerule}}{}%
+  \blxja@def@replacerule{#1}}
+
+\def\blxja@def@replacerule#1#2{%
+  \protected\long\csdef{blxja@replacerule@\detokenize{#1}}##1##2{#2}}
 
 \newreplacerule{iflangidisjapanese}{%
   \iffieldequalstr{langid}{japanese}
