@@ -14,8 +14,8 @@
           {\input{biblatex-japanese.def}}
           {}%
 
-  \DeclareJapaneseCommand{\multinamedelim}{，}%
-  \DeclareJapaneseCommand{\finalnamedelim}{，}%
+  \replacecommand{\multinamedelim}{iflangidisjapanese}{，}%
+  \replacecommand{\finalnamedelim}{iflangidisjapanese}{，}%
 
   \savenameformat{first-last}%
   \DeclareJapaneseNameFormat{first-last}{%

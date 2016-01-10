@@ -11,8 +11,21 @@
 
 %% --- User commands ---
 
-% \replacecommand{<command>}[<replace rule name>}{<code>}
-% \replacecommand*{<command>}[<replace rule code>}{<code>}
+% \replacecommand{<command>}{<replace rule name>}{<code>}
+% \replacecommand*{<command>}{<replace rule code>}{<code>}
+\DeclareDocumentCommand{\replacecommand}{ s }{%
+  \IfValueTF{#1}
+            {\blxja@replacecommand@rulename}
+            {\blxja@replacecommand@rulecode}}
+\def\blxja@replacecommand@rulename{%
+  \etb@dbg@trce\DeclareJapaneseCommand
+  \begingroup
+  \@makeother\#%
+  \blxja@rcrnn@args\etb@hooktocmd}
+\long\def\blxja@rcrnn@args#1#2#3#4{\expandafter
+  #1\csname blxja@replacerule@\detokenize{#3}\endcsname#2{#4}{}{%
+    \blxja@error{\replacecommand for the command \string#2 failed}
+                {Try \detokenize{\tracingpatches} to investigate the cause of the problem.}}}
 
 \DeclareDocumentCommand{\newreplacerule}{ m }{%
   \ifcsdef{blxja@replacerule@\detokenize{#1}}{%
@@ -36,6 +49,7 @@
                   {#2}
                   {#1}}
 
+%% obsolete
 \long\def\blxja@djc@args@#1#2#3#4{#1#2{#3}{#4}{}{%
     \blxja@error{\DeclareJapaneseCommand for the command \string#3 failed}
                 {Try \detokenize{\tracingpatches} to investigate the cause of the problem.}}}
