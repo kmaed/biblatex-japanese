@@ -1,6 +1,7 @@
 % -*- mode: LaTeX -*-
 \ProvidesFile{biblatex-japanese.def}
 
+\edef\blxja@restorecatcode{\catcode64=\the\catcode64}
 \catcode`\@=11
 \def\blxja@macrosdefined{\blxja@macrosdefined}
 
@@ -10,22 +11,34 @@
 \def\blxja@warning@noline#1{\PackageWarningNoLine{biblatex-japanese}{#1}}
 
 %% --- User commands ---
-
-% \replacecommand{<command>}{<replace rule name>}{<code>}
-% \replacecommand*{<command>}{<replace rule code>}{<code>}
 \DeclareDocumentCommand{\replacecommand}{ s }{%
-  \IfValueTF{#1}
-            {\blxja@replacecommand@rulename}
-            {\blxja@replacecommand@rulecode}}
+  \IfBooleanTF{#1}
+              {\blxja@replacecommand@rulecode}
+              {\blxja@replacecommand@rulename}}
 \def\blxja@replacecommand@rulename{%
-  \etb@dbg@trce\DeclareJapaneseCommand
+  \etb@dbg@trce\replacecommand
   \begingroup
   \@makeother\#%
-  \blxja@rcrnn@args\etb@hooktocmd}
-\long\def\blxja@rcrnn@args#1#2#3#4{\expandafter
-  #1\csname blxja@replacerule@\detokenize{#3}\endcsname#2{#4}{}{%
-    \blxja@error{\replacecommand for the command \string#2 failed}
-                {Try \detokenize{\tracingpatches} to investigate the cause of the problem.}}}
+  \blxja@rcrn@args\etb@hooktocmd}
+\def\blxja@replacecommand@rulecode{%
+  \etb@dbg@trce{\replacecommand*}
+  \begingroup
+  \@makeother\#%
+  \blxja@rcrc@args}
+\long\def\blxja@rcrn@args#1#2#3#4{%
+  \ifcsundef{blxja@replacerule@\detokenize{#3}}{%
+    \blxja@error{Replace rule '\detokenize{#3}' undefined}{}}{%
+    \expandafter#1\csname blxja@replacerule@\detokenize{#3}\endcsname#2{#4}{}{%
+      \blxja@error{\replacecommand for the command \string#2 failed}
+                  {Try \detokenize{\tracingpatches} to investigate the cause of the problem.}}}}
+\long\def\blxja@rcrc@args#1#2#3{
+  \endgroup
+  \edef\blxja@reserveda{%
+    \unexpanded{\protected\long\def\blxja@replacerule@@temprule@##1##2}{%
+      \scantokens{\unexpanded{#2}\noexpand}}}%
+  \blxja@reserveda
+  \begingroup                   % dummy for \endgroup in \etb@hooktocmd
+  \blxja@rcrn@args\etb@hooktocmd#1{@temprule@}{#3}}
 
 \DeclareDocumentCommand{\newreplacerule}{ m }{%
   \ifcsdef{blxja@replacerule@\detokenize{#1}}{%
@@ -118,4 +131,5 @@
      \usebibmacro{name:hook}{#2}}%
   \mkbibnamelast{#2}\isdot}
 
+\blxja@restorecatcode
 \endinput
