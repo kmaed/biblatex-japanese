@@ -21,6 +21,7 @@
 \setsansfont{M+ 1c-Bold}
 \setmonofont{Inconsolata-zi4}
 \renewcommand{\headfont}{\sffamily\spotcolor}
+\pretocmd{\l@subsection}{\fontspec{M+ 1c-Regular}\jfontspec{M+ 1c-Regular}}{}{}
 \renewcommand{\@makefnmark}{\hbox{}\hbox{\@textsuperscript{\normalfont\@thefnmark}}\hbox{}}
 \makeatother
 
@@ -93,10 +94,11 @@ Bib\TeX で問題を解決することも可能であるという話もある
 二条項BSDライセンスとする．同梱の\file{LICENSE}を参照し，従うこと．
 
 \subsection{バグレポート・要望など}
-パッケージの開発にはGithub\footnote{\url{https://github.com/kmaed/biblatex-japanese}}を利用している．
+パッケージの開発にはGitHub\footnote{\url{https://github.com/kmaed/biblatex-japanese}}を利用している．
 バグレポートや要望はここのIssuesに書き込めば，対応可能である（もちろん日本語で構わない）．
 また，パッチを投げるにはPull requestsが利用できる．
-もちろん，メールで報告しても構わない（アドレスは最初のページの脚注に書いてある）．
+
+GitHubが利用できない場合は，メールで報告していただいても構わない．メールアドレスは最初のページの脚注に書いてある．
 
 \subsection{謝辞}
 
@@ -107,7 +109,7 @@ Bib\TeX で問題を解決することも可能であるという話もある
 \begin{lstlisting}[style=latex]{}
 \usepackage[backend=biber]{biblatex-japanese}
 \end{lstlisting}
-これで日本語用の設定ファイルが読み込まれる．
+これで\sty{biblatex}本体および日本語用の設定ファイルが読み込まれる．
 \sty{biblatex}に渡したいオプションは\sty{biblatex-japanese}に渡せばよい．
 例えば，引用時の番号をソートしたければ
 \begin{lstlisting}[style=latex]{}

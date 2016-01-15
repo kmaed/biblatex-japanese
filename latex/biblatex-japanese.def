@@ -19,38 +19,71 @@
   \etb@dbg@trce\replacecommand
   \begingroup
   \@makeother\#%
-  \blxja@rcrn@args\etb@hooktocmd}
+  \blxja@rcrn@args}
 \def\blxja@replacecommand@rulecode{%
   \etb@dbg@trce{\replacecommand*}
   \begingroup
   \@makeother\#%
   \blxja@rcrc@args}
-\long\def\blxja@rcrn@args#1#2#3#4{%
-  \ifcsundef{blxja@replacerule@\detokenize{#3}}{%
-    \blxja@error{Replace rule '\detokenize{#3}' undefined}{}}{%
-    \expandafter#1\csname blxja@replacerule@\detokenize{#3}\endcsname#2{#4}{}{%
-      \blxja@error{\replacecommand for the command \string#2 failed}
-                  {Try \detokenize{\tracingpatches} to investigate the cause of the problem.}}}}
-\long\def\blxja@rcrc@args#1#2#3{
+\long\def\blxja@rcrn@args#1#2#3{%
+  \ifcsundef{blxja@replacerule@\detokenize{#2}}{%
+    \blxja@error{Replace rule '\detokenize{#2}' undefined}{}}{%
+    \expandafter\etb@hooktocmd\csname blxja@replacerule@\detokenize{#2}\endcsname#1{#3}{}{%
+      \blxja@error{\replacecommand for the command \string#1 failed}
+                  {Try \detokenize{\tracingpatches} to investigate the cause of the problem.\MessageBreak}}}}
+\long\def\blxja@rcrc@args#1#2#3{%
   \endgroup
   \edef\blxja@reserveda{%
     \unexpanded{\protected\long\def\blxja@replacerule@@temprule@##1##2}{%
       \scantokens{\unexpanded{#2}\noexpand}}}%
   \blxja@reserveda
-  \begingroup                   % dummy for \endgroup in \etb@hooktocmd
-  \blxja@rcrn@args\etb@hooktocmd#1{@temprule@}{#3}}
+  \begingroup                  % dummy for \endgroup in \etb@hooktocmd
+  \blxja@rcrn@args#1{@temprule@}{#3}}
+
+\DeclareDocumentCommand{\replacebibmacro}{ s }{%
+  \IfBooleanTF{#1}
+              {\blxja@replacebibmacro@rulecode}
+              {\blxja@replacebibmacro@rulename}}
+\def\blxja@replacebibmacro@rulename{%
+  \etb@dbg@trce\replacebibmacro
+  \begingroup
+  \@makeother\#%
+  \blxja@rbrn@args}
+\def\blxja@replacebibmacro@rulecode{%
+  \etb@dbg@trce{\replacebibmacro*}
+  \begingroup
+  \@makeother\#%
+  \blxja@rbrc@args}
+\long\def\blxja@rbrn@args#1#2#3{%
+  \endgroup
+  \ifcsundef{blxja@replacerule@\detokenize{#2}}{%
+    \blxja@error{Replace rule '\detokenize{#2}' undefined}{}}{%
+    \expandafter\def\expandafter\blxja@tempa\expandafter{\csname blxja@replacerule@\detokenize{#2}\endcsname}%
+    \expandafter\def\expandafter\blxja@tempb\expandafter{\csname abx@macro@\detokenize{#1}\endcsname}%
+    \begingroup                % dummy for \endgroup in \etb@hooktocmd
+    \expandafter\expandafter\expandafter\etb@hooktocmd\expandafter\blxja@tempa\blxja@tempb{#3}{}{%
+      \blxja@error{\replacebibmacro for the bibliography macro '\detokenize{#1}' failed}
+                  {Try \detokenize{\tracingpatches} to investigate the cause of the problem.\MessageBreak}}}}
+\long\def\blxja@rbrc@args#1#2#3{%
+  \endgroup
+  \edef\blxja@reserveda{%
+    \unexpanded{\protected\long\def\blxja@replacerule@@temprule@##1##2}{%
+      \scantokens{\unexpanded{#2}\noexpand}}}%
+  \blxja@reserveda
+  \begingroup                  % dummy for \endgroup in \etb@hooktocmd
+  \blxja@rbrn@args{#1}{@temprule@}{#3}}
 
 \DeclareDocumentCommand{\newreplacerule}{ m }{%
   \ifcsdef{blxja@replacerule@\detokenize{#1}}{%
     \blxja@warning{%
-      Replace rule '\detokenize{#1}' already defined.^^J
+      Replace rule '\detokenize{#1}' already defined.\MessageBreak
       Using \string\renewreplacerule}}{}%
   \blxja@def@replacerule{#1}}
 
 \DeclareDocumentCommand{\renewreplacerule}{ m }{%
   \ifcsundef{blxja@replacerule@\detokenize{#1}}{%
     \blxja@warning{%
-      Replace rule '\detokenize{#1}' undefined.^^J
+      Replace rule '\detokenize{#1}' undefined.\MessageBreak
       Using \string\newreplacerule}}{}%
   \blxja@def@replacerule{#1}}
 
@@ -65,7 +98,7 @@
 %% obsolete
 \long\def\blxja@djc@args@#1#2#3#4{#1#2{#3}{#4}{}{%
     \blxja@error{\DeclareJapaneseCommand for the command \string#3 failed}
-                {Try \detokenize{\tracingpatches} to investigate the cause of the problem.}}}
+                {Try \detokenize{\tracingpatches} to investigate the cause of the problem.^^J}}}
 \DeclareDocumentCommand{\DeclareJapaneseCommand}{}{%
   \etb@dbg@trce\DeclareJapaneseCommand
   \begingroup
