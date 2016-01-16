@@ -58,8 +58,8 @@
   \endgroup
   \ifcsundef{blxja@replacerule@\detokenize{#2}}{%
     \blxja@error{Replace rule '\detokenize{#2}' undefined}{}}{%
-    \expandafter\def\expandafter\blxja@tempa\expandafter{\csname blxja@replacerule@\detokenize{#2}\endcsname}%
-    \expandafter\def\expandafter\blxja@tempb\expandafter{\csname abx@macro@\detokenize{#1}\endcsname}%
+    \edef\blxja@tempa{\expandonce{\csname blxja@replacerule@\detokenize{#2}\endcsname}}%
+    \edef\blxja@tempb{\expandonce{\csname abx@macro@\detokenize{#1}\endcsname}}%
     \begingroup                % dummy for \endgroup in \etb@hooktocmd
     \expandafter\expandafter\expandafter\etb@hooktocmd\expandafter\blxja@tempa\blxja@tempb{#3}{}{%
       \blxja@error{\replacebibmacro for the bibliography macro '\detokenize{#1}' failed}
@@ -94,9 +94,9 @@
         \endgroup
         \ifcsundef{blxja@replacerule@\detokenize{##3}}{%
           \blxja@error{Replace rule '\detokenize{##3}' undefined}{}}{%
-          \expandafter\def\expandafter\blxja@tempa\expandafter{\csname blxja@replacerule@\detokenize{##3}\endcsname}%
-          \expandafter\def\expandafter\blxja@tempb\expandafter{\csname #1@\detokenize{##1}@\detokenize{##2}\endcsname}%
-          \begingroup                % dummy for \endgroup in \etb@hooktocmd
+          \edef\blxja@tempa{\expandonce{\csname blxja@replacerule@\detokenize{##3}\endcsname}}%
+          \edef\blxja@tempb{\expandonce{\csname #1@\detokenize{##1}@\detokenize{##2}\endcsname}}%
+          \begingroup          % dummy for \endgroup in \etb@hooktocmd
           \expandafter\expandafter\expandafter\etb@hooktocmd\expandafter\blxja@tempa\blxja@tempb{##4}{}{%
             \blxja@error{#3 for the #2 '\detokenize{##2}' failed}
                         {Try \detokenize{\tracingpatches} to investigate the cause of the problem.\MessageBreak}}}}
@@ -108,7 +108,7 @@
           \unexpanded{\protected\long\def\blxja@replacerule@@temprule@####1####2}{%
             \scantokens{\unexpanded{##3}\noexpand}}}%
         \blxja@reserveda
-        \begingroup                  % dummy for \endgroup in \etb@hooktocmd
+        \begingroup            % dummy for \endgroup in \etb@hooktocmd
         \csuse{blxja@replace@\detokenize{#1}@rn@args}[##1]{##2}{@temprule@}{##4}}}
 
 \blxja@def@replacemacro{abx@nfd}{name list format}{\replacenameformat}
