@@ -111,7 +111,7 @@
         \begingroup                  % dummy for \endgroup in \etb@hooktocmd
         \csuse{blxja@replace@\detokenize{#1}@rn@args}[##1]{##2}{@temprule@}{##4}}}
 
-\blxja@def@replacemacro{abx@nfd}{name format}{\replacenameformat}
+\blxja@def@replacemacro{abx@nfd}{name list format}{\replacenameformat}
 
 \DeclareDocumentCommand{\newreplacerule}{ m }{%
   \ifcsdef{blxja@replacerule@\detokenize{#1}}{%
