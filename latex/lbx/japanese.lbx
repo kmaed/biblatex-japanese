@@ -8,6 +8,7 @@
 %% For patching to macros taking parameters, change the catcode of #.
 %% Cf. http://tex.stackexchange.com/questions/113147
 %%     http://tex.stackexchange.com/questions/51929
+\begingroup
 \catcode`\#=12
 \DeclareBibliographyExtras{%
   \ifundef{\blxja@macrosdefined}
@@ -18,21 +19,21 @@
   \replacecommand{\finalnamedelim}{iflangidisjapanese}{，}%
 
   \savenameformat{first-last}%
-  \DeclareJapaneseNameFormat{first-last}{%
+  \replacenameformat{first-last}{iflangidisjapanese}{%
     \iffirstinits
         {\usebibmacro{name:first-last}{#1}{#4}{#5}{#7}}
         {\usebibmacro{name:japanese-full}{#1}{#3}{#5}{#7}}%
     \usebibmacro{name:andothers}}%
 
   \savenameformat{last-first}%
-  \DeclareJapaneseNameFormat{last-first}{%
+  \replacenameformat{last-first}{iflangidisjapanese}{%
     \iffirstinits
         {\usebibmacro{name:last-first}{#1}{#4}{#5}{#7}}
         {\usebibmacro{name:japanese-full}{#1}{#3}{#5}{#7}}%
         \usebibmacro{name:andothers}}%
 
   \savenameformat{last-first/first-last}%
-  \DeclareJapaneseNameFormat{last-first/first-last}{%
+  \replacenameformat{last-first/first-last}{iflangidisjapanese}{%
     \ifnumequal{\value{listcount}}{1}
                {\iffirstinits
                  {\usebibmacro{name:last-first}{#1}{#4}{#5}{#7}}
@@ -46,7 +47,7 @@
      \usebibmacro{name:andothers}}%
 
   \savenameformat{labelname}%
-  \DeclareJapaneseNameFormat{labelname}{%
+  \replacenameformat{labelname}{iflangidisjapanese}{%
     \ifcase\value{uniquename}%
         \usebibmacro{name:japanese-last}{#1}{#3}{#5}{#7}%
     \or
@@ -58,7 +59,7 @@
     \fi
     \usebibmacro{name:andothers}}%
 }
-\catcode`\#=6                   % restore the catcode of #
+\endgroup
 
 \UndeclareBibliographyExtras{%
   \restorenameformat{first-last}%

@@ -1,7 +1,7 @@
 % -*- mode: LaTeX -*-
 \ProvidesFile{biblatex-japanese.def}
 
-\edef\blxja@restorecatcode{\catcode64=\the\catcode64}
+\edef\blxja@restorecatcode{\catcode64=\the\catcode64} % 64 = @
 \catcode`\@=11
 \def\blxja@macrosdefined{\blxja@macrosdefined}
 
@@ -19,26 +19,26 @@
   \etb@dbg@trce\replacecommand
   \begingroup
   \@makeother\#%
-  \blxja@rcrn@args}
+  \blxja@replace@command@rn@args}
 \def\blxja@replacecommand@rulecode{%
-  \etb@dbg@trce{\replacecommand*}
+  \etb@dbg@trce{\replacecommand*}%
   \begingroup
   \@makeother\#%
-  \blxja@rcrc@args}
-\long\def\blxja@rcrn@args#1#2#3{%
+  \blxja@replace@command@rc@args}
+\long\def\blxja@replace@command@rn@args#1#2#3{%
   \ifcsundef{blxja@replacerule@\detokenize{#2}}{%
     \blxja@error{Replace rule '\detokenize{#2}' undefined}{}}{%
     \expandafter\etb@hooktocmd\csname blxja@replacerule@\detokenize{#2}\endcsname#1{#3}{}{%
       \blxja@error{\replacecommand for the command \string#1 failed}
                   {Try \detokenize{\tracingpatches} to investigate the cause of the problem.\MessageBreak}}}}
-\long\def\blxja@rcrc@args#1#2#3{%
+\long\def\blxja@replace@command@rc@args#1#2#3{%
   \endgroup
   \edef\blxja@reserveda{%
     \unexpanded{\protected\long\def\blxja@replacerule@@temprule@##1##2}{%
       \scantokens{\unexpanded{#2}\noexpand}}}%
   \blxja@reserveda
   \begingroup                  % dummy for \endgroup in \etb@hooktocmd
-  \blxja@rcrn@args#1{@temprule@}{#3}}
+  \blxja@replace@command@rn@args#1{@temprule@}{#3}}
 
 \DeclareDocumentCommand{\replacebibmacro}{ s }{%
   \IfBooleanTF{#1}
@@ -48,13 +48,13 @@
   \etb@dbg@trce\replacebibmacro
   \begingroup
   \@makeother\#%
-  \blxja@rbrn@args}
+  \blxja@replace@abx@macro@rn@args}
 \def\blxja@replacebibmacro@rulecode{%
-  \etb@dbg@trce{\replacebibmacro*}
+  \etb@dbg@trce{\replacebibmacro*}%
   \begingroup
   \@makeother\#%
-  \blxja@rbrc@args}
-\long\def\blxja@rbrn@args#1#2#3{%
+  \blxja@replace@abx@macro@rc@args}
+\long\def\blxja@replace@abx@macro@rn@args#1#2#3{%
   \endgroup
   \ifcsundef{blxja@replacerule@\detokenize{#2}}{%
     \blxja@error{Replace rule '\detokenize{#2}' undefined}{}}{%
@@ -64,14 +64,54 @@
     \expandafter\expandafter\expandafter\etb@hooktocmd\expandafter\blxja@tempa\blxja@tempb{#3}{}{%
       \blxja@error{\replacebibmacro for the bibliography macro '\detokenize{#1}' failed}
                   {Try \detokenize{\tracingpatches} to investigate the cause of the problem.\MessageBreak}}}}
-\long\def\blxja@rbrc@args#1#2#3{%
+\long\def\blxja@replace@abx@macro@rc@args#1#2#3{%
   \endgroup
   \edef\blxja@reserveda{%
     \unexpanded{\protected\long\def\blxja@replacerule@@temprule@##1##2}{%
       \scantokens{\unexpanded{#2}\noexpand}}}%
   \blxja@reserveda
   \begingroup                  % dummy for \endgroup in \etb@hooktocmd
-  \blxja@rbrn@args{#1}{@temprule@}{#3}}
+  \blxja@replace@abx@macro@rn@args{#1}{@temprule@}{#3}}
+
+\def\blxja@def@replacemacro#1#2#3{%
+  \DeclareDocumentCommand{#3}{ s }{%
+    \IfBooleanTF{##1}
+                {\csuse{blxja@replace@\detokenize{#1}@rulecode}}
+                {\csuse{blxja@replace@\detokenize{#1}@rulename}}}
+  \csdef{blxja@replace@\detokenize{#1}@rulename}{%
+    \etb@dbg@trce#3
+    \begingroup
+    \@makeother\#%
+    \csuse{blxja@replace@\detokenize{#1}@rn@args}}
+  \csdef{blxja@replace@\detokenize{#1}@rulecode}{%
+    \etb@dbg@trce{#3*}%
+    \begingroup
+    \@makeother\#%
+    \csuse{blxja@replace@\detokenize{#1}@rc@args}}
+  \expandafter\DeclareDocumentCommand\expandafter
+      {\csname blxja@replace@\detokenize{#1}@rn@args\endcsname}
+      { O{*} m m +m }{%
+        \endgroup
+        \ifcsundef{blxja@replacerule@\detokenize{##3}}{%
+          \blxja@error{Replace rule '\detokenize{##3}' undefined}{}}{%
+          \expandafter\def\expandafter\blxja@tempa\expandafter{\csname blxja@replacerule@\detokenize{##3}\endcsname}%
+          \expandafter\def\expandafter\blxja@tempb\expandafter{\csname #1@\detokenize{##1}@\detokenize{##2}\endcsname}%
+          \begingroup                % dummy for \endgroup in \etb@hooktocmd
+          \expandafter\expandafter\expandafter\etb@hooktocmd\expandafter\blxja@tempa\blxja@tempb{##4}{}{%
+            \blxja@error{#3 for the #2 '\detokenize{##2}' failed}
+                        {Try \detokenize{\tracingpatches} to investigate the cause of the problem.\MessageBreak}}}}
+  \expandafter\DeclareDocumentCommand\expandafter
+      {\csname blxja@replace@\detokenize{#1}@rc@args\endcsname}
+      { O{*} m m +m }{%
+        \endgroup
+        \edef\blxja@reserveda{%
+          \unexpanded{\protected\long\def\blxja@replacerule@@temprule@####1####2}{%
+            \scantokens{\unexpanded{##3}\noexpand}}}%
+        \blxja@reserveda
+        \begingroup                  % dummy for \endgroup in \etb@hooktocmd
+        \csuse{blxja@replace@\detokenize{#1}@rn@args}[##1]{##2}{@temprule@}{##4}}}
+
+\blxja@def@replacemacro{abx@nfd}{name format}{\replacenameformat}
 
 \DeclareDocumentCommand{\newreplacerule}{ m }{%
   \ifcsdef{blxja@replacerule@\detokenize{#1}}{%
@@ -94,51 +134,6 @@
   \iffieldequalstr{langid}{japanese}
                   {#2}
                   {#1}}
-
-%% obsolete
-\long\def\blxja@djc@args@#1#2#3#4{#1#2{#3}{#4}{}{%
-    \blxja@error{\DeclareJapaneseCommand for the command \string#3 failed}
-                {Try \detokenize{\tracingpatches} to investigate the cause of the problem.^^J}}}
-\DeclareDocumentCommand{\DeclareJapaneseCommand}{}{%
-  \etb@dbg@trce\DeclareJapaneseCommand
-  \begingroup
-  \@makeother\#%
-  \blxja@djc@args@\etb@hooktocmd\blxja@replacerule@iflangidisjapanese}
-
-\long\def\blxja@djb@args@#1#2#3#4{\expandafter
-  #1\expandafter
-  #2\expandafter
-  {\csname abx@macro@\detokenize{#3}\endcsname}
-  {#4}
-  {}
-  {\blxja@error
-    {\DeclareJapaneseBibmacro for the bibliography macro '\detokenize{#3}' failed}
-    {Try \detokenize{\tracingpatches} to investigate the cause of the problem.^^J^^J}}}
-\DeclareDocumentCommand{\DeclareJapaneseBibmacro}{}{%
-  \etb@dbg@trce\DeclareJapaneseBibmacro
-  \begingroup
-  \@makeother\#%
-  \blxja@djb@args@\etb@hooktocmd\blxja@replacerule@iflangidisjapanese}
-
-\def\blxja@def@declarejamacro#1#2#3{%
-  \expandafter\DeclareDocumentCommand\expandafter
-      {\csname blxja@\detokenize{#1}@args@\endcsname}
-      { m m O{*} m +m }{\expandafter
-        ##1\expandafter
-        ##2\expandafter
-        {\csname \detokenize{#1}@\detokenize{##3}@\detokenize{##4}\endcsname}
-        {##5}
-        {}
-        {\blxja@error
-          {#3 for the #2 '\detokenize{##4}' failed}
-          {Try \detokenize{\tracingpatches} to investigate the cause of the problem.^^J^^J}}}
-  \DeclareDocumentCommand{#3}{}{%
-    \etb@dbg@trce#3
-    \begingroup
-    \@makeother\#%
-    \csuse{blxja@\detokenize{#1}@args@}\etb@hooktocmd\blxja@replacerule@iflangidisjapanese}}
-
-\blxja@def@declarejamacro{abx@nfd}{name format}{\DeclareJapaneseNameFormat}
 
 %% --- Bibmacros for Japanese ---
 \newbibmacro*{name:japanese-full}[4]{% test: now only remove spaces
