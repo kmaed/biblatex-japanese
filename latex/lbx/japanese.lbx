@@ -15,8 +15,10 @@
           {\input{biblatex-japanese.def}}
           {}%
 
-  \replacecommand{\multinamedelim}{iflangidisjapanese}{，}%
+  \savecommand{\finalnamdelim}%
   \replacecommand{\finalnamedelim}{iflangidisjapanese}{，}%
+  \savecommand{\multinamedelim}%
+  \replacecommand{\multinamedelim}{iflangidisjapanese}{，}%
 
   \savenameformat{first-last}%
   \replacenameformat{first-last}{iflangidisjapanese}{%
@@ -62,6 +64,9 @@
 \endgroup
 
 \UndeclareBibliographyExtras{%
+  \restorecommand{multinamedelim}%
+  \restorecommand{finalnamdelim}%
+
   \restorenameformat{first-last}%
   \restorenameformat{last-first}%
   \restorenameformat{last-first/first-last}%
