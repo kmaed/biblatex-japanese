@@ -5,6 +5,11 @@
 \InheritBibliographyExtras{english}
 \InheritBibliographyStrings{english}
 
+\NewBibliographyString{%
+  japanese-bytranslator,
+}
+
+
 %% For patching to macros taking parameters, change the catcode of #.
 %% Cf. http://tex.stackexchange.com/questions/113147
 %%     http://tex.stackexchange.com/questions/51929
@@ -19,6 +24,40 @@
   \replacecommand{\finalnamedelim}{iflangidisjapanese}{，}%
   \savecommand{\multinamedelim}%
   \replacecommand{\multinamedelim}{iflangidisjapanese}{，}%
+
+  \savebibmacro{bytranslator+others}
+  \replacebibmacro{bytranslator+others}{iflangidisjapanese}{%
+    \ifnameundef{translator}
+                {}
+                {\setunit{\addspace}%
+                  \printnames{translator}%
+                  \clearname{translator}%
+                  \addspace
+                  \usebibmacro{bytranslator+othersstrg}%
+                  \newunit}%
+                \usebibmacro{withothers}}
+
+  \replacebibmacro{bytranslator+othersstrg}{iflangidisjapanese}{%
+    \def\abx@tempa{japanese-bytranslator}%
+    \ifnamesequal{translator}{commentator}
+                 {\appto\abx@tempa{co}%
+                   \clearname{commentator}}
+                 {\ifnamesequal{translator}{annotator}
+                   {\appto\abx@tempa{an}%
+                     \clearname{annotator}}
+                   {}}%
+    \ifnamesequal{translator}{introduction}
+                 {\appto\abx@tempa{in}%
+                   \clearname{introduction}}
+                 {\ifnamesequal{translator}{foreword}
+                   {\appto\abx@tempa{fo}%
+                     \clearname{foreword}}
+                   {\ifnamesequal{translator}{afterword}
+                     {\appto\abx@tempa{af}%
+                       \clearname{afterword}}
+                     {}}}%
+    \bibstring{\abx@tempa}}
+
 
   \savenameformat{first-last}%
   \replacenameformat{first-last}{iflangidisjapanese}{%
@@ -74,9 +113,10 @@
 }
 
 \DeclareBibliographyStrings{%
-  bibliography  = {{参考文献}{参考文献}},
-  ibidem        = {{同書}{同書}},
-  references    = {{参考文献}{参考文献}},
+  bibliography          = {{参考文献}{参考文献}},
+  ibidem                = {{同書}{同書}},
+  japanese-bytranslator = {{訳}{訳}},
+  references            = {{参考文献}{参考文献}},
 }
 
 \endinput
