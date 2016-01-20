@@ -7,6 +7,7 @@
 
 \NewBibliographyString{%
   japanese-bytranslator,
+  japanese-cbytranslator,
 }
 
 
@@ -25,18 +26,19 @@
   \savecommand{\multinamedelim}%
   \replacecommand{\multinamedelim}{iflangidisjapanese}{，}%
 
-  \savebibmacro{bytranslator+others}
+  \savebibmacro{bytranslator+others}%
   \replacebibmacro{bytranslator+others}{iflangidisjapanese}{%
     \ifnameundef{translator}
                 {}
                 {\setunit{\addspace}%
-                  \printnames{translator}%
+                  \printnames[bytranslator]{translator}%
                   \clearname{translator}%
                   \addspace
                   \usebibmacro{bytranslator+othersstrg}%
                   \newunit}%
-                \usebibmacro{withothers}}
+                \usebibmacro{withothers}}%
 
+  \savebibmacro{bytranslator+othersstrg}%
   \replacebibmacro{bytranslator+othersstrg}{iflangidisjapanese}{%
     \def\abx@tempa{japanese-bytranslator}%
     \ifnamesequal{translator}{commentator}
@@ -52,12 +54,11 @@
                  {\ifnamesequal{translator}{foreword}
                    {\appto\abx@tempa{fo}%
                      \clearname{foreword}}
-                   {\ifnamesequal{translator}{afterword}
-                     {\appto\abx@tempa{af}%
-                       \clearname{afterword}}
-                     {}}}%
-    \bibstring{\abx@tempa}}
-
+                 {\ifnamesequal{translator}{afterword}
+                   {\appto\abx@tempa{af}%
+                     \clearname{afterword}}
+                   {}}}%
+    \bibstring{\abx@tempa}}%
 
   \savenameformat{first-last}%
   \replacenameformat{first-last}{iflangidisjapanese}{%
@@ -99,6 +100,41 @@
         \usebibmacro{name:japanese-full}{#1}{#3}{#5}{#7}%
     \fi
     \usebibmacro{name:andothers}}%
+
+  %% -- for chicago --
+  \ifcsdef{abx@macro@cbytranslator+others}{%
+    \savebibmacro{cbytranslator+others}
+    \replacebibmacro{cbytranslator+others}{iflangidisjapanese}{%
+      \ifnameundef{translator}
+                  {}
+                  {\def\@tempa{japanese-cbytranslator}%
+                    \ifnamesequal{translator}{namec}
+                                 {\edef\@tempa{\@tempa cp}%
+                                   \clearname{namec}}
+                                 {}%
+                    \ifnamesequal{translator}{commentator}
+                                 {\edef\@tempa{\@tempa co}%
+                                   \clearname{commentator}}
+                                 {\ifnamesequal{translator}{annotator}
+                                   {\edef\@tempa{\@tempa an}%
+                                     \clearname{annotator}}
+                                   {}}%
+                    \ifnamesequal{translator}{introduction}
+                                 {\edef\@tempa{\@tempa in}%
+                                   \clearname{introduction}}
+                                 {\ifnamesequal{translator}{foreword}
+                                   {\edef\@tempa{\@tempa fo}%
+                                     \clearname{foreword}}
+                                   {\ifnamesequal{translator}{afterword}
+                                     {\edef\@tempa{\@tempa af}%
+                                       \clearname{afterword}}
+                                     {}}}%
+                   \printnames[bytranslator]{translator}%
+                   \clearname{translator}%
+                   \space\bibstring{\@tempa}%
+                   \newcunit}%
+      \usebibmacro{cbycompiler+others}}}{}%
+  %% -- End: for chicago --
 }
 \endgroup
 
@@ -106,17 +142,25 @@
   \restorecommand{multinamedelim}%
   \restorecommand{finalnamdelim}%
 
+  \restorebibmacro{bytranslator+others}%
+  \restorebibmacro{bytranslator+othersstrg}%
+
   \restorenameformat{first-last}%
   \restorenameformat{last-first}%
   \restorenameformat{last-first/first-last}%
   \restorenameformat{labelname}%
+
+  %% -- for chicago --
+  \restorebibmacro{cbytranslator+others}%
+  %% -- End: for chicago --
 }
 
 \DeclareBibliographyStrings{%
-  bibliography          = {{参考文献}{参考文献}},
-  ibidem                = {{同書}{同書}},
-  japanese-bytranslator = {{訳}{訳}},
-  references            = {{参考文献}{参考文献}},
+  bibliography           = {{参考文献}{参考文献}},
+  ibidem                 = {{同書}{同書}},
+  japanese-bytranslator  = {{訳}{訳}},
+  japanese-cbytranslator = {{訳}{訳}},
+  references             = {{参考文献}{参考文献}},
 }
 
 \endinput
