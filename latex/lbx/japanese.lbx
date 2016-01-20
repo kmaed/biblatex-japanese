@@ -102,7 +102,7 @@
     \usebibmacro{name:andothers}}%
 
   %% -- for chicago --
-  \ifcsdef{abx@macro@cbytranslator+others}{%
+  \ifbibmacroundef{cbytranslator+others}{}{%
     \savebibmacro{cbytranslator+others}
     \replacebibmacro{cbytranslator+others}{iflangidisjapanese}{%
       \ifnameundef{translator}
@@ -133,7 +133,7 @@
                    \clearname{translator}%
                    \space\bibstring{\@tempa}%
                    \newcunit}%
-      \usebibmacro{cbycompiler+others}}}{}%
+      \usebibmacro{cbycompiler+others}}}%
   %% -- End: for chicago --
 }
 \endgroup
@@ -151,7 +151,8 @@
   \restorenameformat{labelname}%
 
   %% -- for chicago --
-  \restorebibmacro{cbytranslator+others}%
+  \ifbibmacroundef{cbytranslator+others}{}{%
+    \restorebibmacro{cbytranslator+others}}%
   %% -- End: for chicago --
 }
 

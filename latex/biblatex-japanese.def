@@ -9,6 +9,8 @@
 \def\blxja@error#1#2{\PackageError{biblatex-japanese}{#1}{#2}}
 \def\blxja@warning#1{\PackageWarning{biblatex-japanese}{#1}}
 \def\blxja@warning@noline#1{\PackageWarningNoLine{biblatex-japanese}{#1}}
+\def\ifbibmacrodef#1{\ifcsdef{abx@macro@\detokenize{#1}}}
+\def\ifbibmacroundef#1{\ifcsundef{abx@macro@\detokenize{#1}}}
 
 %% --- User commands ---
 \DeclareDocumentCommand{\replacecommand}{ s }{%
