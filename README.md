@@ -9,8 +9,8 @@ The details are explained in doc/biblatex-japanese.pdf (now only available in Ja
 License
 -------
 
-The package may be modified or distributed under the terms of the
-2-clause BSD license (see LICENSE).
+The package may be distributed and/or modified under the terms of
+the 2-clause BSD license (see LICENSE).
 
 Contact
 -------
