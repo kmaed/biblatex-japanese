@@ -60,6 +60,9 @@
                    {}}}%
     \bibstring{\abx@tempa}}%
 
+  \savebibmacro{in:}%
+  \replacebibmacro{in:}{iflangidisjapanese}{}%
+
   \savenameformat{first-last}%
   \replacenameformat{first-last}{iflangidisjapanese}{%
     \iffirstinits
@@ -144,6 +147,7 @@
 
   \restorebibmacro{bytranslator+others}%
   \restorebibmacro{bytranslator+othersstrg}%
+  \restorebibmacro{in:}
 
   \restorenameformat{first-last}%
   \restorenameformat{last-first}%
