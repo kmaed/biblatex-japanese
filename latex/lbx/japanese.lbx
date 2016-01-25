@@ -105,8 +105,8 @@
     \usebibmacro{name:andothers}}%
 
   %% -- for chicago --
-  \ifbibmacroundef{cbytranslator+others}{}{%
-    \savebibmacro{cbytranslator+others}
+  \@ifpackageloaded{biblatex-chicago}{%
+    \savebibmacro{cbytranslator+others}%
     \replacebibmacro{cbytranslator+others}{iflangidisjapanese}{%
       \ifnameundef{translator}
                   {}
@@ -136,7 +136,8 @@
                    \clearname{translator}%
                    \space\bibstring{\@tempa}%
                    \newcunit}%
-      \usebibmacro{cbycompiler+others}}}%
+      \usebibmacro{cbycompiler+others}}%
+  }{}%
   %% -- End: for chicago --
 }
 \endgroup
@@ -155,8 +156,9 @@
   \restorenameformat{labelname}%
 
   %% -- for chicago --
-  \ifbibmacroundef{cbytranslator+others}{}{%
-    \restorebibmacro{cbytranslator+others}}%
+  \@ifpackageloaded{biblatex-chicago}{%
+    \restorebibmacro{cbytranslator+others}%
+  }{}%
   %% -- End: for chicago --
 }
 
