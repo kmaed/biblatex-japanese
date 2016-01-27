@@ -8,6 +8,8 @@
 \NewBibliographyString{%
   japanese-bytranslator,
   japanese-cbytranslator,
+  japanese-page,
+  japanese-pages,
 }
 
 
@@ -62,6 +64,9 @@
 
   \savebibmacro{in:}%
   \replacebibmacro{in:}{iflangidisjapanese}{}%
+
+  \savefieldformat{pages}%
+  \replacefieldformat{pages}{iflangidisjapanese}{#1\bibstring{japanese-pages}}%
 
   \savenameformat{first-last}%
   \replacenameformat{first-last}{iflangidisjapanese}{%
@@ -148,7 +153,9 @@
 
   \restorebibmacro{bytranslator+others}%
   \restorebibmacro{bytranslator+othersstrg}%
-  \restorebibmacro{in:}
+  \restorebibmacro{in:}%
+
+  \restorefieldformat{pages}%
 
   \restorenameformat{first-last}%
   \restorenameformat{last-first}%
@@ -167,6 +174,8 @@
   ibidem                 = {{同書}{同書}},
   japanese-bytranslator  = {{訳}{訳}},
   japanese-cbytranslator = {{訳}{訳}},
+  japanese-page          = {{頁}{頁}},
+  japanese-pages         = {{頁}{頁}},
   references             = {{参考文献}{参考文献}},
 }
 

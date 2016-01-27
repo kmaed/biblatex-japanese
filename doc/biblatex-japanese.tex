@@ -155,9 +155,11 @@ GitHubが利用できない場合は，メールで報告していただいて�
 
   \cmditem{replacebibmacro}{name}{replace rule name}{code}
 
+  \cmditem{replacefieldformat}[entrytype, \dots]{format}{replace rule name}{code}
+
   \cmditem{replacenameformat}[entrytype, \dots]{format}{replace rule name}{code}
 
-  それぞれ\cmd{replacecommand}のbibmacro, name list formatに対応するもの．
+  それぞれ\cmd{replacecommand}のbibmacro, field format, name list formatに対応するもの．
 \end{ltxsyntax}
 
 \prm{replace rule name}には以下のいずれかを指定する（現状では1つしかないが，
@@ -171,6 +173,8 @@ GitHubが利用できない場合は，メールで報告していただいて�
   \cmditem{replacecommand*}{command}{replace rule code}{code}
 
   \cmditem{replacebibmacro*}{name}{replace rule code}{code}
+
+  \cmditem{replacefieldformat*}[entrytype, \dots]{format}{replace rule code}{code}
 
   \cmditem{replacenameformat*}[entrytype, \dots]{format}{replace rule code}{code}
 
