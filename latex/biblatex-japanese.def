@@ -5,6 +5,8 @@
 \catcode`\@=11
 \def\blxja@macrosdefined{\blxja@macrosdefined}
 
+\RequirePackage{xparse}
+
 %% --- Internal macros ---
 \def\blxja@error#1#2{\PackageError{biblatex-japanese}{#1}{#2}}
 \def\blxja@warning#1{\PackageWarning{biblatex-japanese}{#1}}

@@ -65,8 +65,18 @@
   \savebibmacro{in:}%
   \replacebibmacro{in:}{iflangidisjapanese}{}%
 
+  \savefieldformat{booktitle}%
+  \replacefieldformat{booktitle}{iflangidisjapanese}{#1}%
+  \savefieldformat{issuetitle}%
+  \replacefieldformat{issuetitle}{iflangidisjapanese}{#1}%
+  \savefieldformat{journaltitle}%
+  \replacefieldformat{journaltitle}{iflangidisjapanese}{#1}%
+  \savefieldformat{maintitle}%
+  \replacefieldformat{maintitle}{iflangidisjapanese}{#1}%
   \savefieldformat{pages}%
   \replacefieldformat{pages}{iflangidisjapanese}{#1\bibstring{japanese-pages}}%
+  \savefieldformat{title}%
+  \replacefieldformat{title}{iflangidisjapanese}{#1}%
 
   \savenameformat{first-last}%
   \replacenameformat{first-last}{iflangidisjapanese}{%
@@ -155,7 +165,12 @@
   \restorebibmacro{bytranslator+othersstrg}%
   \restorebibmacro{in:}%
 
+  \restorefieldformat{booktitle}%
+  \restorefieldformat{issuetitle}%
+  \restorefieldformat{journaltitle}%
+  \restorefieldformat{maintitle}%
   \restorefieldformat{pages}%
+  \restorefieldformat{title}%
 
   \restorenameformat{first-last}%
   \restorenameformat{last-first}%
