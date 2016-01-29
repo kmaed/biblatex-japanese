@@ -13,6 +13,14 @@
 \def\blxja@warning@noline#1{\PackageWarningNoLine{biblatex-japanese}{#1}}
 \def\ifbibmacrodef#1{\ifcsdef{abx@macro@\detokenize{#1}}}
 \def\ifbibmacroundef#1{\ifcsundef{abx@macro@\detokenize{#1}}}
+\def\blxja@def@savesrestorescommand#1#2#3{
+  \newrobustcmd*{#1}[2][*]{%
+    \edef\@tempa{##1}%
+    \@for\@tempb:=\@tempa\do{%
+      \edef\@tempc{\noexpand#2{abx@#3@\@tempb @##2}}%
+      \@tempc}}}
+\blxja@def@savesrestorescommand{\savefieldformats}{\blx@save}{ffd}
+\blxja@def@savesrestorescommand{\restorefieldformats}{\blx@restore}{ffd}
 
 %% --- User commands ---
 \DeclareDocumentCommand{\replacecommand}{ s }{%
@@ -86,16 +94,27 @@
     \etb@dbg@trce#3
     \begingroup
     \@makeother\#%
-    \csuse{blxja@replace@\detokenize{#1}@rn@args}}
+    \csuse{blxja@replace@\detokenize{#1}@args@}
+    {\csuse{blxja@replace@\detokenize{#1}@rn@args}}}
   \csdef{blxja@replace@\detokenize{#1}@rulecode}{%
     \etb@dbg@trce{#3*}%
     \begingroup
     \@makeother\#%
-    \csuse{blxja@replace@\detokenize{#1}@rc@args}}
+    \csuse{blxja@replace@\detokenize{#1}@args@}
+          {\csuse{blxja@replace@\detokenize{#1}@rc@args}}}
+
+  \expandafter\DeclareDocumentCommand\expandafter
+      {\csname blxja@replace@\detokenize{#1}@args@\endcsname}
+      { m O{*} m m +m }{%
+        \endgroup
+        \edef\@tempa{##2}%
+        \def\@tempc{##1}%
+        \@for\@tempb:=\@tempa\do{%
+          \expandafter\@tempc\expandafter{\@tempb}{##3}{##4}{##5}}}
+
   \expandafter\DeclareDocumentCommand\expandafter
       {\csname blxja@replace@\detokenize{#1}@rn@args\endcsname}
-      { O{*} m m +m }{%
-        \endgroup
+      { m m m +m }{%
         \ifcsundef{blxja@replacerule@\detokenize{##3}}{%
           \blxja@error{Replace rule '\detokenize{##3}' undefined}{}}{%
           \edef\blxja@tempa{\expandonce{\csname blxja@replacerule@\detokenize{##3}\endcsname}}%
@@ -106,8 +125,7 @@
                         {Try \detokenize{\tracingpatches} to investigate the cause of the problem.\MessageBreak}}}}
   \expandafter\DeclareDocumentCommand\expandafter
       {\csname blxja@replace@\detokenize{#1}@rc@args\endcsname}
-      { O{*} m m +m }{%
-        \endgroup
+      { m m m +m }{%
         \edef\blxja@reserveda{%
           \unexpanded{\protected\long\def\blxja@replacerule@@temprule@####1####2}{%
             \scantokens{\unexpanded{##3}\noexpand}}}%
@@ -162,7 +180,16 @@
         \ifprefchar{}{\bibnamedelimc}}}
     {\usebibmacro{name:delim}{#2}%
      \usebibmacro{name:hook}{#2}}%
-  \mkbibnamelast{#2}\isdot}
+    \mkbibnamelast{#2}\isdot}
+
+%% --- Punctuations ---
+\newrobustcmd*{\textocbracket}{「}
+\newrobustcmd*{\textccbracket}{」}
+\newrobustcmd*{\textowcbracket}{『}
+\newrobustcmd*{\textcwcbracket}{』}
+
+\newrobustcmd*{\encbracket}[1]{\textocbracket#1\textccbracket}
+\newrobustcmd*{\enwcbracket}[1]{\textowcbracket#1\textcwcbracket}
 
 \blxja@restorecatcode
 \endinput

@@ -66,17 +66,31 @@
   \replacebibmacro{in:}{iflangidisjapanese}{}%
 
   \savefieldformat{booktitle}%
-  \replacefieldformat{booktitle}{iflangidisjapanese}{#1}%
+  \replacefieldformat{booktitle}{iflangidisjapanese}{\enwcbracket{#1}}%
+  \savefieldformat{citetitle}%
+  \replacefieldformat{citetitle}{iflangidisjapanese}{\enwcbracket{#1}}%
+  \savefieldformats
+      [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
+      {citetitle}%
+  \replacefieldformat
+      [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
+      {citetitle}{iflangidisjapanese}{\encbracket{#1}}%
   \savefieldformat{issuetitle}%
-  \replacefieldformat{issuetitle}{iflangidisjapanese}{#1}%
+  \replacefieldformat{issuetitle}{iflangidisjapanese}{\enwcbracket{#1}}%
   \savefieldformat{journaltitle}%
-  \replacefieldformat{journaltitle}{iflangidisjapanese}{#1}%
+  \replacefieldformat{journaltitle}{iflangidisjapanese}{\enwcbracket{#1}}%
   \savefieldformat{maintitle}%
-  \replacefieldformat{maintitle}{iflangidisjapanese}{#1}%
+  \replacefieldformat{maintitle}{iflangidisjapanese}{\enwcbracket{#1}}%
   \savefieldformat{pages}%
   \replacefieldformat{pages}{iflangidisjapanese}{#1\bibstring{japanese-pages}}%
   \savefieldformat{title}%
-  \replacefieldformat{title}{iflangidisjapanese}{#1}%
+  \replacefieldformat{title}{iflangidisjapanese}{\enwcbracket{#1}}%
+  \savefieldformats
+      [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
+      {title}%
+  \replacefieldformat
+      [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
+      {title}{iflangidisjapanese}{\encbracket{#1}}%
 
   \savenameformat{first-last}%
   \replacenameformat{first-last}{iflangidisjapanese}{%
@@ -166,11 +180,18 @@
   \restorebibmacro{in:}%
 
   \restorefieldformat{booktitle}%
+  \restorefieldformat{citetitle}%
+  \restorefieldformats
+      [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
+      {citetitle}%
   \restorefieldformat{issuetitle}%
   \restorefieldformat{journaltitle}%
   \restorefieldformat{maintitle}%
   \restorefieldformat{pages}%
   \restorefieldformat{title}%
+  \restorefieldformats
+      [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
+      {title}%
 
   \restorenameformat{first-last}%
   \restorenameformat{last-first}%
