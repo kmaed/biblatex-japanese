@@ -25,9 +25,12 @@
 
 \ProcessOptions*
 
-\iftoggle{blxja@chicago}
-         {\RequirePackage{biblatex-chicago}[2014/08/15]}
-         {}
+\iftoggle{blxja@chicago}{%
+  \RequirePackage{biblatex-chicago}[2014/08/15]%
+  \def\thefootnote{\@arabic\c@footnote)}%
+  \patchcmd{\@makefntext}
+           {\@thefnmark.\,\,}
+           {\@thefnmark\hspace{.7em}}{}{}}{}
 \RequirePackage{biblatex}[2015/10/21]
 
 \ifundef{\blxja@macrosdefined}
