@@ -27,6 +27,8 @@
   \replacecommand{\finalnamedelim}{iflangidisjapanese}{，}%
   \savecommand{\multinamedelim}%
   \replacecommand{\multinamedelim}{iflangidisjapanese}{，}%
+  \savecommand{\newunitpunct}%
+  \replacecommand{\newunitpunct}{iflangidisjapanese}{}%
 
   \savebibmacro{bytranslator+others}%
   \replacebibmacro{bytranslator+others}{iflangidisjapanese}{%
@@ -172,8 +174,9 @@
 \endgroup
 
 \UndeclareBibliographyExtras{%
-  \restorecommand{multinamedelim}%
-  \restorecommand{finalnamdelim}%
+  \restorecommand{\multinamedelim}%
+  \restorecommand{\finalnamdelim}%
+  \restorecommand{\newunitpunct}%
 
   \restorebibmacro{bytranslator+others}%
   \restorebibmacro{bytranslator+othersstrg}%
