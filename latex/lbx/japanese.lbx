@@ -28,7 +28,7 @@
   \savecommand{\multinamedelim}%
   \replacecommand{\multinamedelim}{iflangidisjapanese}{，}%
   \savecommand{\newunitpunct}%
-  \replacecommand{\newunitpunct}{iflangidisjapanese}{}%
+  \replacecommand{\newunitpunct}{iflangidisjapanese}{，}%
 
   \savebibmacro{bytranslator+others}%
   \replacebibmacro{bytranslator+others}{iflangidisjapanese}{%
@@ -37,7 +37,6 @@
                 {\setunit{\addspace}%
                   \printnames[bytranslator]{translator}%
                   \clearname{translator}%
-                  \addspace
                   \usebibmacro{bytranslator+othersstrg}%
                   \newunit}%
                 \usebibmacro{withothers}}%
@@ -165,7 +164,7 @@
                                      {}}}%
                    \printnames[bytranslator]{translator}%
                    \clearname{translator}%
-                   \space\bibstring{\@tempa}%
+                   \bibstring{\@tempa}%
                    \newcunit}%
       \usebibmacro{cbycompiler+others}}%
   }{}%
