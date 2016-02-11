@@ -183,6 +183,8 @@
     \mkbibnamelast{#2}\isdot}
 
 %% --- Punctuations ---
+\newrobustcmd*{\textfwcomma}{，}
+\newrobustcmd*{\textfwperiod}{．}
 \newrobustcmd*{\textocbracket}{「}
 \newrobustcmd*{\textccbracket}{」}
 \newrobustcmd*{\textowcbracket}{『}
