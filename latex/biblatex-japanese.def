@@ -85,26 +85,27 @@
   \begingroup                  % dummy for \endgroup in \etb@hooktocmd
   \blxja@replace@abx@macro@rn@args{#1}{@temprule@}{#3}}
 
+% {<id>}{<type>}{<macro>}
 \def\blxja@def@replacemacro#1#2#3{%
   \DeclareDocumentCommand{#3}{ s }{%
     \IfBooleanTF{##1}
-                {\csuse{blxja@replace@\detokenize{#1}@rulecode}}
-                {\csuse{blxja@replace@\detokenize{#1}@rulename}}}
-  \csdef{blxja@replace@\detokenize{#1}@rulename}{%
+                {\csuse{blxja@replace@abx@\detokenize{#1}@rulecode}}
+                {\csuse{blxja@replace@abx@\detokenize{#1}@rulename}}}
+  \csdef{blxja@replace@abx@\detokenize{#1}@rulename}{%
     \etb@dbg@trce#3
     \begingroup
     \@makeother\#%
-    \csuse{blxja@replace@\detokenize{#1}@args@}
-    {\csuse{blxja@replace@\detokenize{#1}@rn@args}}}
-  \csdef{blxja@replace@\detokenize{#1}@rulecode}{%
+    \csuse{blxja@replace@abx@\detokenize{#1}@args@}
+    {\csuse{blxja@replace@abx@\detokenize{#1}@rn@args}}}
+  \csdef{blxja@replace@abx@\detokenize{#1}@rulecode}{%
     \etb@dbg@trce{#3*}%
     \begingroup
     \@makeother\#%
-    \csuse{blxja@replace@\detokenize{#1}@args@}
-          {\csuse{blxja@replace@\detokenize{#1}@rc@args}}}
+    \csuse{blxja@replace@abx@\detokenize{#1}@args@}
+          {\csuse{blxja@replace@abx@\detokenize{#1}@rc@args}}}
 
   \expandafter\DeclareDocumentCommand\expandafter
-      {\csname blxja@replace@\detokenize{#1}@args@\endcsname}
+      {\csname blxja@replace@abx@\detokenize{#1}@args@\endcsname}
       { m O{*} m m +m }{%
         \endgroup
         \edef\@tempa{##2}%
@@ -113,28 +114,28 @@
           \expandafter\@tempc\expandafter{\@tempb}{##3}{##4}{##5}}}
 
   \expandafter\DeclareDocumentCommand\expandafter
-      {\csname blxja@replace@\detokenize{#1}@rn@args\endcsname}
+      {\csname blxja@replace@abx@\detokenize{#1}@rn@args\endcsname}
       { m m m +m }{%
         \ifcsundef{blxja@replacerule@\detokenize{##3}}{%
           \blxja@error{Replace rule '\detokenize{##3}' undefined}{}}{%
           \edef\blxja@tempa{\expandonce{\csname blxja@replacerule@\detokenize{##3}\endcsname}}%
-          \edef\blxja@tempb{\expandonce{\csname #1@\detokenize{##1}@\detokenize{##2}\endcsname}}%
+          \edef\blxja@tempb{\expandonce{\csname abx@#1@\detokenize{##1}@\detokenize{##2}\endcsname}}%
           \begingroup          % dummy for \endgroup in \etb@hooktocmd
           \expandafter\expandafter\expandafter\etb@hooktocmd\expandafter\blxja@tempa\blxja@tempb{##4}{}{%
             \blxja@error{#3 for the #2 '\detokenize{##2}' failed}
                         {Try \detokenize{\tracingpatches} to investigate the cause of the problem.\MessageBreak}}}}
   \expandafter\DeclareDocumentCommand\expandafter
-      {\csname blxja@replace@\detokenize{#1}@rc@args\endcsname}
+      {\csname blxja@replace@abx@\detokenize{#1}@rc@args\endcsname}
       { m m m +m }{%
         \edef\blxja@reserveda{%
           \unexpanded{\protected\long\def\blxja@replacerule@@temprule@####1####2}{%
             \scantokens{\unexpanded{##3}\noexpand}}}%
         \blxja@reserveda
         \begingroup            % dummy for \endgroup in \etb@hooktocmd
-        \csuse{blxja@replace@\detokenize{#1}@rn@args}[##1]{##2}{@temprule@}{##4}}}
+        \csuse{blxja@replace@abx@\detokenize{#1}@rn@args}[##1]{##2}{@temprule@}{##4}}}
 
-\blxja@def@replacemacro{abx@ffd}{field format}{\replacefieldformat}
-\blxja@def@replacemacro{abx@nfd}{name list format}{\replacenameformat}
+\blxja@def@replacemacro{ffd}{field format}{\replacefieldformat}
+\blxja@def@replacemacro{nfd}{name list format}{\replacenameformat}
 
 \DeclareDocumentCommand{\newreplacerule}{ m }{%
   \ifcsdef{blxja@replacerule@\detokenize{#1}}{%
