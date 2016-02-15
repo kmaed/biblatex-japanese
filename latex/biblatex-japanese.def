@@ -13,7 +13,7 @@
 \def\blxja@warning@noline#1{\PackageWarningNoLine{biblatex-japanese}{#1}}
 \def\ifbibmacrodef#1{\ifcsdef{abx@macro@\detokenize{#1}}}
 \def\ifbibmacroundef#1{\ifcsundef{abx@macro@\detokenize{#1}}}
-\def\blxja@def@savesrestorescommand#1#2#3{
+\def\blxja@def@savesrestorescommand#1#2#3{%
   \newrobustcmd*{#1}[2][*]{%
     \edef\@tempa{##1}%
     \@for\@tempb:=\@tempa\do{%
@@ -158,6 +158,24 @@
   \iffieldequalstr{langid}{japanese}
                   {#2}
                   {#1}}
+
+\def\blxja@hook@print@getname#1#2#3#4{%
+  \ifcsundef{blxja@hook@print@#2@\blx@imc@thefield{entrytype}@#3}
+    {\ifcsundef{blxja@hook@print@#2@*@#3}
+      {\ifcsundef{blxja@hook@print@#2@\blx@imc@thefield{entrytype}@#4}
+        {\ifcsundef{blxja@hook@print@#2@*@#4}
+          {\edef#1{blxja@hook@print@#2@*@default}}
+          {\edef#1{blxja@hook@print@#2@*@#4}}}
+        {\edef#1{blxja@hook@print@#2@\blx@imc@thefield{entrytype}@#4}}}
+      {\edef#1{blxja@hook@print@#2@*@#3}}}
+    {\edef#1{blxja@hook@print@#2@\blx@imc@thefield{entrytype}@#3}}}
+\def\blxja@def@printhook#1#2{%
+  \newrobustcmd*{#1}[3][*]{%
+    \edef\@tempa{##1}%
+    \@for\@tempb:=\@tempa\do{%
+      \csdef{blxja@hook@print@#2@\@tempb @##2}{##3}}}}
+
+\blxja@def@printhook{\printfieldhook}{ffd}
 
 %% --- Bibmacros for Japanese ---
 \newbibmacro*{name:japanese-full}[4]{% test: now only remove spaces

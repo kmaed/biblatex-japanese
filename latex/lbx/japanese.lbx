@@ -30,6 +30,15 @@
   \savecommand{\newunitpunct}%
   \replacecommand{\newunitpunct}{iflangidisjapanese}{\textfwcomma}%
 
+  \savecommand{\blx@begunit}%
+  \pretocmd{\blx@begunit}
+           {\ifcsdef{\blxja@hook@print@name}{\csuse{\blxja@hook@print@name}}{}}
+           {}{}%
+  \savecommand{\blx@getformat}%
+  \apptocmd{\blx@getformat}
+           {\blxja@hook@print@getname\blxja@hook@print@name{#2}{#3}{#4}}
+           {}{}%
+
   \savebibmacro{bytranslator+others}%
   \replacebibmacro{bytranslator+others}{iflangidisjapanese}{%
     \ifnameundef{translator}
@@ -66,8 +75,13 @@
   \savebibmacro{in:}%
   \replacebibmacro{in:}{iflangidisjapanese}{}%
 
+  \def\blxja@removeunitpunct{%
+    \iffieldequalstr{langid}{japanese}
+                    {\global\togglefalse{blx@insert}}
+                    {}}
   \savefieldformat{booktitle}%
   \replacefieldformat{booktitle}{iflangidisjapanese}{\enwcbracket{#1}}%
+  \printfieldhook{booktitle}{\blxja@removeunitpunct}
   \savefieldformat{citetitle}%
   \replacefieldformat{citetitle}{iflangidisjapanese}{\enwcbracket{#1}}%
   \savefieldformats
@@ -76,10 +90,12 @@
   \replacefieldformat
       [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
       {citetitle}{iflangidisjapanese}{\encbracket{#1}}%
+  \printfieldhook{citetitle}{\blxja@removeunitpunct}
   \savefieldformat{issuetitle}%
   \replacefieldformat{issuetitle}{iflangidisjapanese}{\enwcbracket{#1}}%
   \savefieldformat{journaltitle}%
   \replacefieldformat{journaltitle}{iflangidisjapanese}{\enwcbracket{#1}}%
+  \printfieldhook{journaltitle}{\blxja@removeunitpunct}
   \savefieldformat{maintitle}%
   \replacefieldformat{maintitle}{iflangidisjapanese}{\enwcbracket{#1}}%
   \savefieldformat{pages}%
@@ -92,6 +108,7 @@
   \replacefieldformat
       [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
       {title}{iflangidisjapanese}{\encbracket{#1}}%
+  \printfieldhook{title}{\blxja@removeunitpunct}
 
   \savenameformat{first-last}%
   \replacenameformat{first-last}{iflangidisjapanese}{%
@@ -176,6 +193,9 @@
   \restorecommand{\multinamedelim}%
   \restorecommand{\finalnamdelim}%
   \restorecommand{\newunitpunct}%
+
+  \restorecommand{\blx@begunit}%
+  \restorecommand{\blx@getformat}%
 
   \restorebibmacro{bytranslator+others}%
   \restorebibmacro{bytranslator+othersstrg}%
