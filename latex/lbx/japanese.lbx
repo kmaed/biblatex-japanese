@@ -23,12 +23,12 @@
           {\input{biblatex-japanese.def}}
           {}%
 
+  \savecommand{\blx@imc@addcomma}%
+  \replacecommand{\blx@imc@addcomma}{iflangidisjapanese}{\textfwcomma\ignorespaces}%
   \savecommand{\finalnamdelim}%
-  \replacecommand{\finalnamedelim}{iflangidisjapanese}{\textfwcomma}%
-  \savecommand{\multinamedelim}%
-  \replacecommand{\multinamedelim}{iflangidisjapanese}{\textfwcomma}%
+  \replacecommand{\finalnamedelim}{iflangidisjapanese}{\addcomma}%
   \savecommand{\newunitpunct}%
-  \replacecommand{\newunitpunct}{iflangidisjapanese}{\textfwcomma}%
+  \replacecommand{\newunitpunct}{iflangidisjapanese}{\addcomma}%
 
   \savecommand{\blx@begunit}%
   \pretocmd{\blx@begunit}
@@ -190,7 +190,7 @@
 \endgroup
 
 \UndeclareBibliographyExtras{%
-  \restorecommand{\multinamedelim}%
+  \restorecommand{\blx@imc@addcomma}%
   \restorecommand{\finalnamdelim}%
   \restorecommand{\newunitpunct}%
 
