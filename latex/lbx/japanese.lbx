@@ -153,6 +153,9 @@
 
   %% -- for chicago --
   \@ifpackageloaded{biblatex-chicago}{%
+    \savecommand{\classicpunct}
+    \replacecommand{\classicpunct}{iflangidisjapanese}{}
+
     \savebibmacro{cbytranslator+others}%
     \replacebibmacro{cbytranslator+others}{iflangidisjapanese}{%
       \ifnameundef{translator}
@@ -222,6 +225,7 @@
 
   %% -- for chicago --
   \@ifpackageloaded{biblatex-chicago}{%
+    \restorecommand{\classicpunct}
     \restorebibmacro{cbytranslator+others}%
   }{}%
   %% -- End: for chicago --
