@@ -108,7 +108,8 @@
   \replacefieldformat
       [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
       {title}{iflangidisjapanese}{\encbracket{#1}}%
-  \printfieldhook{title}{\blxja@removeunitpunct}
+  \printfieldhook{title}{\blxja@removeunitpunct}%
+  \printfieldhook{volume}{\blxja@removeunitpunct}%
 
   \savenameformat{first-last}%
   \replacenameformat{first-last}{iflangidisjapanese}{%
