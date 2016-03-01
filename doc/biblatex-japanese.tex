@@ -227,4 +227,17 @@ GitHubが利用できない場合は，メールで報告していただいて�
 （定義関係のコマンド）の引数で\texttt{\#}を含むものがある場合は，
 カテゴリコード12で読ませると当然意図通りにならないので，この場合は処理を
 分割する必要がある．
+
+\subsection{割り込み}
+
+\begin{ltxsyntax}
+  \cmditem{printfieldhook}[entrytype, \dots]{format}{code}
+
+  \cmd{printfield}の実行前に割り込んで\prm{code}を実行する．
+  割り込みが実行されるのは実際にprintすべきものが存在するときのみである．
+  ここで，割り込み箇所は\cmd{newunit}での約物出力処理(\cmd{blx@begunit})よりも前なので，
+  この約物出力を抑制することが可能である．現在のところ，用途はこれ以外に思いつかない
+  （し，あまり筋が良い方法とも思えない……）．
+\end{ltxsyntax}
+
 \end{document}
