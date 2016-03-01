@@ -2,9 +2,9 @@
 \usepackage{etoolbox}
 \usepackage{btxdockit}
 \makeatletter
-\patchcmd{\@maketitle}{\@author}{\setcounter{footnote}{1}\@author}{}{}
 \patchcmd{\ltxsyntax}{\let}{\parindent=1\zw\let}{}{}
 \catcode`\?=11
+\patchcmd{\@maketitle}{\@author}{\setcounter{footnote}{1}\@author}{}{}
 \patchcmd{\@dottedtocline}{\normalfont\normalcolor}{}{}{}
 \catcode`\?=12
 %% from ltxdockit.cfg
