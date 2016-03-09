@@ -32,7 +32,7 @@
 
   \savecommand{\blx@begunit}%
   \pretocmd{\blx@begunit}
-           {\ifcsdef{\blxja@hook@print@name}{\csuse{\blxja@hook@print@name}}{}}
+           {\ifdef{\blxja@hook@print@name}{\csuse{\blxja@hook@print@name}}{}}
            {}{}%
   \savecommand{\blx@getformat}%
   \apptocmd{\blx@getformat}
