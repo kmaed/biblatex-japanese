@@ -1,7 +1,7 @@
 % -*- mode: LaTeX -*-
 \ProvidesFile{biblatex-japanese.def}
 
-\edef\blxja@restorecatcode{\catcode64=\the\catcode64} % 64 = @
+\csedef{blxja@restorecatcode}{\catcode64=\the\catcode64}% 64 = @
 \catcode`\@=11
 \def\blxja@macrosdefined{\blxja@macrosdefined}
 
