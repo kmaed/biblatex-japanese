@@ -2,7 +2,7 @@
 % biblatex-japanese.sty
 %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{biblatex-japanese}[2016/01/01 Japanese language support for biblatex]
+\ProvidesPackage{biblatex-japanese}[2016/03/14 Japanese language support for biblatex]
 
 \RequirePackage{etoolbox}
 
@@ -31,7 +31,7 @@
   \patchcmd{\@makefntext}
            {\@thefnmark.\,\,}
            {\@thefnmark\hspace{1em}}{}{}}{}
-\RequirePackage{biblatex}[2015/10/21]
+\RequirePackage{biblatex}[2016/03/03]
 
 \ifundef{\blxja@macrosdefined}
         {\input{biblatex-japanese.def}}

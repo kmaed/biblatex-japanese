@@ -181,17 +181,17 @@
 \newbibmacro*{name:japanese-full}[4]{% test: now only remove spaces
   \usebibmacro{name:delim}{#2#3#1}%
   \usebibmacro{name:hook}{#2#3#1}%
-  \ifblank{#2}{}{\mkbibnamefirst{#2}\isdot}%
-  \ifblank{#3}{}{%
+  \ifempty{#2}{}{\mkbibnamefirst{#2}\isdot}%
+  \ifempty{#3}{}{%
     \mkbibnameprefix{#3}\isdot}%
   \mkbibnamelast{#1}\isdot
-  \ifblank{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}}
+  \ifempty{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}}
 
 \newbibmacro*{name:japanese-last}[4]{% test
   \ifuseprefix
     {\usebibmacro{name:delim}{#2}%
      \usebibmacro{name:hook}{#2}%
-     \ifblank{#2}
+     \ifempty{#2}
        {}
        {\ifcapital
           {\mkbibnameprefix{\MakeCapital{#2}}\isdot}
