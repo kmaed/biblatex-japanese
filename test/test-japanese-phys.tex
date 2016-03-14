@@ -1,0 +1,16 @@
+\documentclass[lualatex,ja=standard,magstyle=real,12pt]{bxjsarticle}
+\usepackage[backend=biber,sortcites=true,bibstyle=phys,biblabel=brackets]{biblatex-japanese}
+\addbibresource{test-japanese.bib}
+\makeatletter
+\renewcommand{\@makefnmark}{\hbox{}\hbox{\@textsuperscript{\normalfont\@thefnmark}}\hbox{}}
+\makeatother
+\begin{document}
+文献\autocite{hoge2000,foobar1990}はこの分野で最も広く読まれている基礎文献であり，
+大学院に入学するまでに必読である
+\footnote{\cite{foobar1990}は長大な論文であり，和訳が単行本で出ている\cite{foobar1995}．}．
+特に平安時代の文化との関わり\autocite[25]{hoge2000}，
+英語と日本語の言語学的関連からの考察\autocite[30--35]{hoge2000}は興味深い．
+また，文献\autocite{hoge2001}は新たな分野を拓いた最初の論文であり，
+当初の問題意識を知るうえで重要である．
+\printbibliography
+\end{document}
