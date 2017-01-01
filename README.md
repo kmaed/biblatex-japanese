@@ -4,7 +4,7 @@ Biblatex-japanese
 The package WILL provide a framework to use the [biblatex package](https://github.com/plk/biblatex) for making bibliographies in Japanese articles and books.
 The development of the package has been just started; the package is not practical at present.
 
-The present version is designed to work with biblatex v3.3.
+The present version is designed to work with at least v3.4 of biblatex.
 
 The details are explained in doc/biblatex-japanese.pdf (now only available in Japanese).
 

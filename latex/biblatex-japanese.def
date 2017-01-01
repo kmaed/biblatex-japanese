@@ -181,17 +181,17 @@
 \newbibmacro*{name:japanese-full}[4]{% test: now only remove spaces
   \usebibmacro{name:delim}{#2#3#1}%
   \usebibmacro{name:hook}{#2#3#1}%
-  \ifempty{#2}{}{\mkbibnamefirst{#2}\isdot}%
-  \ifempty{#3}{}{%
+  \ifdefvoid{#2}{}{\mkbibnamegiven{#2}\isdot}%
+  \ifdefvoid{#3}{}{%
     \mkbibnameprefix{#3}\isdot}%
-  \mkbibnamelast{#1}\isdot
-  \ifempty{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}}
+  \mkbibnamefamily{#1}\isdot
+  \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}}
 
 \newbibmacro*{name:japanese-last}[4]{% test
   \ifuseprefix
     {\usebibmacro{name:delim}{#2}%
      \usebibmacro{name:hook}{#2}%
-     \ifempty{#2}
+     \ifdefvoid{#2}
        {}
        {\ifcapital
           {\mkbibnameprefix{\MakeCapital{#2}}\isdot}
@@ -199,7 +199,7 @@
         \ifprefchar{}{\bibnamedelimc}}}
     {\usebibmacro{name:delim}{#2}%
      \usebibmacro{name:hook}{#2}}%
-    \mkbibnamelast{#2}\isdot}
+    \mkbibnamefamily{#2}\isdot}
 
 %% --- Punctuations ---
 \newrobustcmd*{\textfwcomma}{，}

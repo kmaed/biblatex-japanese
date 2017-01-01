@@ -2,7 +2,7 @@
 % biblatex-japanese.sty
 %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{biblatex-japanese}[2016/03/14 Japanese language support for biblatex]
+\ProvidesPackage{biblatex-japanese}[2017/01/02 Japanese language support for biblatex]
 
 \RequirePackage{etoolbox}
 
@@ -26,12 +26,12 @@
 \ProcessOptions*
 
 \iftoggle{blxja@chicago}{%
-  \RequirePackage{biblatex-chicago}[2014/08/15]%
+  \RequirePackage{biblatex-chicago}[2016/06/01]%
   \def\thefootnote{\@arabic\c@footnote)}%
   \patchcmd{\@makefntext}
            {\@thefnmark.\,\,}
            {\@thefnmark\hspace{1em}}{}{}}{}
-\RequirePackage{biblatex}[2016/03/03]
+\RequirePackage{biblatex}[2016/05/14]
 
 \ifundef{\blxja@macrosdefined}
         {\input{biblatex-japanese.def}}
