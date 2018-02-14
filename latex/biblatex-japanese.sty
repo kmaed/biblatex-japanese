@@ -7,8 +7,6 @@
 \RequirePackage{etoolbox}
 \RequirePackage{kvoptions}
 
-\newtoggle{blxja@chicago}
-
 \SetupKeyvalOptions{%
   family=blxja,
   prefix=blxja@
@@ -18,7 +16,7 @@
   \edef\@tempa{#1}%
   \@for\@tempb:=\@tempa\do{%
     \DeclareOption{\@tempb}{\PassOptionsToPackage{\CurrentOption}{biblatex-chicago}}}}
-\DeclareVoidOption{chicago}{\global\toggletrue{blxja@chicago}}
+\DeclareBoolOption{chicago}
 \DeclareOptionsToChicago{authordate,notes,authordate-trad,authordate15,notes15,footmarkoff}
 \DeclareBoolOption{yearsuffix}
 \DeclareDefaultOption{%
@@ -36,7 +34,7 @@
 
 \ProcessOptions*
 
-\iftoggle{blxja@chicago}{%
+\ifbool{blxja@chicago}{%
   \RequirePackage{biblatex-chicago}[2016/06/01]%
   \def\thefootnote{\@arabic\c@footnote)}%
   \patchcmd{\@makefntext}
