@@ -125,16 +125,21 @@ GitHubが利用できない場合は，メールで報告していただいて�
 \end{lstlisting}
 のようにする．
 
-\sty{biblatex-chicago}を読み込みたいときは
-\begin{lstlisting}[style=latex]{}
-\usepackage[backend=biber,chicago]{biblatex-japanese}
-\end{lstlisting}
-と\opt{chicago}オプションをつける．
-このときは，\sty{biblatex-chicago}に渡すオプションも通るようになる．
-
 \paragraph{注意}
 まだまだ開発は始めたばかりのため，とても実用に耐えるものではない．
 気長に待っていただければ幸いである．
+
+\section{オプション}
+
+\begin{optionlist}
+  \legitem{chicago}
+  \sty{biblatex-chicago}を使いたいときに指定する．
+  このときは，\sty{biblatex-chicago}が自動的に読み込まれ，
+  これに渡すオプションも通るようになる．
+
+  \boolitem[false]{yearsuffix}
+  文献の年号のあとに「年」をつけるかどうか．
+\end{optionlist}
 
 \section{開発者向けコマンド解説}
 \sty{biblatex-japanese}では，日本語対応ファイルの開発に用いるコマンド（マクロ）を

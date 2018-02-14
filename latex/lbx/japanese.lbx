@@ -10,6 +10,7 @@
   japanese-cbytranslator,
   japanese-page,
   japanese-pages,
+  japanese-yearsuffix,
 }
 
 
@@ -210,9 +211,28 @@
 }
 \endgroup
 
+\DeclareBibliographyExtras{%
+  \savecommand{\mkbibdatelong}%
+  \protected\def\mkbibdatelong#1#2#3{%
+    \iffieldundef{#2}
+      {}
+      {\mkbibmonth{\thefield{#2}}%
+       \iffieldundef{#3}
+         {\iffieldundef{#1}{}{\space}}
+         {\nobreakspace}}%
+    \iffieldundef{#3}
+      {}
+      {\stripzeros{\thefield{#3}}%
+       \iffieldundef{#1}{}{,\space}}%
+     \iffieldbibstring{#1}
+       {\bibstring{\thefield{#1}}\bibstring{japanese-yearsuffix}}
+       {\dateeraprintpre{#1}\stripzeros{\thefield{#1}\bibstring{japanese-yearsuffix}}}}%
+}
+
 \UndeclareBibliographyExtras{%
   \restorecommand{\blx@imc@addcomma}%
   \restorecommand{\finalnamdelim}%
+  \restorecommand{\mkbibdatelong}%
   \restorecommand{\newunitpunct}%
 
   \restorecommand{\blx@begunit}%
@@ -256,7 +276,13 @@
   japanese-cbytranslator = {{訳}{訳}},
   japanese-page          = {{頁}{頁}},
   japanese-pages         = {{頁}{頁}},
+  japanese-yearsuffix    = {{}{}},
   references             = {{参考文献}{参考文献}},
 }
+
+\ifbool{blxja@yearsuffix}{%
+\DeclareBibliographyStrings{%
+  japanese-yearsuffix    = {{年}{年}},
+}}
 
 \endinput

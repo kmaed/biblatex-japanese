@@ -2,20 +2,31 @@
 % biblatex-japanese.sty
 %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{biblatex-japanese}[2017/01/02 Japanese language support for biblatex]
+\ProvidesPackage{biblatex-japanese}[2018/02/15 Japanese language support for biblatex]
 
 \RequirePackage{etoolbox}
+\RequirePackage{kvoptions}
 
 \newtoggle{blxja@chicago}
+
+\SetupKeyvalOptions{%
+  family=blxja,
+  prefix=blxja@
+}
 
 \newcommand*{\DeclareOptionsToChicago}[1]{%
   \edef\@tempa{#1}%
   \@for\@tempb:=\@tempa\do{%
     \DeclareOption{\@tempb}{\PassOptionsToPackage{\CurrentOption}{biblatex-chicago}}}}
-
-\DeclareOption{chicago}{\global\toggletrue{blxja@chicago}}
+\DeclareVoidOption{chicago}{\global\toggletrue{blxja@chicago}}
 \DeclareOptionsToChicago{authordate,notes,authordate-trad,authordate15,notes15,footmarkoff}
-\DeclareOption*{\PassOptionsToPackage{\CurrentOption}{biblatex}}
+\DeclareBoolOption{yearsuffix}
+\DeclareDefaultOption{%
+  \key@ifundefined{blxja}{\CurrentOptionKey}
+                  {\expandafter\PassOptionsToPackage\expandafter{\CurrentOption}{biblatex}}%
+                  {}}
+\ProcessKeyvalOptions*
+\DeclareOption*{}
 
 \PassOptionsToPackage{%
   language=japanese,
