@@ -28,6 +28,21 @@
   \replacecommand{\blx@imc@addcomma}{iflangidisjapanese}{\textfwcomma\ignorespaces}%
   \savecommand{\finalnamdelim}%
   \replacecommand{\finalnamedelim}{iflangidisjapanese}{\addcomma}%
+  \savecommand{\mkbibdatelong}%
+  \replacecommand{\mkbibdatelong}{iflangidisjapanese}{%
+    \iffieldundef{#2}
+      {}
+      {\mkbibmonth{\thefield{#2}}%
+       \iffieldundef{#3}
+         {\iffieldundef{#1}{}{\space}}
+         {\nobreakspace}}%
+    \iffieldundef{#3}
+      {}
+      {\stripzeros{\thefield{#3}}%
+       \iffieldundef{#1}{}{,\space}}%
+     \iffieldbibstring{#1}
+       {\bibstring{\thefield{#1}}\bibstring{japanese-yearsuffix}}
+       {\dateeraprintpre{#1}\stripzeros{\thefield{#1}\bibstring{japanese-yearsuffix}}}}%
   \savecommand{\newunitpunct}%
   \replacecommand{\newunitpunct}{iflangidisjapanese}{\addcomma}%
 
@@ -210,24 +225,6 @@
   %% -- End: for chicago --
 }
 \endgroup
-
-\DeclareBibliographyExtras{%
-  \savecommand{\mkbibdatelong}%
-  \protected\def\mkbibdatelong#1#2#3{%
-    \iffieldundef{#2}
-      {}
-      {\mkbibmonth{\thefield{#2}}%
-       \iffieldundef{#3}
-         {\iffieldundef{#1}{}{\space}}
-         {\nobreakspace}}%
-    \iffieldundef{#3}
-      {}
-      {\stripzeros{\thefield{#3}}%
-       \iffieldundef{#1}{}{,\space}}%
-     \iffieldbibstring{#1}
-       {\bibstring{\thefield{#1}}\bibstring{japanese-yearsuffix}}
-       {\dateeraprintpre{#1}\stripzeros{\thefield{#1}\bibstring{japanese-yearsuffix}}}}%
-}
 
 \UndeclareBibliographyExtras{%
   \restorecommand{\blx@imc@addcomma}%
