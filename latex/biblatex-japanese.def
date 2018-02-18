@@ -1,10 +1,11 @@
-% -*- mode: LaTeX -*-
+% -*- mode: Latex -*-
 \ProvidesFile{biblatex-japanese.def}
 
 \csedef{blxja@restorecatcode}{\catcode64=\the\catcode64}% 64 = @
 \catcode`\@=11
 \def\blxja@macrosdefined{\blxja@macrosdefined}
 
+\RequirePackage{expl3}
 \RequirePackage{xparse}
 
 %% --- Internal macros ---
@@ -23,6 +24,20 @@
 \blxja@def@savesrestorescommand{\restorefieldformats}{\blx@restore}{ffd}
 
 %% --- User commands ---
+\ExplSyntaxOn
+
+\DeclareDocumentCommand{\ifCJKtokens}{ m m m }{
+  \tl_set:Nx \l_tmpa_tl {#1}
+  \bool_set_false:N \l_tmpa_bool
+  \tl_map_inline:Nn \l_tmpa_tl {
+    \token_if_cs:NF ##1 {
+      \int_compare:nNnT {`##1} > {"2E7F} {\bool_set_true:N \l_tmpa_bool} % ToDo: change CJK chars range
+    }
+  }
+  \bool_if:NTF \l_tmpa_bool {#2} {#3}
+}
+\ExplSyntaxOff
+
 \DeclareDocumentCommand{\replacecommand}{ s }{%
   \IfBooleanTF{#1}
               {\blxja@replacecommand@rulecode}
