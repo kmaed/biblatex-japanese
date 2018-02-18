@@ -202,15 +202,35 @@
     \mkbibnamefamily{#2}\isdot}
 
 %% --- Punctuations ---
-\newrobustcmd*{\textfwcomma}{，}
-\newrobustcmd*{\textfwperiod}{．}
-\newrobustcmd*{\textocbracket}{「}
-\newrobustcmd*{\textccbracket}{」}
-\newrobustcmd*{\textowcbracket}{『}
-\newrobustcmd*{\textcwcbracket}{』}
+\newrobustcmd*{\textocbracket}{「}  % U+300C LEFT CORNER BRACKET
+\newrobustcmd*{\textccbracket}{」}  % U+300D RIGHT CORNER BRACKET
+\newrobustcmd*{\textowcbracket}{『} % U+300E LEFT WHITE CORNER BRACKET
+\newrobustcmd*{\textcwcbracket}{』} % U+300F RIGHT WHITE CORNER BRACKET
+\newrobustcmd*{\textfwoparen}{（}     % U+FF08 FULLWIDTH LEFT PARENTHESIS
+\newrobustcmd*{\textfwcparen}{）}     % U+FF09 FULLWIDTH RIGHT PARENTHESIS
+\newrobustcmd*{\textfwcomma}{，}    % U+FF0C FULLWIDTH COMMA
+\newrobustcmd*{\textfwperiod}{．}   % U+FF0E FULLWIDTH FULL STOP
 
-\newrobustcmd*{\encbracket}[1]{\textocbracket#1\textccbracket}
-\newrobustcmd*{\enwcbracket}[1]{\textowcbracket#1\textcwcbracket}
+\newrobustcmd*{\mkbibcbrackets}[1]{%
+  \begingroup
+  \blx@blxinit
+  \blx@setsfcodes
+  \textocbracket#1\textccbracket
+  \endgroup}
+
+\newrobustcmd*{\mkbibwcbrackets}[1]{%
+  \begingroup
+  \blx@blxinit
+  \blx@setsfcodes
+  \textowcbracket#1\textcwcbracket
+  \endgroup}
+
+\newrobustcmd*{\mkbibfwparens}[1]{%
+  \begingroup
+  \blx@blxinit
+  \blx@setsfcodes
+  \textfwoparen#1\textfwcparen
+  \endgroup}
 
 \blxja@restorecatcode
 \endinput
