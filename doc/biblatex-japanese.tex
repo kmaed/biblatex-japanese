@@ -1,4 +1,5 @@
-\documentclass[lualatex,ja=standard,magstyle=real]{bxjsarticle}
+\documentclass{jlreq}
+\usepackage[sourcehan-jp]{luatexja-preset}
 \usepackage{etoolbox}
 \usepackage{btxdockit}
 \makeatletter
@@ -7,6 +8,7 @@
 \patchcmd{\@maketitle}{\@author}{\setcounter{footnote}{1}\@author}{}{}
 \patchcmd{\@dottedtocline}{\normalfont\normalcolor}{}{}{}
 \catcode`\?=12
+\setlength{\lstenvsep}{.5\Cvs}
 %% from ltxdockit.cfg
 \renewcommand*{\verbatimfont}{\ttfamily}
 \renewcommand*{\displayverbfont}{\ttfamily}
@@ -18,16 +20,18 @@
 \renewcommand*{\changelogfont}{\normalfont}
 \renewcommand*{\changeloglabelfont}{\spotcolor\sffamily\bfseries}
 
-\setmainjfont[BoldFont=M+ 1c-Bold]{IPAexMincho}
-\setsansjfont{M+ 1c}
-\setmainfont[BoldFont=M+ 1c-Bold]{TeXGyreTermes}
-\setsansfont{M+ 1c}
+\setmainfont{TeXGyreTermes}
+\setsansfont{TeXGyreHeros}
 \setmonofont{Inconsolata-zi4}
-\renewcommand{\headfont}{\sffamily\bfseries\spotcolor}
-\pretocmd{\l@subsection}{\fontspec{M+ 1c}\jfontspec{M+ 1c}\color{spot}}{}{}
+\RenewBlockHeading{section}{1}{font={\jlreq@keepbaselineskip{\Large\sffamily\bfseries\spotcolor}},lines=3,after_label_space=1\zw,second_heading_text_indent={-1\zw,1\zw},subtitle_font={\jlreq@keepbaselineskip{\normalsize}}}
+\RenewBlockHeading{subsection}{2}{font={\jlreq@keepbaselineskip{\large\sffamily\bfseries\spotcolor}},lines=2,after_label_space=1\zw,second_heading_text_indent={-1\zw,1\zw},subtitle_font={\jlreq@keepbaselineskip{\small}}}
+\RenewBlockHeading{subsubsection}{3}{font={\jlreq@keepbaselineskip{\normalsize\sffamily\bfseries\spotcolor}},lines=1,before_lines=1,subtitle_break=false,after_label_space=1\zw,second_heading_text_indent={-1\zw,1\zw},subtitle_font={\jlreq@keepbaselineskip{\scriptsize}}}
+\RenewRuninHeading{paragraph}{4}{font={\jlreq@keepbaselineskip{\normalsize\sffamily\bfseries\spotcolor}},indent=1\zw}
+\RenewRuninHeading{subparagraph}{5}{font={\jlreq@keepbaselineskip{\normalsize\sffamily\bfseries\spotcolor}},indent=2\zw}
+\pretocmd{\l@section}{\sffamily\jfontspec{SourceHanSansJp-Regular}\spotcolor}{}{}
+\pretocmd{\l@subsection}{\sffamily\jfontspec{SourceHanSansJp-Regular}\spotcolor}{}{}
 \renewcommand{\@makefnmark}{\hbox{}\hbox{\@textsuperscript{\normalfont\@thefnmark}}\hbox{}}
 \makeatother
-
 
 \title{\bfseries\spotcolor\sty{biblatex-japanese}パッケージ}
 \author{前田一貴\footnote{Email: \texttt{kmaeda@kmaeda.net}}}
@@ -114,15 +118,15 @@ GitHubが利用できない場合は，メールで報告していただいて�
 \section{使い方}
 \sty{biblatex-japanese}一式を\file{TEXMF}ツリーの適切な場所に配置したうえで，
 プリアンブルに次を入れる：
-\begin{lstlisting}[style=latex]{}
+\begin{ltxexample}
 \usepackage[backend=biber]{biblatex-japanese}
-\end{lstlisting}
+\end{ltxexample}
 これで\sty{biblatex}本体および日本語用の設定ファイルが読み込まれる．
 \sty{biblatex}に渡したいオプションは\sty{biblatex-japanese}に渡せばよい．
 例えば，引用時の番号をソートしたければ
-\begin{lstlisting}[style=latex]{}
+\begin{ltxexample}
 \usepackage[backend=biber,sortcites=true]{biblatex-japanese}
-\end{lstlisting}
+\end{ltxexample}
 のようにする．
 
 \paragraph{注意}
@@ -132,13 +136,13 @@ GitHubが利用できない場合は，メールで報告していただいて�
 \section{オプション}
 
 \begin{optionlist}
-  \legitem{chicago}
+  \boolitem[false]{chicago}
   \sty{biblatex-chicago}を使いたいときに指定する．
   このときは，\sty{biblatex-chicago}が自動的に読み込まれ，
   これに渡すオプションも通るようになる．
 
   \boolitem[false]{yearsuffix}
-  文献の年号のあとに「年」をつけるかどうか．
+  和文文献の年号のあとに「年」をつけるかどうか．
 \end{optionlist}
 
 \section{開発者向けコマンド解説}
@@ -190,12 +194,12 @@ GitHubが利用できない場合は，メールで報告していただいて�
   \prm{replace rule name}の代わりに置換ルールのコードを直接引数に取るバージョン．
   置換ルールコード中では，\verb|#1|が置換前のコードを，\verb|#2|が置換後のコードを
   表す．例えば，
-\begin{lstlisting}[style=latex]{}
+  \begin{ltxexample}
 \replacecommand{\command}{%
    \iffieldequalstr{langid}{japanese}
                    {#2}
                    {#1}}{...}
-\end{lstlisting}
+  \end{ltxexample}
   と書けば，スター無し版で\prm{replace rule name}に\texttt{iflangidisjapanese}を指定したのと
   同じことになる．
 
@@ -220,10 +224,10 @@ GitHubが利用できない場合は，メールで報告していただいて�
 変えてから引数のコードを取り込み，後で\cmd{scantokens}で読み直すという処理を行っている．
 このため，引数のコードを一度別のマクロに保存してから実行するような処理と相性が悪い．
 このことを理解するには次のコードを試してみるとよい：
-\begin{lstlisting}[style=latex]{}
+\begin{ltxexample}
 \def\a#1{\detokenize{#1}}
 \a{#2}
-\end{lstlisting}
+\end{ltxexample}
 処理すると結果は「\#\#2」となるはずである．このように二重\texttt{\#}に化けてから
 パッチコマンドに渡すと，うまくパッチが当てられないということになる．
 この現象と同じことが\cmd{DeclareBibliographyExtras}や
