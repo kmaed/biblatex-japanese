@@ -31,8 +31,9 @@
   }
 }
 \cs_new:Nn \blxja_if_CJKchar:nT {\blxja_if_CJKchar:nTF {#1} {#2} {}}
+\cs_generate_variant:Nn \tl_to_str:n {f}
 \DeclareDocumentCommand{\ifCJKstr}{ m m m }{
-  \tl_set:Nx \l_tmpa_tl { \tl_to_str:n {#1} }
+  \tl_set:Nf \l_tmpa_tl { \tl_to_str:f {#1} }
   \bool_set_false:N \l_tmpa_bool
   \tl_map_inline:Nn \l_tmpa_tl {
     \token_if_cs:NF ##1 {
@@ -44,9 +45,9 @@
 \cs_generate_variant:Nn \blxja_if_CJKchar:nTF {oTF}
 \cs_generate_variant:Nn \tl_if_head_is_group:nTF {oTF}
 \DeclareDocumentCommand{\ifbeginwithCJKchar}{ m m m }{
-  \tl_set:Nx \l_tmpa_tl { \tl_head:f {#1} }
+  \tl_set:Nf \l_tmpa_tl { \tl_head:f {#1} }
   \tl_if_head_is_group:oTF { \l_tmpa_tl }{
-    \tl_set:Nx \l_tmpa_tl { \exp_last_unbraced:No \use:n \l_tmpa_tl }
+    \tl_set:Nf \l_tmpa_tl { \exp_last_unbraced:No \use:n \l_tmpa_tl }
     \ifbeginwithCJKchar { \l_tmpa_tl } {#2} {#3}
   }{
     \blxja_if_CJKchar:oTF { \l_tmpa_tl } {#2} {#3}
@@ -54,12 +55,12 @@
 }
 \cs_generate_variant:Nn \tl_if_single:nTF {oTF}
 \DeclareDocumentCommand{\ifendwithCJKchar}{ m m m }{
-  \tl_set:Nx \l_tmpa_tl { #1 }
+  \tl_set:Nf \l_tmpa_tl { #1 }
   \tl_if_single:oTF \l_tmpa_tl {} {
-    \tl_set:Nx \l_tmpa_tl { \tl_tail:f {\l_tmpa_tl} }
+    \tl_set:Nf \l_tmpa_tl { \tl_tail:f {\l_tmpa_tl} }
   }
   \tl_if_head_is_group:oTF { \l_tmpa_tl }{
-    \tl_set:Nx \l_tmpa_tl { \exp_last_unbraced:No \use:n \l_tmpa_tl }
+    \tl_set:Nf \l_tmpa_tl { \exp_last_unbraced:No \use:n \l_tmpa_tl }
     \ifendwithCJKchar { \l_tmpa_tl } {#2} {#3}
   }{
     \tl_if_single:oTF {\l_tmpa_tl} {
@@ -254,10 +255,10 @@
 \newrobustcmd*{\bibclosecbracket}{」} % U+300D RIGHT CORNER BRACKET
 \newrobustcmd*{\bibopenwcbracket}{『} % U+300E LEFT WHITE CORNER BRACKET
 \newrobustcmd*{\bibclosewcbracket}{』} % U+300F RIGHT WHITE CORNER BRACKET
-\newrobustcmd*{\bibopenfwparen}{（}     % U+FF08 FULLWIDTH LEFT PARENTHESIS
-\newrobustcmd*{\bibclosefwparen}{）}     % U+FF09 FULLWIDTH RIGHT PARENTHESIS
-\newrobustcmd*{\bibfwcomma}{，}    % U+FF0C FULLWIDTH COMMA
-\newrobustcmd*{\bibfwperiod}{．}   % U+FF0E FULLWIDTH FULL STOP
+\newrobustcmd*{\bibopenfwparen}{（} % U+FF08 FULLWIDTH LEFT PARENTHESIS
+\newrobustcmd*{\bibclosefwparen}{）} % U+FF09 FULLWIDTH RIGHT PARENTHESIS
+\newrobustcmd*{\bibfwcomma}{，}      % U+FF0C FULLWIDTH COMMA
+\newrobustcmd*{\bibfwperiod}{．}     % U+FF0E FULLWIDTH FULL STOP
 
 \newrobustcmd*{\mkbibcbrackets}[1]{%
   \begingroup
