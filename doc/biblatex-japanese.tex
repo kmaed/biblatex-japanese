@@ -162,7 +162,7 @@ GitHubが利用できない場合は，メールで報告していただいて�
 このためのテストコマンドを準備しておく．
 
 \begin{ltxsyntax}
-  \cmditem{ifCJKtokens}{tokens}{true code}{false code}
+  \cmditem{ifCJKstr}{tokens}{true code}{false code}
 
   \prm{tokens}にU+2E80以上\footnote{変更可能にすることが今後の課題．}の
   コードポイントの文字が含まれていれば\prm{true code}を実行し，
@@ -172,13 +172,13 @@ GitHubが利用できない場合は，メールで報告していただいて�
   なお，Unicodeであることを前提にしているので，p\TeX の場合は
   怪しい動作になる．どうなるのかをちゃんと理解したら対策するかもしれない．
 
-  \cmditem{ifbeginwithCJKtoken}{tokens}{true code}{false code}
+  \cmditem{ifbeginwithCJKchar}{tokens}{true code}{false code}
 
   \prm{tokens}の先頭にU+2E80以上のコードポイントの文字があれば
   \prm{true code}を実行し，そうでなければ\prm{false code}を実行する．
   テストは一度\prm{tokens}を完全展開してから行われる．
 
-  \cmditem{ifendwithCJKtoken}{tokens}{true code}{false code}
+  \cmditem{ifendwithCJKchar}{tokens}{true code}{false code}
 
   \prm{tokens}の末尾にU+2E80以上のコードポイントの文字があれば
   \prm{true code}を実行し，そうでなければ\prm{false code}を実行する．

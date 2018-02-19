@@ -25,47 +25,47 @@
 
 %% --- User commands ---
 \ExplSyntaxOn
-\cs_new:Nn \blxja_if_CJKtoken:nTF {
+\cs_new:Nn \blxja_if_CJKchar:nTF {
   \token_if_cs:NTF #1 {#3} {
     \int_compare:nNnTF {`#1} > {"2E7F} {#2} {#3} % ToDo: change CJK chars range
   }
 }
-\cs_new:Nn \blxja_if_CJKtoken:nT {\blxja_if_CJKtoken:nTF {#1} {#2} {}}
-\DeclareDocumentCommand{\ifCJKtokens}{ m m m }{
+\cs_new:Nn \blxja_if_CJKchar:nT {\blxja_if_CJKchar:nTF {#1} {#2} {}}
+\DeclareDocumentCommand{\ifCJKstr}{ m m m }{
   \tl_set:Nx \l_tmpa_tl { \tl_to_str:n {#1} }
   \bool_set_false:N \l_tmpa_bool
   \tl_map_inline:Nn \l_tmpa_tl {
     \token_if_cs:NF ##1 {
-      \blxja_if_CJKtoken:nT {##1} {\bool_set_true:N \l_tmpa_bool}
+      \blxja_if_CJKchar:nT {##1} {\bool_set_true:N \l_tmpa_bool}
     }
   }
   \bool_if:NTF \l_tmpa_bool {#2} {#3}
 }
-\cs_generate_variant:Nn \blxja_if_CJKtoken:nTF {fTF}
+\cs_generate_variant:Nn \blxja_if_CJKchar:nTF {oTF}
 \cs_generate_variant:Nn \tl_if_head_is_group:nTF {oTF}
-\DeclareDocumentCommand{\ifbeginwithCJKtoken}{ m m m }{
-  \tl_set:Nf \l_tmpa_tl { \tl_head:f {#1} }
+\DeclareDocumentCommand{\ifbeginwithCJKchar}{ m m m }{
+  \tl_set:Nx \l_tmpa_tl { \tl_head:f {#1} }
   \tl_if_head_is_group:oTF { \l_tmpa_tl }{
-    \tl_set:Nf \l_tmpa_tl { \exp_last_unbraced:No \use:n \l_tmpa_tl }
-    \ifbeginwithCJKtoken { \l_tmpa_tl } {#2} {#3}
+    \tl_set:Nx \l_tmpa_tl { \exp_last_unbraced:No \use:n \l_tmpa_tl }
+    \ifbeginwithCJKchar { \l_tmpa_tl } {#2} {#3}
   }{
-    \blxja_if_CJKtoken:fTF { \l_tmpa_tl } {#2} {#3}
+    \blxja_if_CJKchar:oTF { \l_tmpa_tl } {#2} {#3}
   }
 }
 \cs_generate_variant:Nn \tl_if_single:nTF {oTF}
-\DeclareDocumentCommand{\ifendwithCJKtoken}{ m m m }{
-  \tl_set:Nf \l_tmpa_tl { #1 }
+\DeclareDocumentCommand{\ifendwithCJKchar}{ m m m }{
+  \tl_set:Nx \l_tmpa_tl { #1 }
   \tl_if_single:oTF \l_tmpa_tl {} {
-    \tl_set:Nf \l_tmpa_tl { \tl_tail:f {\l_tmpa_tl} }
+    \tl_set:Nx \l_tmpa_tl { \tl_tail:f {\l_tmpa_tl} }
   }
   \tl_if_head_is_group:oTF { \l_tmpa_tl }{
-    \tl_set:Nf \l_tmpa_tl { \exp_last_unbraced:No \use:n \l_tmpa_tl }
-    \ifendwithCJKtoken { \l_tmpa_tl } {#2} {#3}
+    \tl_set:Nx \l_tmpa_tl { \exp_last_unbraced:No \use:n \l_tmpa_tl }
+    \ifendwithCJKchar { \l_tmpa_tl } {#2} {#3}
   }{
     \tl_if_single:oTF {\l_tmpa_tl} {
-      \blxja_if_CJKtoken:fTF { \l_tmpa_tl } {#2} {#3}
+      \blxja_if_CJKchar:oTF { \l_tmpa_tl } {#2} {#3}
     } {
-      \ifendwithCJKtoken { \l_tmpa_tl } {#2} {#3}
+      \ifendwithCJKchar { \l_tmpa_tl } {#2} {#3}
     }
   }
 }
@@ -250,34 +250,34 @@
     \mkbibnamefamily{#2}\isdot}
 
 %% --- Punctuations ---
-\newrobustcmd*{\textocbracket}{「}  % U+300C LEFT CORNER BRACKET
-\newrobustcmd*{\textccbracket}{」}  % U+300D RIGHT CORNER BRACKET
-\newrobustcmd*{\textowcbracket}{『} % U+300E LEFT WHITE CORNER BRACKET
-\newrobustcmd*{\textcwcbracket}{』} % U+300F RIGHT WHITE CORNER BRACKET
-\newrobustcmd*{\textfwoparen}{（}     % U+FF08 FULLWIDTH LEFT PARENTHESIS
-\newrobustcmd*{\textfwcparen}{）}     % U+FF09 FULLWIDTH RIGHT PARENTHESIS
-\newrobustcmd*{\textfwcomma}{，}    % U+FF0C FULLWIDTH COMMA
-\newrobustcmd*{\textfwperiod}{．}   % U+FF0E FULLWIDTH FULL STOP
+\newrobustcmd*{\bibopencbracket}{「}  % U+300C LEFT CORNER BRACKET
+\newrobustcmd*{\bibclosecbracket}{」} % U+300D RIGHT CORNER BRACKET
+\newrobustcmd*{\bibopenwcbracket}{『} % U+300E LEFT WHITE CORNER BRACKET
+\newrobustcmd*{\bibclosewcbracket}{』} % U+300F RIGHT WHITE CORNER BRACKET
+\newrobustcmd*{\bibopenfwparen}{（}     % U+FF08 FULLWIDTH LEFT PARENTHESIS
+\newrobustcmd*{\bibclosefwparen}{）}     % U+FF09 FULLWIDTH RIGHT PARENTHESIS
+\newrobustcmd*{\bibfwcomma}{，}    % U+FF0C FULLWIDTH COMMA
+\newrobustcmd*{\bibfwperiod}{．}   % U+FF0E FULLWIDTH FULL STOP
 
 \newrobustcmd*{\mkbibcbrackets}[1]{%
   \begingroup
   \blx@blxinit
   \blx@setsfcodes
-  \textocbracket#1\textccbracket
+  \bibopencbracket#1\bibclosecbracket
   \endgroup}
 
 \newrobustcmd*{\mkbibwcbrackets}[1]{%
   \begingroup
   \blx@blxinit
   \blx@setsfcodes
-  \textowcbracket#1\textcwcbracket
+  \bibopenwcbracket#1\bibclosewcbracket
   \endgroup}
 
 \newrobustcmd*{\mkbibfwparens}[1]{%
   \begingroup
   \blx@blxinit
   \blx@setsfcodes
-  \textfwoparen#1\textfwcparen
+  \bibopenfwparen#1\bibclosefwparen
   \endgroup}
 
 \blxja@restorecatcode
