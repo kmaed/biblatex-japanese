@@ -161,6 +161,9 @@ GitHubが利用できない場合は，メールで報告していただいて�
 フィールド毎に和文文字を含むかどうかで動作を変更できると便利である．
 このためのテストコマンドを準備しておく．
 
+なお，Unicodeであることを前提にしているので，p\TeX の場合は
+怪しい動作になる．どうなるのかをちゃんと理解したら対策するかもしれない．
+
 \begin{ltxsyntax}
   \cmditem{ifCJKstr}{tokens}{true code}{false code}
 
@@ -168,9 +171,6 @@ GitHubが利用できない場合は，メールで報告していただいて�
   コードポイントの文字が含まれていれば\prm{true code}を実行し，
   そうでなければ\prm{false code}を実行する．
   テストは一度\prm{tokens}を完全展開してから行われる．
-
-  なお，Unicodeであることを前提にしているので，p\TeX の場合は
-  怪しい動作になる．どうなるのかをちゃんと理解したら対策するかもしれない．
 
   \cmditem{ifbeginwithCJKchar}{tokens}{true code}{false code}
 
@@ -205,13 +205,19 @@ GitHubが利用できない場合は，メールで報告していただいて�
   \cmditem{replacenameformat}[entrytype, \dots]{format}{replace rule name}{code}
 
   それぞれ\cmd{replacecommand}のbibmacro, field format, name list formatに対応するもの．
+
+  \cmd{replacefieldformat}, \cmd{replacenameformat}では，replace ruleの定義中にある
+  \cmd{blxja@format}が冒頭で\prm{format}と定義される．
+  このことを利用すると，\prm{format}毎にreplace ruleを用意する手間を省ける．
 \end{ltxsyntax}
 
-\prm{replace rule name}には以下のいずれかを指定する（現状では1つしかないが，
-  今後増やす予定）．
+\prm{replace rule name}には以下のいずれかを指定する．
 \begin{typelist}
   \typeitem{iflangidisjapanese}
   文献出力処理中に，もしその文献の\bibfield{langid}が\texttt{japanese}ならば真になる．
+
+  \typeitem{iffieldisCJK}
+  \cmd{replacefieldformat}で用いると，対象のfieldが和文文字を含む時に真になる．
 \end{typelist}
 
 \begin{ltxsyntax}

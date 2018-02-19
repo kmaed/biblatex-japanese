@@ -96,34 +96,34 @@
                     {\global\togglefalse{blx@insert}}
                     {}}
   \savefieldformat{booktitle}%
-  \replacefieldformat{booktitle}{iflangidisjapanese}{\mkbibwcbrackets{#1}}%
+  \replacefieldformat{booktitle}{iffieldisCJK}{\mkbibwcbrackets{#1}}%
   \printfieldhook{booktitle}{\blxja@removeunitpunct}
   \savefieldformat{citetitle}%
-  \replacefieldformat{citetitle}{iflangidisjapanese}{\mkbibwcbrackets{#1}}%
+  \replacefieldformat{citetitle}{iffieldisCJK}{\mkbibwcbrackets{#1}}%
   \savefieldformats
       [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
       {citetitle}%
   \replacefieldformat
       [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
-      {citetitle}{iflangidisjapanese}{\mkbibcbrackets{#1}}%
+      {citetitle}{iffieldisCJK}{\mkbibcbrackets{#1}}%
   \printfieldhook{citetitle}{\blxja@removeunitpunct}%
   \savefieldformat{issuetitle}%
-  \replacefieldformat{issuetitle}{iflangidisjapanese}{\mkbibwcbrackets{#1}}%
+  \replacefieldformat{issuetitle}{iffieldisCJK}{\mkbibwcbrackets{#1}}%
   \savefieldformat{journaltitle}%
-  \replacefieldformat{journaltitle}{iflangidisjapanese}{\mkbibwcbrackets{#1}}%
+  \replacefieldformat{journaltitle}{iffieldisCJK}{\mkbibwcbrackets{#1}}%
   \printfieldhook{journaltitle}{\blxja@removeunitpunct}%
   \savefieldformat{maintitle}%
-  \replacefieldformat{maintitle}{iflangidisjapanese}{\mkbibwcbrackets{#1}}%
+  \replacefieldformat{maintitle}{iffieldisCJK}{\mkbibwcbrackets{#1}}%
   \savefieldformat{pages}%
-  \replacefieldformat{pages}{iflangidisjapanese}{#1\bibstring{japanese-pages}}%
+  \replacefieldformat{pages}{iffieldisCJK}{#1\bibstring{japanese-pages}}%
   \savefieldformat{title}%
-  \replacefieldformat{title}{iflangidisjapanese}{\mkbibwcbrackets{#1}}%
+  \replacefieldformat{title}{iffieldisCJK}{\mkbibwcbrackets{#1}}%
   \savefieldformats
       [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
       {title}%
   \replacefieldformat
       [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
-      {title}{iflangidisjapanese}{\mkbibcbrackets{#1}}%
+      {title}{iffieldisCJK}{\mkbibcbrackets{#1}}%
   \printfieldhook{title}{\blxja@removeunitpunct}%
   \printfieldhook{volume}{\blxja@removeunitpunct}%
 
