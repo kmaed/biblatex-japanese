@@ -1,14 +1,42 @@
-\documentclass[12pt]{jlreq}
-\usepackage[sourcehan-jp]{luatexja-preset}
-\usepackage[backend=biber,sortcites=true,bibstyle=phys,biblabel=brackets]{biblatex-japanese}
+\documentclass[10pt]{jlreq}
+
+\usepackage{luatexja-preset}
+
+\usepackage[bookmarks,bookmarksnumbered,colorlinks,breaklinks]{hyperref}
+\hypersetup{%
+citecolor=[rgb]{0.6,0,0.1},%
+urlcolor=[rgb]{0,0.4,0},%
+linkcolor=[rgb]{0.3,0,0},%
+filecolor=[rgb]{0.3,0,0}}
+
+% biblatex の読み込み．
+\usepackage[style=phys]{biblatex-japanese}
+
+% その他のbiblatex の option の指定
+\ExecuteBibliographyOptions{
+sortcites=true,%
+}
+
+% 文献データベースの指定．
 \addbibresource{test-japanese.bib}
+\addbibresource{test-japanese-additional.bib}
+
+\biblabelsep1\zw
+
 \begin{document}
-文献\autocite{hoge2000,foobar1990}はこの分野で最も広く読まれている基礎文献であり，
-大学院に入学するまでに必読である
-\footnote{\cite{foobar1990}は長大な論文であり，和訳が単行本で出ている\cite{foobar1995}．}．
-特に平安時代の文化との関わり\autocite[25]{hoge2000}，
-英語と日本語の言語学的関連からの考察\autocite[30--35]{hoge2000}は興味深い．
-また，文献\autocite{hoge2001}は新たな分野を拓いた最初の論文であり，
-当初の問題意識を知るうえで重要である．
-\printbibliography
+
+\section{説明}
+
+\begin{itemize}
+ \item これは \texttt{biblatex-japanese} パッケージを利用したサンプルのファイル
+       です．
+ \item 利用している引用・参考文献スタイル
+       \begin{itemize}
+        \item ``\texttt{biblatex-phys}'' スタイルを利用しています．
+       \end{itemize}
+\end{itemize}
+
+% 引用部分、参考文献部分は input-text.tex というファイル．
+\input{input-text}
+
 \end{document}
