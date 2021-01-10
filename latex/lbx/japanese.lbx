@@ -11,6 +11,7 @@
   japanese-page,
   japanese-pages,
   japanese-yearsuffix,
+  japanese-chapter,
 }
 
 
@@ -126,6 +127,10 @@
       {title}{iffieldisCJK}{\mkbibcbrackets{#1}}%
   \printfieldhook{title}{\blxja@removeunitpunct}%
   \printfieldhook{volume}{\blxja@removeunitpunct}%
+
+  \savefieldformat{chapter}%
+  \replacefieldformat{chapter}{iflangidisjapanese}{%
+    {#1\bibstring{japanese-chapter}}}%
 
   \savenameformat{given-family}%
   \replacenameformat{given-family}{iflangidisjapanese}{%
@@ -252,6 +257,7 @@
   \restorefieldformats
       [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
       {title}%
+  \restorefieldformat{chapter}
 
   \restorenameformat{given-family}%
   \restorenameformat{family-given}%
@@ -275,6 +281,7 @@
   japanese-pages         = {{頁}{頁}},
   japanese-yearsuffix    = {{}{}},
   references             = {{参考文献}{参考文献}},
+  japanese-chapter	 = {{章}{章}},
 }
 
 \ifbool{blxja@yearsuffix}{%
