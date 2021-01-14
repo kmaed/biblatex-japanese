@@ -13,6 +13,7 @@
   japanese-yearsuffix,
   japanese-chapter,
   japanese-edition,
+  japanese-andothers,
 }
 
 
@@ -92,6 +93,16 @@
 
   \savebibmacro{in:}%
   \replacebibmacro{in:}{iflangidisjapanese}{}%
+
+  \savebibmacro{name:andothers}%
+  \replacebibmacro{name:andothers}{iflangidisjapanese}{%
+    \ifboolexpr{%
+      test {\ifnumequal{\value{listcount}}{\value{liststop}}}
+      and
+      test \ifmorenames
+    }
+      {\bibstring{japanese-andothers}}
+      {}}
 
   \def\blxja@removeunitpunct{%
     \iffieldequalstr{langid}{japanese}
@@ -250,6 +261,7 @@
   \restorebibmacro{bytranslator+others}%
   \restorebibmacro{bytranslator+othersstrg}%
   \restorebibmacro{in:}%
+  \restorebibmacro{name:andothers}%
 
   \restorefieldformat{booktitle}%
   \restorefieldformat{citetitle}%
@@ -291,6 +303,7 @@
   references             = {{参考文献}{参考文献}},
   japanese-chapter	 = {{章}{章}},
   japanese-edition	 = {{版}{版}},
+  japanese-andothers     = {{他}{他}},
 }
 
 \ifbool{blxja@yearsuffix}{%
