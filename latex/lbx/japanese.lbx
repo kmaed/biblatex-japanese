@@ -51,6 +51,9 @@
   \savecommand{\newunitpunct}%
   \replacecommand{\newunitpunct}{iflangidisjapanese}{\addcomma}%
 
+  \savecommand{\editortypedelim}%
+  \replacecommand{\editortypedelim}{iflangidisjapanese}{}%
+
   \savecommand{\blx@begunit}%
   \pretocmd{\blx@begunit}
            {\ifdef{\blxja@hook@print@name}{\csuse{\blxja@hook@print@name}}{}}
@@ -253,11 +256,6 @@
     \fi
     \usebibmacro{name:andothers}}%
 
-  \DeclareDelimFormat{editortypedelim}{%
-    \iffieldequalstr{langid}{japanese}
-      {}
-      {\addcomma\space}}
-
   %% -- for chicago --
   \@ifpackageloaded{biblatex-chicago}{%
     \savecommand{\classicpunct}%
@@ -304,6 +302,7 @@
   \restorecommand{\finalnamedelim}%
   \restorecommand{\mkbibdatelong}%
   \restorecommand{\newunitpunct}%
+  \restorecommand{\editortypedelim}%
 
   \restorecommand{\blx@begunit}%
   \restorecommand{\blx@getformat}%
