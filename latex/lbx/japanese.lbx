@@ -14,6 +14,8 @@
   japanese-chapter,
   japanese-edition,
   japanese-andothers,
+  japanese-editor,
+  japanese-editors,
 }
 
 
@@ -29,7 +31,7 @@
 
   \savecommand{\blx@imc@addcomma}%
   \replacecommand{\blx@imc@addcomma}{iflangidisjapanese}{\bibfwcomma\ignorespaces}%
-  \savecommand{\finalnamdelim}%
+  \savecommand{\finalnamedelim}%
   \replacecommand{\finalnamedelim}{iflangidisjapanese}{\addcomma}%
   \savecommand{\mkbibdatelong}%
   \replacecommand{\mkbibdatelong}{iflangidisjapanese}{%
@@ -48,6 +50,9 @@
        {\dateeraprintpre{#1}\stripzeros{\thefield{#1}\bibstring{japanese-yearsuffix}}}}%
   \savecommand{\newunitpunct}%
   \replacecommand{\newunitpunct}{iflangidisjapanese}{\addcomma}%
+
+  \savecommand{\editortypedelim}%
+  \replacecommand{\editortypedelim}{iflangidisjapanese}{}%
 
   \savecommand{\blx@begunit}%
   \pretocmd{\blx@begunit}
@@ -139,6 +144,49 @@
       {title}{iffieldisCJK}{\mkbibcbrackets{#1}}%
   \printfieldhook{title}{\blxja@removeunitpunct}%
   \printfieldhook{volume}{\blxja@removeunitpunct}%
+
+  \savebibmacro{editor+othersstrg}%
+  \replacebibmacro{editor+othersstrg}{iflangidisjapanese}{%
+    \iffieldundef{editortype}
+      {\ifboolexpr{
+         test {\ifnumgreater{\value{editor}}{1}}
+         or
+         test {\ifandothers{editor}}
+       }
+         {\def\abx@tempa{japanese-editors}}
+         {\def\abx@tempa{japanese-editor}}}
+      {\ifboolexpr{
+         test {\ifnumgreater{\value{editor}}{1}}
+         or
+         test {\ifandothers{editor}}
+       }
+         {\edef\abx@tempa{\thefield{editortype}s}}
+         {\edef\abx@tempa{\thefield{editortype}}}}%
+    \let\abx@tempb=\empty
+    \ifnamesequal{editor}{translator}
+      {\appto\abx@tempa{tr}%
+       \appto\abx@tempb{\clearname{translator}}}
+      {}%
+    \ifnamesequal{editor}{commentator}
+      {\appto\abx@tempa{co}%
+       \appto\abx@tempb{\clearname{commentator}}}
+      {\ifnamesequal{editor}{annotator}
+         {\appto\abx@tempa{an}%
+          \appto\abx@tempb{\clearname{annotator}}}
+         {}}%
+    \ifnamesequal{editor}{introduction}
+      {\appto\abx@tempa{in}%
+       \appto\abx@tempb{\clearname{introduction}}}
+      {\ifnamesequal{editor}{foreword}
+         {\appto\abx@tempa{fo}%
+          \appto\abx@tempb{\clearname{foreword}}}
+         {\ifnamesequal{editor}{afterword}
+            {\appto\abx@tempa{af}%
+             \appto\abx@tempb{\clearname{afterword}}}
+            {}}}%
+    \ifbibxstring{\abx@tempa}
+      {\printtext[editortype]{\bibstring{\abx@tempa}}\abx@tempb}
+      {\usebibmacro{editorstrg}}}
 
   \savefieldformat{chapter}%
   \replacefieldformat{chapter}{iflangidisjapanese}{%
@@ -251,9 +299,10 @@
 
 \UndeclareBibliographyExtras{%
   \restorecommand{\blx@imc@addcomma}%
-  \restorecommand{\finalnamdelim}%
+  \restorecommand{\finalnamedelim}%
   \restorecommand{\mkbibdatelong}%
   \restorecommand{\newunitpunct}%
+  \restorecommand{\editortypedelim}%
 
   \restorecommand{\blx@begunit}%
   \restorecommand{\blx@getformat}%
@@ -262,6 +311,7 @@
   \restorebibmacro{bytranslator+othersstrg}%
   \restorebibmacro{in:}%
   \restorebibmacro{name:andothers}%
+  \restorebibmacro{editor+othersstrg}%
 
   \restorefieldformat{booktitle}%
   \restorefieldformat{citetitle}%
@@ -304,6 +354,8 @@
   japanese-chapter	 = {{章}{章}},
   japanese-edition	 = {{版}{版}},
   japanese-andothers     = {{他}{他}},
+  japanese-editor	 = {{編}{編}},
+  japanese-editors	 = {{編}{編}},
 }
 
 \ifbool{blxja@yearsuffix}{%
