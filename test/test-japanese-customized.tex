@@ -1,0 +1,70 @@
+\documentclass[10pt]{jlreq}
+
+\usepackage{luatexja-preset}
+
+\usepackage[bookmarks,bookmarksnumbered,colorlinks,breaklinks]{hyperref}
+\hypersetup{%
+citecolor=[rgb]{0.6,0,0.1},%
+urlcolor=[rgb]{0,0.4,0},%
+linkcolor=[rgb]{0.3,0,0},%
+filecolor=[rgb]{0.3,0,0}}
+
+% biblatex の読み込み．
+\usepackage[style=authoryear]{biblatex-japanese}
+
+% その他のbiblatex の option の指定
+\ExecuteBibliographyOptions{
+sortcites=true,%
+date=year,%
+}
+
+% localisation stringsの変更．これで書式を変更．
+\DefineBibliographyStrings{japanese}{%
+japanese-editor	 = {（編）},%
+japanese-editors	 = {（編）},%
+japanese-name-delimiter	 = {・},%
+}
+
+% ------------------------------------------------------------
+%	同じ著者が続く場合の省略用の線の形式の変更
+%
+% authoryear style では同じ著者が続く場合に横線で省略される。その形式は
+% \bibnamedash で定義されている。
+% \bibnamedash is originally defined in biblatex.def.
+\renewcommand{\bibnamedash}{%
+  \hskip.2em \leavevmode\rule[.5ex]{2.5em}{.3pt}\hskip0.4em}
+% 前の空白                    高さ 横の長さ 太さ 後ろの空白
+
+
+% 文献データベースの指定．
+\addbibresource{test-japanese.bib}
+\addbibresource{test-japanese-additional.bib}
+
+\biblabelsep1\zw
+
+\begin{document}
+
+\section{説明}
+
+\begin{itemize}
+ \item これは \texttt{biblatex-japanese} パッケージを利用したサンプルのファイル
+       です．
+ \item 利用している引用・参考文献スタイル
+       \begin{itemize}
+        \item ``\texttt{authoryear}'' スタイルを利用しています．
+       \end{itemize}
+ \item さらに，以下のようにカスタマイズしています．
+       \begin{itemize}
+        \item \texttt{date} は \texttt{year} のみを表示．
+        \item \texttt{japanese-editor} と \texttt{japanese-editors} の定義を
+              「（編）」に変更．
+        \item \texttt{japanese-name-delimiter} を中黒「・」に変更．
+        \item \verb|\bibnamedash|（author-year 形式を利用しているときに，連続
+              する同一著者名を省略する際の横線） の定義を変更．
+       \end{itemize}
+\end{itemize}
+
+% 引用部分、参考文献部分は input-text.tex というファイル．
+\input{input-text}
+
+\end{document}

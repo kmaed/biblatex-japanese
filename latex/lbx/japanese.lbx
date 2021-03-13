@@ -16,6 +16,7 @@
   japanese-andothers,
   japanese-editor,
   japanese-editors,
+  japanese-name-delimiter,
 }
 
 
@@ -31,8 +32,15 @@
 
   \savecommand{\blx@imc@addcomma}%
   \replacecommand{\blx@imc@addcomma}{iflangidisjapanese}{\bibfwcomma\ignorespaces}%
-  \savecommand{\finalnamedelim}%
-  \replacecommand{\finalnamedelim}{iflangidisjapanese}{\addcomma}%
+
+  \savecommand{\finalnamdelim}%
+  \replacecommand{\finalnamedelim}{iflangidisjapanese}
+    {\bibstring{japanese-name-delimiter}}%
+
+  \savecommand{\multinamedelim}%
+  \replacecommand{\multinamedelim}{iflangidisjapanese}
+    {\bibstring{japanese-name-delimiter}}%
+
   \savecommand{\mkbibdatelong}%
   \replacecommand{\mkbibdatelong}{iflangidisjapanese}{%
     \iffieldundef{#2}
@@ -300,6 +308,7 @@
 \UndeclareBibliographyExtras{%
   \restorecommand{\blx@imc@addcomma}%
   \restorecommand{\finalnamedelim}%
+  \restorecommand{\multinamedelim}%
   \restorecommand{\mkbibdatelong}%
   \restorecommand{\newunitpunct}%
   \restorecommand{\editortypedelim}%
@@ -356,6 +365,7 @@
   japanese-andothers     = {{他}{他}},
   japanese-editor	 = {{編}{編}},
   japanese-editors	 = {{編}{編}},
+  japanese-name-delimiter = {{\addcomma}{\addcomma}},
 }
 
 \ifbool{blxja@yearsuffix}{%
