@@ -196,6 +196,18 @@
       {\printtext[editortype]{\bibstring{\abx@tempa}}\abx@tempb}
       {\usebibmacro{editorstrg}}}
 
+  \savebibmacro{byeditor+others}
+  \replacebibmacro{byeditor+others}{iflangidisjapanese}{%
+    \ifnameundef{editor}
+      {}
+      {\setunit{\addspace}%
+       \printnames[byeditor]{editor}%
+       \usebibmacro{editor+othersstrg}%
+       \clearname{editor}%
+       \newunit}%
+    \usebibmacro{byeditorx}%
+    \usebibmacro{bytranslator+others}}
+
   \savefieldformat{chapter}%
   \replacefieldformat{chapter}{iflangidisjapanese}{%
     {#1\bibstring{japanese-chapter}}}%
@@ -321,6 +333,7 @@
   \restorebibmacro{in:}%
   \restorebibmacro{name:andothers}%
   \restorebibmacro{editor+othersstrg}%
+  \restorebibmacro{byeditor+others}
 
   \restorefieldformat{booktitle}%
   \restorefieldformat{citetitle}%
