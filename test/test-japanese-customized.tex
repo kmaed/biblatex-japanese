@@ -10,12 +10,14 @@ linkcolor=[rgb]{0.3,0,0},%
 filecolor=[rgb]{0.3,0,0}}
 
 % biblatex の読み込み．
-\usepackage[style=authoryear]{biblatex-japanese}
+\usepackage[style=authoryear,nameorder]{biblatex-japanese}
+%
+% nameorderja: bib ファイルにおける日本語文献の姓名の順序を英語文献と同じとする。
 
 % その他のbiblatex の option の指定
 \ExecuteBibliographyOptions{
 sortcites=true,%
-date=year,%
+date=year,              % date を year のみ表示
 }
 
 % localisation stringsの変更．これで書式を変更．
@@ -37,7 +39,7 @@ japanese-name-delimiter	 = {・},%
 
 
 % 文献データベースの指定．
-\addbibresource{test-japanese.bib}
+\addbibresource{test-japanese-reverse.bib}
 
 \biblabelsep1\zw
 
@@ -54,6 +56,10 @@ japanese-name-delimiter	 = {・},%
        \end{itemize}
  \item さらに，以下のようにカスタマイズしています．
        \begin{itemize}
+        \item \texttt{nameorder} オプションをオンにしている．このオプションをオ
+              ンにすると，bib ファイルにおける日本語文献の「姓名」の順序が英語文
+              献と同じと想定して処理をする．bib ファイルには
+              \texttt{test-japanese-reverse.bib} を指定している．
         \item \texttt{date} は \texttt{year} のみを表示．
         \item \texttt{japanese-editor} と \texttt{japanese-editors} の定義を
               「（編）」に変更．
@@ -63,7 +69,7 @@ japanese-name-delimiter	 = {・},%
        \end{itemize}
 \end{itemize}
 
-% 引用部分、参考文献部分は input-text.tex というファイル．
+% 引用部分，参考文献部分は input-text.tex というファイル．
 \input{input-text}
 
 \end{document}
