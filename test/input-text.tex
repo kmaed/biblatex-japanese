@@ -1,4 +1,24 @@
 
+\section{日本語の文献}
+
+\begin{itemize}
+ \item 日本語の文献には \texttt{bib} ファイルの中で  \texttt{langid} と
+       \texttt{sortname} の二つのフィールドを設定しています．
+ \item \texttt{langid} フィールド
+       \begin{itemize}
+        \item ここに「\texttt{japanese}」と指定します．この指定がないと英語文献
+              と同じ処理がされるため，表示がおかしくなります．
+       \end{itemize}
+ \item \texttt{sortname} フィールド
+       \begin{itemize}
+        \item このフィールドが指定されている場合には，参考文献部分における文献の
+              並び順を処理する際に，\texttt{author}，\texttt{editor} フィールド
+              の代わりに利用されます．
+        \item アルファベットで書くと英語文献と同様に扱われます．ひらがなで書くと
+              英語文献後に「あいうえお順」で列挙されます．
+       \end{itemize}
+\end{itemize}
+
 \section{引用例}
 
 \subsection{引用例}
