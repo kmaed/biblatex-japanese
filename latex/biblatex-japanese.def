@@ -244,6 +244,9 @@
   \ifdefvoid{#2}{}{\mkbibnamegiven{#2}\isdot}%
   \ifdefvoid{#3}{}{%
     \mkbibnameprefix{#3}\isdot}%
+  \ifbool{blxja@nameorder}% For name like "R. J. バロー"
+    {\ifdefvoid{#1}{}{\ifCJKstr{#1}{}{\bibfwcomma}}}%
+    {}%
   \mkbibnamefamily{#1}\isdot
   \ifdefvoid{#4}{}{\bibnamedelimd\mkbibnameaffix{#4}\isdot}}
 
