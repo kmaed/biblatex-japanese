@@ -10,7 +10,7 @@ linkcolor=[rgb]{0.3,0,0},%
 filecolor=[rgb]{0.3,0,0}}
 
 % biblatex の読み込み．
-\usepackage[style=authoryear,yearsuffix]{biblatex-japanese}
+\usepackage[style=authoryear,yearsuffix,nameorder]{biblatex-japanese}
 
 % その他のbiblatex の option の指定
 \ExecuteBibliographyOptions{
@@ -18,7 +18,7 @@ sortcites=true,%
 }
 
 % 文献データベースの指定．
-\addbibresource{test-japanese.bib}
+\addbibresource{test-japanese-reverse.bib}
 
 \biblabelsep1\zw
 
@@ -37,6 +37,8 @@ sortcites=true,%
        \end{itemize}
  \item \texttt{yearsuffix} オプションを利用しています $\rightarrow$ 参考文献部分
        の year に「年」が付く．
+ \item \texttt{nameorder} オプションを利用しています $\rightarrow$ bib ファイル
+       に \texttt{test-japanese-reverse.bib} を利用しています．
 \end{itemize}
 
 % 引用部分、参考文献部分は input-text.tex というファイル．
