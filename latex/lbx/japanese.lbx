@@ -221,49 +221,31 @@
   \savenameformat{given-family}%
   \replacenameformat{given-family}{iflangidisjapanese}{%
     \nameparts{#1}%
-    \ifbool{blxja@nameorder}%
-      {\usebibmacro{name:japanese-full}%
-                   {\namepartgiven}%
-                   {\namepartfamily}%
-                   {\namepartprefix}%
-                   {\namepartsuffix}}%
-      {\usebibmacro{name:japanese-full}%
-                   {\namepartfamily}%
-                   {\namepartgiven}%
-                   {\namepartprefix}%
-                   {\namepartsuffix}}%
+    \usebibmacro{name:japanese-full}%
+                {\namepartfamily}%
+                {\namepartgiven}%
+                {\namepartprefix}%
+                {\namepartsuffix}%
     \usebibmacro{name:andothers}}%
 
   \savenameformat{family-given}%
   \replacenameformat{family-given}{iflangidisjapanese}{%
     \nameparts{#1}%
-    \ifbool{blxja@nameorder}%
-      {\usebibmacro{name:japanese-full}%
-                   {\namepartgiven}%
-                   {\namepartfamily}%
-                   {\namepartprefix}%
-                   {\namepartsuffix}}%
-      {\usebibmacro{name:japanese-full}%
-                   {\namepartfamily}%
-                   {\namepartgiven}%
-                   {\namepartprefix}%
-                   {\namepartsuffix}}%
+    \usebibmacro{name:japanese-full}%
+                {\namepartfamily}%
+                {\namepartgiven}%
+                {\namepartprefix}%
+                {\namepartsuffix}%
     \usebibmacro{name:andothers}}%
 
   \savenameformat{family-given/given-family}%
   \replacenameformat{family-given/given-family}{iflangidisjapanese}{%
     \nameparts{#1}%
-    \ifbool{blxja@nameorder}%
-      {\usebibmacro{name:japanese-full}%
-                   {\namepartgiven}%
-                   {\namepartfamily}%
-                   {\namepartprefix}%
-                   {\namepartsuffix}}%
-      {\usebibmacro{name:japanese-full}%
-                   {\namepartfamily}%
-                   {\namepartgiven}%
-                   {\namepartprefix}%
-                   {\namepartsuffix}}%
+    \usebibmacro{name:japanese-full}%
+                {\namepartfamily}%
+                {\namepartgiven}%
+                {\namepartprefix}%
+                {\namepartsuffix}%
     \ifnumequal{\value{listcount}}{1}%
                {\ifdefvoid{\namepartgiven\namepartprefix}%
                  {}%
@@ -274,41 +256,23 @@
   \savenameformat{labelname}%
   \replacenameformat{labelname}{iflangidisjapanese}{%
     \ifcase\value{uniquename}%
-        \ifbool{blxja@nameorder}%
-          {\usebibmacro{name:japanese-last}%
-                       {\namepartgiven}%
-                       {\namepartfamily}%
-                       {\namepartprefix}%
-                       {\namepartsuffix}}%
-          {\usebibmacro{name:japanese-last}%
-                       {\namepartfamily}%
-                       {\namepartgiven}%
-                       {\namepartprefix}%
-                       {\namepartsuffix}}%
+        \usebibmacro{name:japanese-last}%
+                    {\namepartfamily}%
+                    {\namepartgiven}%
+                    {\namepartprefix}%
+                    {\namepartsuffix}%
     \or
-        \ifbool{blxja@nameorder}%
-          {\usebibmacro{name:japanese-full}%
-                       {\namepartgiven}%
-                       {\namepartfamily}%
-                       {\namepartprefix}%
-                       {\namepartsuffix}}%
-          {\usebibmacro{name:japanese-full}%
-                       {\namepartfamily}%
-                       {\namepartgiven}%
-                       {\namepartprefix}%
-                       {\namepartsuffix}}%
+        \usebibmacro{name:japanese-full}%
+                    {\namepartfamily}%
+                    {\namepartgiven}%
+                    {\namepartprefix}%
+                    {\namepartsuffix}%
     \or
-        \ifbool{blxja@nameorder}%
-          {\usebibmacro{name:japanese-full}%
-                       {\namepartgiven}%
-                       {\namepartfamily}%
-                       {\namepartprefix}%
-                       {\namepartsuffix}}%
-          {\usebibmacro{name:japanese-full}%
-                       {\namepartfamily}%
-                       {\namepartgiven}%
-                       {\namepartprefix}%
-                       {\namepartsuffix}}%
+        \usebibmacro{name:japanese-full}%
+                    {\namepartfamily}%
+                    {\namepartgiven}%
+                    {\namepartprefix}%
+                    {\namepartsuffix}%
     \fi
     \usebibmacro{name:andothers}}%
 
