@@ -246,11 +246,6 @@
                 {\namepartgiven}%
                 {\namepartprefix}%
                 {\namepartsuffix}%
-    \ifnumequal{\value{listcount}}{1}%
-               {\ifdefvoid{\namepartgiven\namepartprefix}%
-                 {}%
-                 {\usebibmacro{name:revsdelim}}}%
-               {}%
     \usebibmacro{name:andothers}}%
 
   \savenameformat{labelname}%
