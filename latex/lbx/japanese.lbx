@@ -345,6 +345,9 @@
         {\printtext[capital]{\thefield{editortype}}}}%
       \clearname{editor}}%
 
+      \savebibmacro{cms-in:}%
+      \replacebibmacro{cms-in:}{iflangidisjapanese}{}%
+
       \savefieldformat{injournaltitle}%
       \replacefieldformat{injournaltitle}{iflangidisjapanese}{%
         \mkbibwcbrackets{#1}\isdot}%
@@ -399,6 +402,7 @@
     \restorecommand{\classicpunct}%
     \restorebibmacro{cbytranslator+others}%
     \restorebibmacro{editstrg}%
+    \restorebibmacro{cms-in:}%
     \restorefieldformat{injournaltitle}%
   }{}%
   %% -- End: for chicago --
