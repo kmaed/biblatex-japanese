@@ -307,6 +307,12 @@
                    \bibstring{\@tempa}%
                    \newcunit}%
       \usebibmacro{cbycompiler+others}}%
+
+      \savefieldformat{injournaltitle}%
+      \replacefieldformat{injournaltitle}{iflangidisjapanese}{%
+        \mkbibwcbrackets{#1}\isdot}%
+      \printfieldhook{injournaltitle}{\blxja@removeunitpunct}
+      
   }{}%
   %% -- End: for chicago --
 }
@@ -355,6 +361,7 @@
   \@ifpackageloaded{biblatex-chicago}{%
     \restorecommand{\classicpunct}%
     \restorebibmacro{cbytranslator+others}%
+    \restorefieldformat{injournaltitle}%
   }{}%
   %% -- End: for chicago --
 }
