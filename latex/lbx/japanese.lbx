@@ -308,6 +308,43 @@
                    \newcunit}%
       \usebibmacro{cbycompiler+others}}%
 
+    \savebibmacro{editstrg}%
+    \replacebibmacro{editstrg}{iflangidisjapanese}{%
+      \blxja@removeunitpunct% For removing comma after Japanese editor names.
+      \ifthenelse{\iffieldundef{editortype}\OR%
+        \iffieldequalstr{editortype}{editor}}%
+      {\ifthenelse{\value{editor}>1\OR\ifandothers{editor}}%
+        {\ifthenelse{\ifnamesequal{editor}{translator}\AND%
+            \ifnamesequal{editor}{namec}}%
+          {\bibstring{editortranscompilers}%
+            \clearname{translator}%
+            \clearname{namec}}%
+          {\ifnamesequal{editor}{namec}%
+            {\bibstring{editorcompilers}%
+              \clearname{namec}}%
+            {\ifnamesequal{editor}{translator}%
+              {\bibstring{editortranslators}%
+                \clearname{translator}}%
+              {\bibstring{japanese-editors}}}}}%
+        {\ifthenelse{\ifnamesequal{editor}{translator}\AND%
+            \ifnamesequal{editor}{namec}}%
+          {\bibstring{editortranscompiler}%
+            \clearname{translator}%
+            \clearname{namec}}%
+          {\ifnamesequal{editor}{namec}%
+            {\bibstring{editorcompiler}%
+              \clearname{namec}}%
+            {\ifnamesequal{editor}{translator}%
+              {\bibstring{editortranslator}%
+                \clearname{translator}}%
+              {\bibstring{japanese-editor}}}}}}%
+      {\ifbibxstring{\thefield{editortype}}%
+        {\ifthenelse{\value{editor}>1\OR\ifandothers{editor}}%
+          {\bibstring{\thefield{editortype}s}}%
+          {\bibstring{\thefield{editortype}}}}%
+        {\printtext[capital]{\thefield{editortype}}}}%
+      \clearname{editor}}%
+
       \savefieldformat{injournaltitle}%
       \replacefieldformat{injournaltitle}{iflangidisjapanese}{%
         \mkbibwcbrackets{#1}\isdot}%
@@ -361,6 +398,7 @@
   \@ifpackageloaded{biblatex-chicago}{%
     \restorecommand{\classicpunct}%
     \restorebibmacro{cbytranslator+others}%
+    \restorebibmacro{editstrg}%
     \restorefieldformat{injournaltitle}%
   }{}%
   %% -- End: for chicago --
